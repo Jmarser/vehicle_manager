@@ -3,4 +3,9 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.compose) apply false
+    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.hilt) apply false
+    id("org.jetbrains.kotlinx.kover") version "0.9.3"
+    id("org.sonarqube") version "7.0.1.6134" apply false
 }
