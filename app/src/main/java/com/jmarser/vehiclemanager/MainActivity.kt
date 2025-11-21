@@ -6,7 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -20,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jmarser.vehiclemanager.core.presentation.ui.appDimens
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForPhone
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForTablet
 import com.jmarser.vehiclemanager.ui.theme.VehicleManagerTheme
@@ -59,13 +62,14 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
             modifier = modifier,
             style = MaterialTheme.typography.displayLarge
         )
+        Spacer(Modifier.height(appDimens.spacerXXL))
         Text(
             text = "Nuevo Texto",
             style = MaterialTheme.typography.bodyLarge
         )
-
+        Spacer(Modifier.height(appDimens.spacerXXL))
         Button(
-            modifier = Modifier.padding(top = 16.dp),
+            modifier = Modifier.padding(top = 24.dp),
             onClick = {}
         ) {
             Text(

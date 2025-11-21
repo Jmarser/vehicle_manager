@@ -11,9 +11,11 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
+import com.jmarser.vehiclemanager.core.presentation.ui.dimensForWindowSize
 import com.jmarser.vehiclemanager.core.presentation.ui.isTablet
 import com.jmarser.vehiclemanager.core.presentation.ui.localAppShapes
 import com.jmarser.vehiclemanager.core.presentation.ui.localAppTypography
+import com.jmarser.vehiclemanager.core.presentation.ui.localDimens
 import com.jmarser.vehiclemanager.core.presentation.ui.shapesForWindowSize
 import com.jmarser.vehiclemanager.core.presentation.ui.typographyForWindowSize
 
@@ -60,10 +62,12 @@ fun VehicleManagerTheme(
     val isTablet = isTablet()
     val typography = typographyForWindowSize(windowSizeClass, isTablet)
     val shapes = shapesForWindowSize(windowSizeClass, isTablet)
+    val dimens = dimensForWindowSize(windowSizeClass, isTablet)
 
     CompositionLocalProvider(
         localAppTypography provides typography,
-        localAppShapes provides shapes
+        localAppShapes provides shapes,
+        localDimens provides dimens
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
