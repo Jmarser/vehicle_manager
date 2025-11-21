@@ -23,6 +23,8 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForPhone
+import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForTablet
 import com.jmarser.vehiclemanager.ui.theme.VehicleManagerTheme
 
 class MainActivity : ComponentActivity() {
@@ -72,7 +74,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     VehicleManagerTheme (
-        windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(360.dp, 800.dp))
+        windowSizeClass = getSizeForPhone()
     ){
         Greeting("Android")
     }
@@ -85,7 +87,7 @@ fun GreetingPreview() {
 @Composable
 fun GreetingPreview2() {
     VehicleManagerTheme (
-        windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(800.dp, 1280.dp))
+        windowSizeClass = getSizeForTablet()
     ){
         Greeting("Android")
     }
