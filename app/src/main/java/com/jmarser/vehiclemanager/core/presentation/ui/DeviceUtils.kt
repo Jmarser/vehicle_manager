@@ -8,10 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalConfiguration
+import com.jmarser.vehiclemanager.ui.theme.CompactDimens
 import com.jmarser.vehiclemanager.ui.theme.CompactShapes
 import com.jmarser.vehiclemanager.ui.theme.CompactTypography
+import com.jmarser.vehiclemanager.ui.theme.Dimens
+import com.jmarser.vehiclemanager.ui.theme.ExpandedDimens
 import com.jmarser.vehiclemanager.ui.theme.ExpandedShapes
 import com.jmarser.vehiclemanager.ui.theme.ExpandedTypography
+import com.jmarser.vehiclemanager.ui.theme.MediumDimens
 import com.jmarser.vehiclemanager.ui.theme.MediumShapes
 import com.jmarser.vehiclemanager.ui.theme.MediumTypography
 
@@ -81,3 +85,22 @@ fun shapesForWindowSize(
 
 val localAppShapes = staticCompositionLocalOf { CompactShapes }
 val appShapes: Shapes @Composable get() = localAppShapes.current
+
+fun dimensForWindowSize(
+    windowSizeClass: WindowSizeClass,
+    isTablet: Boolean
+): Dimens{
+    return if (isTablet){
+        when(windowSizeClass.widthSizeClass){
+            WindowWidthSizeClass.Compact -> CompactDimens
+            WindowWidthSizeClass.Medium -> MediumDimens
+            WindowWidthSizeClass.Expanded -> ExpandedDimens
+            else -> CompactDimens
+        }
+    }else{
+        CompactDimens
+    }
+}
+
+val localDimens = staticCompositionLocalOf { CompactDimens }
+val appDimens: Dimens @Composable get() = localDimens.current
