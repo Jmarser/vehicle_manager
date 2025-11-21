@@ -1,6 +1,5 @@
 package com.jmarser.vehiclemanager.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -13,7 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
 import com.jmarser.vehiclemanager.core.presentation.ui.isTablet
+import com.jmarser.vehiclemanager.core.presentation.ui.localAppShapes
 import com.jmarser.vehiclemanager.core.presentation.ui.localAppTypography
+import com.jmarser.vehiclemanager.core.presentation.ui.shapesForWindowSize
 import com.jmarser.vehiclemanager.core.presentation.ui.typographyForWindowSize
 
 private val DarkColorScheme = darkColorScheme(
@@ -58,13 +59,16 @@ fun VehicleManagerTheme(
 
     val isTablet = isTablet()
     val typography = typographyForWindowSize(windowSizeClass, isTablet)
+    val shapes = shapesForWindowSize(windowSizeClass, isTablet)
 
     CompositionLocalProvider(
-        localAppTypography provides typography
+        localAppTypography provides typography,
+        localAppShapes provides shapes
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
             typography = typography,
+            shapes = shapes,
             content = content
         )
     }

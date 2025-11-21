@@ -1,5 +1,6 @@
 package com.jmarser.vehiclemanager.core.presentation.ui
 
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.Typography
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -7,8 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalConfiguration
+import com.jmarser.vehiclemanager.ui.theme.CompactShapes
 import com.jmarser.vehiclemanager.ui.theme.CompactTypography
+import com.jmarser.vehiclemanager.ui.theme.ExpandedShapes
 import com.jmarser.vehiclemanager.ui.theme.ExpandedTypography
+import com.jmarser.vehiclemanager.ui.theme.MediumShapes
 import com.jmarser.vehiclemanager.ui.theme.MediumTypography
 
 /**
@@ -58,3 +62,22 @@ fun typographyForWindowSize(
 
 val localAppTypography = staticCompositionLocalOf { CompactTypography }
 val appTypography: Typography @Composable get() = localAppTypography.current
+
+fun shapesForWindowSize(
+    windowSizeClass: WindowSizeClass,
+    isTablet: Boolean
+): Shapes{
+    return if (isTablet){
+        when(windowSizeClass.widthSizeClass){
+            WindowWidthSizeClass.Compact -> CompactShapes
+            WindowWidthSizeClass.Medium -> MediumShapes
+            WindowWidthSizeClass.Expanded -> ExpandedShapes
+            else -> CompactShapes
+        }
+    }else{
+        CompactShapes
+    }
+}
+
+val localAppShapes = staticCompositionLocalOf { CompactShapes }
+val appShapes: Shapes @Composable get() = localAppShapes.current
