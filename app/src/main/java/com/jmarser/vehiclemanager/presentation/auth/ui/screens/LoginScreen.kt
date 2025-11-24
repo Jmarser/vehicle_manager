@@ -42,8 +42,10 @@ import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceNorma
 import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceSmall
 import com.jmarser.vehiclemanager.core.presentation.ui.appDimens
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForPhone
+import com.jmarser.vehiclemanager.presentation.components.AppImages
 import com.jmarser.vehiclemanager.presentation.components.AppImages.logo
 import com.jmarser.vehiclemanager.presentation.components.HeaderAuth
+import com.jmarser.vehiclemanager.presentation.components.TextInputField
 import com.jmarser.vehiclemanager.ui.theme.MyAppTheme
 
 @Composable
@@ -71,25 +73,20 @@ fun LoginScreen(
 
         VerticalSpaceLarge()
 
-        OutlinedTextField(
+
+        TextInputField(
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(horizontal = appDimens.paddingMedium),
             value = "",
             onValueChange = {},
-            label = { Text(text = "Email") },
-            singleLine = true,
-            shape = RoundedCornerShape(appDimens.roundedShapePercent25),
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Email,
-                    contentDescription = null
-                )
-            },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Next
-            )
+            placeholder = R.string.email_placeholder,
+            label = R.string.email,
+            semanticText = R.string.semantic_email,
+            keyboardType = KeyboardType.Email,
+            imeAction = ImeAction.Next,
+            isError = false,
+            textError = R.string.error_email_invalid,
+            leadingIcon = AppImages.ic_email
         )
 
         VerticalSpaceNormal()

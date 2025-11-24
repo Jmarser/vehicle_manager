@@ -11,6 +11,8 @@
     <string name="dont_have_account">¿No tienes cuenta?</string>
     <string name="register_now">regístrate</string>
     <string name="forgotten_yout_password">¿Has olvidado la contraseña?</string>
+    <string name="email_placeholder">email@email.com</string>
+    <string name="semantic_email">Introduce tu dirección de correo electrónico</string>
 
-
+    <string name="error_email_invalid">Email no válido</string>
 </resources>
