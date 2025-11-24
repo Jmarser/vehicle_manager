@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Vehicle manager</string>
+
+    <!-- PANTALLAS AUTH -->
+    <string name="login_sesion">Inicio de sesión</string>
+    <string name="email">Email</string>
+    <string name="password">Contraseña</string>
+    <string name="password_hide">Ocultar contraseña</string>
+    <string name="password_show">Mostrar contraseña</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="dont_have_account">¿No tienes cuenta?</string>
+    <string name="register_now">regístrate</string>
+    <string name="forgotten_yout_password">¿Has olvidado la contraseña?</string>
+
+
 </resources>
