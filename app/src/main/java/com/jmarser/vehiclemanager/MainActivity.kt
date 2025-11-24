@@ -20,11 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceLarge
 import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceNormal
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForPhone
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForTablet
-import com.jmarser.vehiclemanager.ui.theme.VehicleManagerTheme
+import com.jmarser.vehiclemanager.ui.theme.MyAppTheme
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -35,7 +34,7 @@ class MainActivity : ComponentActivity() {
 
             val windowSizeClass = calculateWindowSizeClass(this)
 
-            VehicleManagerTheme(
+            MyAppTheme(
                 windowSizeClass = windowSizeClass
             ) {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -86,7 +85,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 )
 @Composable
 fun GreetingPreview() {
-    VehicleManagerTheme(
+    MyAppTheme(
         windowSizeClass = getSizeForPhone()
     ) {
         Greeting("Android")
@@ -101,7 +100,7 @@ fun GreetingPreview() {
 )
 @Composable
 fun GreetingPreview2() {
-    VehicleManagerTheme(
+    MyAppTheme(
         windowSizeClass = getSizeForTablet()
     ) {
         Greeting("Android")
