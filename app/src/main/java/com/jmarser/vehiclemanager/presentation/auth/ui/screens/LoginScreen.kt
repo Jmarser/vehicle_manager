@@ -3,6 +3,7 @@ package com.jmarser.vehiclemanager.presentation.auth.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,8 +24,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.jmarser.vehiclemanager.R
 import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceLarge
@@ -31,6 +35,7 @@ import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceNorma
 import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceSmall
 import com.jmarser.vehiclemanager.core.presentation.ui.appDimens
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForPhone
+import com.jmarser.vehiclemanager.presentation.auth.ui.components.MyClickableText
 import com.jmarser.vehiclemanager.presentation.components.AppImages
 import com.jmarser.vehiclemanager.presentation.components.AppImages.logo
 import com.jmarser.vehiclemanager.presentation.components.HeaderAuth
@@ -87,7 +92,7 @@ fun LoginScreen(
             value = "",
             onValueChange = {},
             label = R.string.password,
-            semanticText = R.string.semantic_email,
+            semanticText = R.string.semantic_password,
             keyboardType = KeyboardType.Password,
             imeAction = ImeAction.Next,
             isError = false,
@@ -101,10 +106,23 @@ fun LoginScreen(
 
         VerticalSpaceSmall()
 
-        Text(
-            text = "¿Has olvidado tu contraseña?",
-            style = MaterialTheme.typography.labelMedium
-        )
+        Row (
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = appDimens.paddingMedium),
+            horizontalArrangement = Arrangement.End
+        ){
+            TextButton(
+                modifier = Modifier,
+                onClick = {}
+            ) {
+                Text(
+                    text = stringResource(R.string.forgotten_yout_password),
+                    textAlign = TextAlign.End,
+                    style = MaterialTheme.typography.labelMedium
+                )
+            }
+        }
 
         VerticalSpaceLarge()
 
@@ -122,10 +140,13 @@ fun LoginScreen(
         }
 
         VerticalSpaceNormal()
-        
-        Text(
-            text = "¿No tienes una cuenta? Regístrate",
-            style = MaterialTheme.typography.labelMedium
+
+        MyClickableText(
+            modifier = Modifier,
+            textNormal = R.string.dont_have_account,
+            textClickable = R.string.register_now,
+            textDescription = R.string.clickable_text_description_login,
+            onClick = {}
         )
     }
 }
