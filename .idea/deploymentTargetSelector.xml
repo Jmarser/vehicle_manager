@@ -5,16 +5,19 @@
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="ExampleInstrumentedTest">
+      <SelectionState runConfigName="passwordInputFiled_allowsTyping_andStartsHidden()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="HeaderAuthTest">
+      <SelectionState runConfigName="passwordInputField_toggles_visibility_icon()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="textInputField_displaysCorrectSemanticDescription()">
+      <SelectionState runConfigName="passwordInputField_showsTooltip_onClick()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="textInputField_allowsTyping()">
+      <SelectionState runConfigName="passwordInputField_showsErrorText_whenErrorState()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="PasswordInputFieldTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
