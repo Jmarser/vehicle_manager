@@ -38,7 +38,7 @@ fun HeaderAuth(
             modifier = Modifier
                 .size(appDimens.logoSize),
             painter = logo,
-            contentDescription = "Logo de la app"
+            contentDescription = stringResource(R.string.img_header_auth_description)
         )
 
         VerticalSpaceNormal()

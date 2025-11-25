@@ -63,7 +63,7 @@ fun MyClickableText(
     }
 
     BasicText(
-        modifier = Modifier
+        modifier = modifier
             .padding(bottom = appDimens.paddingXL)
             .semantics{
                 role = Role.Button
