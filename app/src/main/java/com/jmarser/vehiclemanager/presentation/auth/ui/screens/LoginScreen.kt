@@ -11,17 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,8 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import com.jmarser.vehiclemanager.R
 import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceLarge
@@ -44,6 +34,7 @@ import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForPhone
 import com.jmarser.vehiclemanager.presentation.components.AppImages
 import com.jmarser.vehiclemanager.presentation.components.AppImages.logo
 import com.jmarser.vehiclemanager.presentation.components.HeaderAuth
+import com.jmarser.vehiclemanager.presentation.components.PasswordInputField
 import com.jmarser.vehiclemanager.presentation.components.TextInputField
 import com.jmarser.vehiclemanager.ui.theme.MyAppTheme
 
@@ -90,36 +81,22 @@ fun LoginScreen(
 
         VerticalSpaceNormal()
 
-        OutlinedTextField(
+        PasswordInputField(
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(horizontal = appDimens.paddingMedium),
             value = "",
             onValueChange = {},
-            label = { Text(text = "Password") },
-            singleLine = true,
-            shape = RoundedCornerShape(appDimens.roundedShapePercent25),
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Lock,
-                    contentDescription = null
-                )
-            },
-            trailingIcon = {
-                IconButton(
-                    onClick = { passwordVisible = !passwordVisible }
-                ) {
-                    Icon(
-                        imageVector = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                        contentDescription = if (passwordVisible) "Ocultar contraseña" else "Mostrar contraseña"
-                    )
-                }
-            },
-            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Next
-            )
+            label = R.string.password,
+            semanticText = R.string.semantic_email,
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Next,
+            isError = false,
+            textError = R.string.error_password_invalid,
+            leadingIcon = AppImages.ic_password,
+            iconShow = AppImages.ic_eye_open,
+            iconHide = AppImages.ic_eye_hide,
+            iconInfo = AppImages.ic_info,
+            iconInfoDescription = R.string.info_password_description,
         )
 
         VerticalSpaceSmall()

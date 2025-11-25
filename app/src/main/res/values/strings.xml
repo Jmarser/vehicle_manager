@@ -13,6 +13,14 @@
     <string name="forgotten_yout_password">¿Has olvidado la contraseña?</string>
     <string name="email_placeholder">email@email.com</string>
     <string name="semantic_email">Introduce tu dirección de correo electrónico</string>
+    <string name="info_password_description">Mostrar características para contraseña</string>
+    <string name="title_message_info_password">La contraseña debe cumplir:</string>
+    <string name="info_min_character">* Mínimo 8 caracteres</string>
+    <string name="info_upper_case">* Una letra mayúscula</string>
+    <string name="info_lower_case">* Una letra minúscula</string>
+    <string name="info_one_number">* Al menos un número</string>
+    <string name="info_caracter_special">* Un carácter especial</string>
 
     <string name="error_email_invalid">Email no válido</string>
+    <string name="error_password_invalid">Contraseña no válida</string>
 </resources>
