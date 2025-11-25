@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">Vehicle manager</string>
+
+    <!-- PANTALLAS AUTH -->
+    <string name="login_sesion">Inicio de sesión</string>
+    <string name="email">Email</string>
+    <string name="password">Contraseña</string>
+    <string name="password_hide">Ocultar contraseña</string>
+    <string name="password_show">Mostrar contraseña</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="dont_have_account">¿No tienes cuenta?</string>
+    <string name="register_now">regístrate</string>
+    <string name="forgotten_yout_password">¿Has olvidado la contraseña?</string>
+    <string name="email_placeholder">email@email.com</string>
+    <string name="semantic_email">Introduce tu dirección de correo electrónico</string>
+    <string name="semantic_password">Introduzca su contraseña de inicio de sesión</string>
+    <string name="info_password_description">Mostrar características para contraseña</string>
+    <string name="title_message_info_password">La contraseña debe cumplir:</string>
+    <string name="info_min_character">* Mínimo 8 caracteres</string>
+    <string name="info_upper_case">* Una letra mayúscula</string>
+    <string name="info_lower_case">* Una letra minúscula</string>
+    <string name="info_one_number">* Al menos un número</string>
+    <string name="info_caracter_special">* Un carácter especial</string>
+    <string name="fogotten_your_password">¿Has olvidado la contraseña?</string>
+    <string name="clickable_text_description_login">No tienes cuenta, navegar hacia la pantalla de registro</string>
+    <string name="clickable_text_description_register">Ya tienes cuenta, navegar hacia la pantalla de login</string>
+    <string name="semantic_button_login">Realizar inicio de sesión</string>
+
+    <string name="error_email_invalid">Email no válido</string>
+    <string name="error_password_invalid">Contraseña no válida</string>
 </resources>

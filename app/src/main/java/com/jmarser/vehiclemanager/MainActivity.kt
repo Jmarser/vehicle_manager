@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceNormal
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForPhone
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForTablet
+import com.jmarser.vehiclemanager.presentation.auth.ui.screens.LoginScreen
 import com.jmarser.vehiclemanager.ui.theme.MyAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -37,12 +38,13 @@ class MainActivity : ComponentActivity() {
             MyAppTheme(
                 windowSizeClass = windowSizeClass
             ) {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                /*Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
-                }
+                }*/
+                LoginScreen(modifier = Modifier)
             }
         }
     }
