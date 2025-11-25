@@ -6,22 +6,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -38,6 +31,7 @@ import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForPhone
 import com.jmarser.vehiclemanager.presentation.auth.ui.components.MyClickableText
 import com.jmarser.vehiclemanager.presentation.components.AppImages
 import com.jmarser.vehiclemanager.presentation.components.AppImages.logo
+import com.jmarser.vehiclemanager.presentation.components.ButtonWithPb
 import com.jmarser.vehiclemanager.presentation.components.HeaderAuth
 import com.jmarser.vehiclemanager.presentation.components.PasswordInputField
 import com.jmarser.vehiclemanager.presentation.components.TextInputField
@@ -48,7 +42,6 @@ fun LoginScreen(
     modifier: Modifier = Modifier
 ) {
 
-    var passwordVisible by remember { mutableStateOf(false) }
 
     Column (
         modifier = modifier
@@ -126,18 +119,15 @@ fun LoginScreen(
 
         VerticalSpaceLarge()
 
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(appDimens.buttonHeightNormal)
-                .padding(horizontal = appDimens.paddingXL),
+        ButtonWithPb(
+            modifier = Modifier,
+            label = R.string.login,
+            value = Unit,
             onClick = {},
-            shape = RoundedCornerShape(appDimens.roundedShapePercent50)
-        ) {
-            Text(
-                text = "Iniciar sesión",
-            )
-        }
+            isEnabled = false,
+            displayProgressbar = false,
+            semanticDescription = R.string.semantic_button_login
+        )
 
         VerticalSpaceNormal()
 
