@@ -22,13 +22,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import com.jmarser.vehiclemanager.R
 import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceLarge
 import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceNormal
 import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceSmall
+import com.jmarser.vehiclemanager.core.presentation.ui.DeviceOrientation
 import com.jmarser.vehiclemanager.core.presentation.ui.appDimens
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForPhone
+import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForTablet
+import com.jmarser.vehiclemanager.core.presentation.ui.rememberDeviceOrientation
 import com.jmarser.vehiclemanager.core.utils.TestTags
 import com.jmarser.vehiclemanager.presentation.auth.ui.components.MyClickableText
 import com.jmarser.vehiclemanager.presentation.components.AppImages
@@ -44,7 +48,20 @@ fun LoginScreen(
     modifier: Modifier = Modifier
 ) {
 
-    Column (
+    val orientation = rememberDeviceOrientation()
+
+    when (orientation) {
+        DeviceOrientation.Portrait -> LoginScreenPhone(modifier = modifier)
+        DeviceOrientation.Landscape,
+        DeviceOrientation.Undefined -> LoginScreenTablet(modifier = modifier)
+    }
+}
+
+@Composable
+fun LoginScreenPhone(
+    modifier: Modifier = Modifier
+) {
+    Column(
         modifier = modifier
             .fillMaxSize()
             .padding(appDimens.paddingMedium)
@@ -53,7 +70,7 @@ fun LoginScreen(
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
-    ){
+    ) {
         HeaderAuth(
             modifier = Modifier
                 .testTag(TestTags.HEADER_LOGIN),
@@ -103,12 +120,12 @@ fun LoginScreen(
 
         VerticalSpaceSmall()
 
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = appDimens.paddingMedium),
             horizontalArrangement = Arrangement.End
-        ){
+        ) {
             TextButton(
                 modifier = Modifier
                     .testTag(TestTags.FORGOT_PASSWORD_BUTTON),
@@ -148,15 +165,161 @@ fun LoginScreen(
     }
 }
 
+@Composable
+fun LoginScreenTablet(
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxSize()
+            .systemBarsPadding()
+            .padding(horizontal = appDimens.paddingLarge),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Column(
+            modifier = Modifier
+                .weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            HeaderAuth(
+                modifier = Modifier
+                    .testTag(TestTags.HEADER_LOGIN),
+                title = R.string.login_sesion,
+                logo = logo()
+            )
+        }
+        Column(
+            modifier = Modifier
+                .weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            TextInputField(
+                modifier = Modifier
+                    .padding(horizontal = appDimens.paddingMedium)
+                    .testTag(TestTags.EMAIL_INPUT_LOGIN),
+                value = "",
+                onValueChange = {},
+                placeholder = R.string.email_placeholder,
+                label = R.string.email,
+                semanticText = R.string.semantic_email,
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next,
+                isError = false,
+                textError = R.string.error_email_invalid,
+                leadingIcon = AppImages.ic_email
+            )
+
+            VerticalSpaceNormal()
+
+            PasswordInputField(
+                modifier = Modifier
+                    .padding(horizontal = appDimens.paddingMedium)
+                    .testTag(TestTags.PASSWORD_INPUT_LOGIN),
+                value = "",
+                onValueChange = {},
+                label = R.string.password,
+                semanticText = R.string.semantic_password,
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Next,
+                isError = false,
+                textError = R.string.error_password_invalid,
+                leadingIcon = AppImages.ic_password,
+                iconShow = AppImages.ic_eye_open,
+                iconHide = AppImages.ic_eye_hide,
+                iconInfo = AppImages.ic_info,
+                iconInfoDescription = R.string.info_password_description,
+            )
+
+            VerticalSpaceSmall()
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = appDimens.paddingMedium),
+                horizontalArrangement = Arrangement.End
+            ) {
+                TextButton(
+                    modifier = Modifier
+                        .testTag(TestTags.FORGOT_PASSWORD_BUTTON),
+                    onClick = {}
+                ) {
+                    Text(
+                        text = stringResource(R.string.forgotten_yout_password),
+                        textAlign = TextAlign.End,
+                        style = MaterialTheme.typography.labelMedium
+                    )
+                }
+            }
+
+            VerticalSpaceLarge()
+
+            ButtonWithPb(
+                modifier = Modifier
+                    .testTag(TestTags.LOGIN_BUTTON),
+                label = R.string.login,
+                value = Unit,
+                onClick = {},
+                isEnabled = false,
+                displayProgressbar = false,
+                semanticDescription = R.string.semantic_button_login
+            )
+
+            VerticalSpaceNormal()
+
+            MyClickableText(
+                modifier = Modifier
+                    .testTag(TestTags.REGISTER_LINK),
+                textNormal = R.string.dont_have_account,
+                textClickable = R.string.register_now,
+                textDescription = R.string.clickable_text_description_login,
+                onClick = {}
+            )
+        }
+    }
+}
+
+
 @Preview(
     showSystemUi = true,
-    showBackground = true
+    showBackground = true,
+    device = Devices.PHONE
 )
 @Composable
 fun LoginScreenPreview() {
     MyAppTheme(
         windowSizeClass = getSizeForPhone()
     ) {
-        LoginScreen(modifier = Modifier)
+        LoginScreenPhone(modifier = Modifier)
+    }
+}
+
+@Preview(
+    showSystemUi = true,
+    showBackground = true,
+    device = Devices.FOLDABLE
+)
+@Composable
+fun LoginScreenPreview3() {
+    MyAppTheme(
+        windowSizeClass = getSizeForPhone()
+    ) {
+        LoginScreenTablet(modifier = Modifier)
+    }
+}
+
+@Preview(
+    showSystemUi = true,
+    showBackground = true,
+    device = Devices.TABLET
+)
+@Composable
+fun LoginScreenPreview2() {
+    MyAppTheme(
+        windowSizeClass = getSizeForTablet()
+    ) {
+        LoginScreenTablet(modifier = Modifier)
     }
 }
