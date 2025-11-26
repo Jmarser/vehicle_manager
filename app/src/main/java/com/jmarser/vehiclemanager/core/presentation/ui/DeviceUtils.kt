@@ -1,5 +1,6 @@
 package com.jmarser.vehiclemanager.core.presentation.ui
 
+import android.content.res.Configuration
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Typography
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -33,6 +34,23 @@ fun isTablet(): Boolean{
     return remember(configuration){
         val smallestWidth = minOf(configuration.screenWidthDp, configuration.screenHeightDp)
         smallestWidth >= 600
+    }
+}
+
+sealed class DeviceOrientation{
+    object Portrait: DeviceOrientation()
+    object Landscape: DeviceOrientation()
+    object Undefined: DeviceOrientation()
+}
+
+@Composable
+fun rememberDeviceOrientation(): DeviceOrientation{
+    val configuration = LocalConfiguration.current
+
+    return when(configuration.orientation){
+        Configuration.ORIENTATION_PORTRAIT -> DeviceOrientation.Portrait
+        Configuration.ORIENTATION_LANDSCAPE -> DeviceOrientation.Landscape
+        else -> DeviceOrientation.Undefined
     }
 }
 
