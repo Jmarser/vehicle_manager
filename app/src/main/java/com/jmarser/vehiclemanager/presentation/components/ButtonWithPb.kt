@@ -77,7 +77,7 @@ fun <T> ButtonWithPb(
                         contentDescription = descriptionButton
                     },
                 shape = shape,
-                onClick = {onClick},
+                onClick = { onClick(value) },
                 enabled = isEnabled
             ) {
                 Row(
