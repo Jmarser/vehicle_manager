@@ -2,27 +2,23 @@ package com.jmarser.vehiclemanager.presentation.auth.ui.components
 
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.LinkAnnotation
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextLinkStyles
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.withLink
 import androidx.compose.ui.tooling.preview.Preview
 import com.jmarser.vehiclemanager.R
-import com.jmarser.vehiclemanager.core.presentation.ui.appDimens
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForPhone
 import com.jmarser.vehiclemanager.ui.theme.MyAppTheme
 
@@ -39,38 +35,33 @@ fun MyClickableText(
     val clickableText = stringResource(textClickable)
     val descriptionText = stringResource(textDescription)
 
-    val annotatedText = buildAnnotatedString {
-        append(normalText)
-        append(" ")
+    Row(
+        modifier = modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = normalText,
+            style = MaterialTheme.typography.labelMedium
+        )
 
-        withLink(
-            LinkAnnotation.Clickable(
-                tag = "Clickable_text",
-                styles = TextLinkStyles(
-                    style = SpanStyle(
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.SemiBold,
-                        textDecoration = TextDecoration.Underline
-                    )
-                ),
-                linkInteractionListener = {
-                    onClick()
-                }
+        TextButton(
+            modifier = Modifier
+                .semantics {
+                    role = Role.Button
+                    contentDescription = descriptionText
+                },
+            onClick = onClick
+        ) {
+            Text(
+                text = clickableText,
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary,
+                textDecoration = TextDecoration.Underline
             )
-        ){
-            append(clickableText)
         }
     }
-
-    BasicText(
-        modifier = modifier
-            .padding(bottom = appDimens.paddingXL)
-            .semantics{
-                role = Role.Button
-                contentDescription = descriptionText
-            },
-        text = annotatedText
-    )
 }
 
 @Preview(
