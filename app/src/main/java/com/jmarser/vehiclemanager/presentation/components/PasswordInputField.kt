@@ -51,7 +51,6 @@ import com.jmarser.vehiclemanager.core.presentation.ui.appDimens
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForPhone
 import com.jmarser.vehiclemanager.ui.theme.MyAppTheme
 import kotlinx.coroutines.launch
-import kotlin.math.sin
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

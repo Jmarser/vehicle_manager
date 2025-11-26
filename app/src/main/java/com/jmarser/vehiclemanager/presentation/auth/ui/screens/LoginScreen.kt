@@ -17,6 +17,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -28,6 +29,7 @@ import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceNorma
 import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceSmall
 import com.jmarser.vehiclemanager.core.presentation.ui.appDimens
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForPhone
+import com.jmarser.vehiclemanager.core.utils.TestTags
 import com.jmarser.vehiclemanager.presentation.auth.ui.components.MyClickableText
 import com.jmarser.vehiclemanager.presentation.components.AppImages
 import com.jmarser.vehiclemanager.presentation.components.AppImages.logo
@@ -42,7 +44,6 @@ fun LoginScreen(
     modifier: Modifier = Modifier
 ) {
 
-
     Column (
         modifier = modifier
             .fillMaxSize()
@@ -54,7 +55,8 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Top
     ){
         HeaderAuth(
-            modifier = Modifier,
+            modifier = Modifier
+                .testTag(TestTags.HEADER_LOGIN),
             title = R.string.login_sesion,
             logo = logo()
         )
@@ -64,7 +66,8 @@ fun LoginScreen(
 
         TextInputField(
             modifier = Modifier
-                .padding(horizontal = appDimens.paddingMedium),
+                .padding(horizontal = appDimens.paddingMedium)
+                .testTag(TestTags.EMAIL_INPUT_LOGIN),
             value = "",
             onValueChange = {},
             placeholder = R.string.email_placeholder,
@@ -81,7 +84,8 @@ fun LoginScreen(
 
         PasswordInputField(
             modifier = Modifier
-                .padding(horizontal = appDimens.paddingMedium),
+                .padding(horizontal = appDimens.paddingMedium)
+                .testTag(TestTags.PASSWORD_INPUT_LOGIN),
             value = "",
             onValueChange = {},
             label = R.string.password,
@@ -106,7 +110,8 @@ fun LoginScreen(
             horizontalArrangement = Arrangement.End
         ){
             TextButton(
-                modifier = Modifier,
+                modifier = Modifier
+                    .testTag(TestTags.FORGOT_PASSWORD_BUTTON),
                 onClick = {}
             ) {
                 Text(
@@ -120,7 +125,8 @@ fun LoginScreen(
         VerticalSpaceLarge()
 
         ButtonWithPb(
-            modifier = Modifier,
+            modifier = Modifier
+                .testTag(TestTags.LOGIN_BUTTON),
             label = R.string.login,
             value = Unit,
             onClick = {},
@@ -132,7 +138,8 @@ fun LoginScreen(
         VerticalSpaceNormal()
 
         MyClickableText(
-            modifier = Modifier,
+            modifier = Modifier
+                .testTag(TestTags.REGISTER_LINK),
             textNormal = R.string.dont_have_account,
             textClickable = R.string.register_now,
             textDescription = R.string.clickable_text_description_login,
