@@ -23,4 +23,9 @@ object TestTags {
     const val EMAIL_INPUT_FORGOT = "email_input_field_forgot"
     const val MESSAGE_INFO_FORGOT = "message_info_forgot"
     const val FORGOT_BUTTON = "forgot_button"
+
+    const val NAME_APP_SPLASH = "name_app"
+    const val LOGO_APP_SPLASH = "logo_app"
+    const val SLOGAN_APP_SPLASH = "slogan_app"
+    const val DEVELOPER_NAME_SPLASH = "developer_name"
 }
