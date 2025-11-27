@@ -36,6 +36,12 @@
     <string name="have_account">¿Ya tienes cuenta?</string>
     <string name="signIn">Inicia sesión</string>
 
+    <string name="forgot_password">Recuperar contraseña</string>
+    <string name="message_screen_forgot">Intruduce el correo electrónico que usastes al registrarte. Te enviaremos un enlace para restablecer tu contraseña.</string>
+    <string name="send">Enviar</string>
+    <string name="semantic_button_back">Regresar a la pantalla anterior</string>
+    <string name="semantic_button_forgot">Solicitar restablecer contraseña</string>
+
     <string name="error_email_invalid">Email no válido</string>
     <string name="error_password_invalid">Contraseña no válida</string>
     <string name="back_to_login">Volver a la pantalla de login</string>
