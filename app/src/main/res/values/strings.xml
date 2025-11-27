@@ -42,6 +42,9 @@
     <string name="semantic_button_back">Regresar a la pantalla anterior</string>
     <string name="semantic_button_forgot">Solicitar restablecer contraseña</string>
 
+    <string name="slogan_app">La gestión inteligente de tus vehículos.</string>
+    <string name="developer_name">by\nJmarser</string>
+
     <string name="error_email_invalid">Email no válido</string>
     <string name="error_password_invalid">Contraseña no válida</string>
     <string name="back_to_login">Volver a la pantalla de login</string>

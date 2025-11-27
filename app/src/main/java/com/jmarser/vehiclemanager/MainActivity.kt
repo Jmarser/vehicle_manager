@@ -24,6 +24,7 @@ import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceNorma
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForPhone
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForTablet
 import com.jmarser.vehiclemanager.presentation.auth.ui.screens.LoginScreen
+import com.jmarser.vehiclemanager.presentation.auth.ui.screens.SplashScreen
 import com.jmarser.vehiclemanager.ui.theme.MyAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -44,7 +45,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     )
                 }*/
-                LoginScreen(modifier = Modifier)
+                SplashScreen(modifier = Modifier)
             }
         }
     }
