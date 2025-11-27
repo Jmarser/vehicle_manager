@@ -130,7 +130,8 @@ fun SplashScreenPhone(
             modifier = Modifier
                 .size(appDimens.logoSize)
                 .alpha(alphaAnim)
-                .scale(scaleAnim),
+                .scale(scaleAnim)
+                .testTag(TestTags.LOGO_APP_SPLASH),
             painter = AppImages.logo(),
             contentDescription = null
         )
@@ -212,7 +213,8 @@ fun SplashScreenTablet(
                     modifier = Modifier
                         .size(appDimens.logoSize)
                         .alpha(alphaAnim)
-                        .scale(scaleAnim),
+                        .scale(scaleAnim)
+                        .testTag(TestTags.LOGO_APP_SPLASH),
                     painter = AppImages.logo(),
                     contentDescription = null
                 )
