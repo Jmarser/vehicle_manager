@@ -30,6 +30,7 @@ import com.jmarser.vehiclemanager.core.presentation.ui.appDimens
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForPhone
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForTablet
 import com.jmarser.vehiclemanager.core.presentation.ui.rememberDeviceOrientation
+import com.jmarser.vehiclemanager.core.utils.TestTags
 import com.jmarser.vehiclemanager.presentation.auth.ui.components.MyClickableText
 import com.jmarser.vehiclemanager.presentation.components.AppImages
 import com.jmarser.vehiclemanager.presentation.components.ButtonWithPb
@@ -73,6 +74,8 @@ fun RegisterScreenPhone(
                 .fillMaxWidth()
         ){
             IconButton(
+                modifier = Modifier
+                    .testTag(TestTags.ON_BACK_BUTTON_REGISTER),
                 onClick = { },
             ) {
                 Icon(
@@ -82,6 +85,8 @@ fun RegisterScreenPhone(
             }
         }
         HeaderAuth(
+            modifier = Modifier
+                .testTag(TestTags.HEADER_REGISTER),
             title = R.string.register_user,
             logo = AppImages.logo()
         )
@@ -91,7 +96,7 @@ fun RegisterScreenPhone(
         TextInputField(
             modifier = Modifier
                 .padding(horizontal = appDimens.paddingMedium)
-                .testTag(""),
+                .testTag(TestTags.NAME_INPUT_REGISTER),
             value = "",
             onValueChange = {},
             label = R.string.user_name,
@@ -105,7 +110,7 @@ fun RegisterScreenPhone(
         TextInputField(
             modifier = Modifier
                 .padding(horizontal = appDimens.paddingMedium)
-                .testTag(""),
+                .testTag(TestTags.EMAIL_INPUT_REGISTER),
             value = "",
             onValueChange = {},
             label = R.string.email,
@@ -119,7 +124,7 @@ fun RegisterScreenPhone(
         PasswordInputField(
             modifier = Modifier
                 .padding(horizontal = appDimens.paddingMedium)
-                .testTag(""),
+                .testTag(TestTags.PASSWORD_INPUT_REGISTER),
             value = "",
             onValueChange = {},
             label = R.string.password,
@@ -137,7 +142,7 @@ fun RegisterScreenPhone(
         PasswordInputField(
             modifier = Modifier
                 .padding(horizontal = appDimens.paddingMedium)
-                .testTag(""),
+                .testTag(TestTags.CONFIRM_PASSWORD_INPUT_REGISTER),
             value = "",
             onValueChange = {},
             label = R.string.repit_password,
@@ -153,7 +158,8 @@ fun RegisterScreenPhone(
         VerticalSpaceLarge()
 
         ButtonWithPb(
-            modifier = Modifier,
+            modifier = Modifier
+                .testTag(TestTags.REGISTER_BUTTON),
             isEnabled = false,
             label = R.string.register,
             displayProgressbar = false,
@@ -163,7 +169,8 @@ fun RegisterScreenPhone(
         )
 
         MyClickableText(
-            modifier = Modifier,
+            modifier = Modifier
+                .testTag(TestTags.LOGIN_LINK),
             textNormal = R.string.have_account,
             textClickable = R.string.signIn,
             textDescription = R.string.clickable_text_description_register,
@@ -185,7 +192,8 @@ fun RegisterScreenTablet(
             modifier = Modifier
                 .fillMaxWidth()
         ){
-            IconButton(
+            IconButton(modifier = Modifier
+                .testTag(TestTags.ON_BACK_BUTTON_REGISTER),
                 onClick = { },
             ) {
                 Icon(
@@ -208,7 +216,8 @@ fun RegisterScreenTablet(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                HeaderAuth(
+                HeaderAuth(modifier = Modifier
+                    .testTag(TestTags.HEADER_REGISTER),
                     title = R.string.register_user,
                     logo = AppImages.logo()
                 )
@@ -222,7 +231,7 @@ fun RegisterScreenTablet(
                 TextInputField(
                     modifier = Modifier
                         .padding(horizontal = appDimens.paddingMedium)
-                        .testTag(""),
+                        .testTag(TestTags.NAME_INPUT_REGISTER),
                     value = "",
                     onValueChange = {},
                     label = R.string.user_name,
@@ -236,7 +245,7 @@ fun RegisterScreenTablet(
                 TextInputField(
                     modifier = Modifier
                         .padding(horizontal = appDimens.paddingMedium)
-                        .testTag(""),
+                        .testTag(TestTags.EMAIL_INPUT_REGISTER),
                     value = "",
                     onValueChange = {},
                     label = R.string.email,
@@ -250,7 +259,7 @@ fun RegisterScreenTablet(
                 PasswordInputField(
                     modifier = Modifier
                         .padding(horizontal = appDimens.paddingMedium)
-                        .testTag(""),
+                        .testTag(TestTags.PASSWORD_INPUT_REGISTER),
                     value = "",
                     onValueChange = {},
                     label = R.string.password,
@@ -268,7 +277,7 @@ fun RegisterScreenTablet(
                 PasswordInputField(
                     modifier = Modifier
                         .padding(horizontal = appDimens.paddingMedium)
-                        .testTag(""),
+                        .testTag(TestTags.CONFIRM_PASSWORD_INPUT_REGISTER),
                     value = "",
                     onValueChange = {},
                     label = R.string.repit_password,
@@ -284,7 +293,8 @@ fun RegisterScreenTablet(
                 VerticalSpaceLarge()
 
                 ButtonWithPb(
-                    modifier = Modifier,
+                    modifier = Modifier
+                        .testTag(TestTags.REGISTER_BUTTON),
                     isEnabled = false,
                     label = R.string.register,
                     displayProgressbar = false,
@@ -294,7 +304,8 @@ fun RegisterScreenTablet(
                 )
 
                 MyClickableText(
-                    modifier = Modifier,
+                    modifier = Modifier
+                        .testTag(TestTags.LOGIN_LINK),
                     textNormal = R.string.have_account,
                     textClickable = R.string.signIn,
                     textDescription = R.string.clickable_text_description_register,

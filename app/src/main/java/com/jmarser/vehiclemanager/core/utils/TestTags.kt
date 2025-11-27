@@ -8,4 +8,13 @@ object TestTags {
     const val FORGOT_PASSWORD_BUTTON = "forgot_password_button"
     const val LOGIN_BUTTON = "login_button"
     const val REGISTER_LINK = "register_clickable_link"
+
+    const val ON_BACK_BUTTON_REGISTER = "on_back_button_register"
+    const val HEADER_REGISTER = "header_register"
+    const val NAME_INPUT_REGISTER = "name_input_field_register"
+    const val EMAIL_INPUT_REGISTER = "email_input_field_register"
+    const val PASSWORD_INPUT_REGISTER = "password_input_field_register"
+    const val CONFIRM_PASSWORD_INPUT_REGISTER = "confirm_password_input_field_register"
+    const val REGISTER_BUTTON = "register_button"
+    const val LOGIN_LINK = "login_clickable_link"
 }
