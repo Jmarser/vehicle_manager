@@ -224,7 +224,9 @@ fun RegisterScreenTablet(
             }
             Column(
                 modifier = Modifier
-                    .weight(1f),
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState())
+                    .imePadding(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
