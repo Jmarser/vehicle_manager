@@ -27,6 +27,17 @@
     <string name="semantic_button_login">Realizar inicio de sesión</string>
     <string name="img_header_auth_description">Logo de la app</string>
 
+    <string name="register_user">Registrar usuario</string>
+    <string name="user_name">Nombre de usuario</string>
+    <string name="semantic_user_name">Ingrese un nombre de usuario</string>
+    <string name="repit_password">Repita contraseña</string>
+    <string name="register">Registro</string>
+    <string name="semantic_button_register">Realizar registro de nuevo usuario</string>
+    <string name="have_account">¿Ya tienes cuenta?</string>
+    <string name="signIn">Inicia sesión</string>
+
     <string name="error_email_invalid">Email no válido</string>
     <string name="error_password_invalid">Contraseña no válida</string>
+    <string name="back_to_login">Volver a la pantalla de login</string>
+
 </resources>

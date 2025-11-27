@@ -1,9 +1,11 @@
 package com.jmarser.vehiclemanager.presentation.components
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Password
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
@@ -22,4 +24,6 @@ object AppImages {
     val ic_eye_open: ImageVector @Composable get() = Icons.Default.Visibility
     val ic_eye_hide: ImageVector @Composable get() = Icons.Default.VisibilityOff
     val ic_info: ImageVector @Composable get() = Icons.Default.Info
+    val ic_user: ImageVector @Composable get() = Icons.Default.Person
+    val ic_back: ImageVector @Composable get() = Icons.Default.ArrowBackIosNew
 }
