@@ -41,22 +41,34 @@ import com.jmarser.vehiclemanager.ui.theme.MyAppTheme
 
 @Composable
 fun RegisterScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToLogin: () -> Unit,
+    navigateToHome: () -> Unit
 ) {
 
     val orientation = rememberDeviceOrientation()
 
     when(orientation){
-        DeviceOrientation.Portrait -> RegisterScreenPhone(modifier = modifier)
+        DeviceOrientation.Portrait -> RegisterScreenPhone(
+            modifier = modifier,
+            navigateToHome = navigateToHome,
+            navigateToLogin = navigateToLogin
+        )
         DeviceOrientation.Landscape,
-                DeviceOrientation.Undefined -> RegisterScreenTablet(modifier = modifier)
+                DeviceOrientation.Undefined -> RegisterScreenTablet(
+            modifier = modifier,
+            navigateToHome = navigateToHome,
+            navigateToLogin = navigateToLogin
+        )
     }
 
 }
 
 @Composable
 fun RegisterScreenPhone(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToLogin: () -> Unit,
+    navigateToHome: () -> Unit
 ){
 
     Column (
@@ -76,7 +88,9 @@ fun RegisterScreenPhone(
             IconButton(
                 modifier = Modifier
                     .testTag(TestTags.ON_BACK_BUTTON_REGISTER),
-                onClick = { },
+                onClick = {
+                    navigateToLogin()
+                },
             ) {
                 Icon(
                     imageVector = AppImages.ic_back,
@@ -174,14 +188,18 @@ fun RegisterScreenPhone(
             textNormal = R.string.have_account,
             textClickable = R.string.signIn,
             textDescription = R.string.clickable_text_description_register,
-            onClick = {}
+            onClick = {
+                navigateToLogin()
+            }
         )
     }
 }
 
 @Composable
 fun RegisterScreenTablet(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToLogin: () -> Unit,
+    navigateToHome: () -> Unit
 ){
     Column (
         modifier = modifier
@@ -194,7 +212,9 @@ fun RegisterScreenTablet(
         ){
             IconButton(modifier = Modifier
                 .testTag(TestTags.ON_BACK_BUTTON_REGISTER),
-                onClick = { },
+                onClick = {
+                    navigateToLogin()
+                },
             ) {
                 Icon(
                     imageVector = AppImages.ic_back,
@@ -311,7 +331,9 @@ fun RegisterScreenTablet(
                     textNormal = R.string.have_account,
                     textClickable = R.string.signIn,
                     textDescription = R.string.clickable_text_description_register,
-                    onClick = {}
+                    onClick = {
+                        navigateToLogin()
+                    }
                 )
             }
         }
@@ -329,7 +351,11 @@ fun RegisterScreenPreview() {
     MyAppTheme(
         windowSizeClass = getSizeForPhone()
     ) {
-        RegisterScreenPhone(modifier = Modifier)
+        RegisterScreen(
+            modifier = Modifier,
+            navigateToLogin = {},
+            navigateToHome = {}
+        )
     }
 }
 
@@ -343,7 +369,11 @@ fun RegisterScreenPreview2() {
     MyAppTheme(
         windowSizeClass = getSizeForPhone()
     ) {
-        RegisterScreenPhone(modifier = Modifier)
+        RegisterScreen(
+            modifier = Modifier,
+            navigateToLogin = {},
+            navigateToHome = {}
+        )
     }
 }
 
@@ -357,6 +387,10 @@ fun RegisterScreenPreview3() {
     MyAppTheme(
         windowSizeClass = getSizeForTablet()
     ) {
-        RegisterScreenTablet(modifier = Modifier)
+        RegisterScreen(
+            modifier = Modifier,
+            navigateToLogin = {},
+            navigateToHome = {}
+        )
     }
 }
