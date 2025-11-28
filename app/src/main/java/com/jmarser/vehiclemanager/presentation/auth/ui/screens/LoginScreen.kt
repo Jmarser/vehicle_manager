@@ -45,21 +45,37 @@ import com.jmarser.vehiclemanager.ui.theme.MyAppTheme
 
 @Composable
 fun LoginScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToRegister: () -> Unit,
+    navigateToHome: () -> Unit,
+    navigateToForgotPassword: () -> Unit
 ) {
 
     val orientation = rememberDeviceOrientation()
 
     when (orientation) {
-        DeviceOrientation.Portrait -> LoginScreenPhone(modifier = modifier)
+        DeviceOrientation.Portrait -> LoginScreenPhone(
+            modifier = modifier,
+            navigateToHome = navigateToHome,
+            navigateToRegister = navigateToRegister,
+            navigateToForgotPassword = navigateToForgotPassword
+        )
         DeviceOrientation.Landscape,
-        DeviceOrientation.Undefined -> LoginScreenTablet(modifier = modifier)
+        DeviceOrientation.Undefined -> LoginScreenTablet(
+            modifier = modifier,
+            navigateToHome = navigateToHome,
+            navigateToRegister = navigateToRegister,
+            navigateToForgotPassword = navigateToForgotPassword
+        )
     }
 }
 
 @Composable
 fun LoginScreenPhone(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToHome: () -> Unit,
+    navigateToRegister: () -> Unit,
+    navigateToForgotPassword: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -129,7 +145,9 @@ fun LoginScreenPhone(
             TextButton(
                 modifier = Modifier
                     .testTag(TestTags.FORGOT_PASSWORD_BUTTON),
-                onClick = {}
+                onClick = {
+                    navigateToForgotPassword()
+                }
             ) {
                 Text(
                     text = stringResource(R.string.forgotten_yout_password),
@@ -160,14 +178,19 @@ fun LoginScreenPhone(
             textNormal = R.string.dont_have_account,
             textClickable = R.string.register_now,
             textDescription = R.string.clickable_text_description_login,
-            onClick = {}
+            onClick = {
+                navigateToRegister()
+            }
         )
     }
 }
 
 @Composable
 fun LoginScreenTablet(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToHome: () -> Unit,
+    navigateToRegister: () -> Unit,
+    navigateToForgotPassword: () -> Unit
 ) {
     Row(
         modifier = modifier
@@ -244,7 +267,9 @@ fun LoginScreenTablet(
                 TextButton(
                     modifier = Modifier
                         .testTag(TestTags.FORGOT_PASSWORD_BUTTON),
-                    onClick = {}
+                    onClick = {
+                        navigateToForgotPassword()
+                    }
                 ) {
                     Text(
                         text = stringResource(R.string.forgotten_yout_password),
@@ -275,7 +300,9 @@ fun LoginScreenTablet(
                 textNormal = R.string.dont_have_account,
                 textClickable = R.string.register_now,
                 textDescription = R.string.clickable_text_description_login,
-                onClick = {}
+                onClick = {
+                    navigateToRegister()
+                }
             )
         }
     }
@@ -292,7 +319,12 @@ fun LoginScreenPreview() {
     MyAppTheme(
         windowSizeClass = getSizeForPhone()
     ) {
-        LoginScreenPhone(modifier = Modifier)
+        LoginScreen(
+            modifier = Modifier,
+            navigateToHome = {},
+            navigateToRegister = {},
+            navigateToForgotPassword = {}
+        )
     }
 }
 
@@ -306,7 +338,12 @@ fun LoginScreenPreview3() {
     MyAppTheme(
         windowSizeClass = getSizeForPhone()
     ) {
-        LoginScreenTablet(modifier = Modifier)
+        LoginScreen(
+            modifier = Modifier,
+            navigateToHome = {},
+            navigateToRegister = {},
+            navigateToForgotPassword = {}
+        )
     }
 }
 
@@ -320,6 +357,11 @@ fun LoginScreenPreview2() {
     MyAppTheme(
         windowSizeClass = getSizeForTablet()
     ) {
-        LoginScreenTablet(modifier = Modifier)
+        LoginScreen(
+            modifier = Modifier,
+            navigateToHome = {},
+            navigateToRegister = {},
+            navigateToForgotPassword = {}
+        )
     }
 }

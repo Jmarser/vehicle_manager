@@ -41,7 +41,8 @@ import com.jmarser.vehiclemanager.ui.theme.MyAppTheme
 
 @Composable
 fun ForgotPasswordScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToLogin: () -> Unit
 ) {
 
     val semantic = stringResource(R.string.semantic_button_back)
@@ -50,12 +51,15 @@ fun ForgotPasswordScreen(
     when (orientation) {
         DeviceOrientation.Landscape -> ForgotPasswordScreenTablet(
             modifier = modifier,
-            semanticBackButton = semantic
+            semanticBackButton = semantic,
+            navigateToLogin = navigateToLogin
         )
+
         DeviceOrientation.Portrait,
         DeviceOrientation.Undefined -> ForgotPasswordScreenPhone(
             modifier = modifier,
-            semanticBackButton = semantic
+            semanticBackButton = semantic,
+            navigateToLogin = navigateToLogin
         )
     }
 }
@@ -63,8 +67,9 @@ fun ForgotPasswordScreen(
 @Composable
 fun ForgotPasswordScreenPhone(
     modifier: Modifier = Modifier,
-    semanticBackButton: String
-){
+    semanticBackButton: String,
+    navigateToLogin: () -> Unit
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -84,7 +89,9 @@ fun ForgotPasswordScreenPhone(
                         contentDescription = semanticBackButton
                     }
                     .testTag(TestTags.ON_BACK_BUTTON_FORGOT),
-                onClick = { }
+                onClick = {
+                    navigateToLogin()
+                }
             ) {
                 Icon(
                     imageVector = AppImages.ic_back,
@@ -145,24 +152,27 @@ fun ForgotPasswordScreenPhone(
 @Composable
 fun ForgotPasswordScreenTablet(
     modifier: Modifier = Modifier,
-    semanticBackButton: String
-){
-    Column (
+    semanticBackButton: String,
+    navigateToLogin: () -> Unit
+) {
+    Column(
         modifier = modifier
             .fillMaxSize()
             .systemBarsPadding(),
-    ){
-        Row (
+    ) {
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-        ){
+        ) {
             IconButton(
                 modifier = Modifier
                     .semantics {
                         contentDescription = semanticBackButton
                     }
                     .testTag(TestTags.ON_BACK_BUTTON_FORGOT),
-                onClick = { }
+                onClick = {
+                    navigateToLogin()
+                }
             ) {
                 Icon(
                     imageVector = AppImages.ic_back,
@@ -171,32 +181,33 @@ fun ForgotPasswordScreenTablet(
             }
         }
 
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = appDimens.paddingLarge),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
-        ){
-            Column (
+        ) {
+            Column(
                 modifier = Modifier
                     .weight(1f),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
-            ){
-                HeaderAuth(modifier = Modifier
-                    .testTag(TestTags.HEADER_REGISTER),
+            ) {
+                HeaderAuth(
+                    modifier = Modifier
+                        .testTag(TestTags.HEADER_REGISTER),
                     title = R.string.register_user,
                     logo = AppImages.logo()
                 )
             }
 
-            Column (
+            Column(
                 modifier = Modifier
                     .weight(1f),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
-            ){
+            ) {
                 TextInputField(
                     modifier = Modifier
                         .padding(horizontal = appDimens.paddingMedium)
@@ -249,7 +260,7 @@ fun ForgotPasswordScreenPreview() {
     MyAppTheme(
         windowSizeClass = getSizeForPhone()
     ) {
-        ForgotPasswordScreen(modifier = Modifier)
+        ForgotPasswordScreen(modifier = Modifier, navigateToLogin = {})
     }
 }
 
@@ -263,7 +274,7 @@ fun ForgotPasswordScreenPreview2() {
     MyAppTheme(
         windowSizeClass = getSizeForPhone()
     ) {
-        ForgotPasswordScreen(modifier = Modifier)
+        ForgotPasswordScreen(modifier = Modifier, navigateToLogin = {})
     }
 }
 
@@ -277,6 +288,6 @@ fun ForgotPasswordScreenPreview3() {
     MyAppTheme(
         windowSizeClass = getSizeForTablet()
     ) {
-        ForgotPasswordScreen(modifier = Modifier)
+        ForgotPasswordScreen(modifier = Modifier, navigateToLogin = {})
     }
 }
