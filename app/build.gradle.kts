@@ -42,6 +42,9 @@ android {
     buildFeatures {
         compose = true
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "2.2.21"
+    }
 
     packaging {
         resources {
@@ -54,7 +57,10 @@ android {
                 "META-INF/NOTICE.txt",
                 "META-INF/LICENSE",
                 "META-INF/LICENSE.txt",
-                "META-INF/ASL2.0"
+                "META-INF/ASL2.0",
+                "META-INF/NOTICE.md",
+                "META-INF/LICENSE.md",
+                "META-INF/LICENSE-notice.md"
             )
         }
     }
@@ -66,11 +72,7 @@ dependencies {
     implementation(libs.androidx.foundation)
     implementation(libs.material3)
     implementation(libs.androidx.junit.ktx)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
+
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
@@ -115,24 +117,23 @@ dependencies {
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.arch.core.testing)
     testImplementation(libs.turbine)
-
-    // Optionally: core test ktx for JVM unit tests that rely on androidx.test core
     testImplementation(libs.androidx.test.core.ktx)
+    testImplementation(kotlin("test"))
 
     // --- Android instrumented tests (androidTest) ---
-    androidTestImplementation(platform(libs.androidx.compose.bom)) // Compose BOM for test artifacts
-    androidTestImplementation(libs.compose.ui.test.junit4) // Compose UI tests (managed by BOM)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.androidx.test.rules)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.hilt.android.testing)
+    androidTestImplementation(libs.mockk.android)
 
     // Hilt testing (annotation processor + testing artifact)
-    androidTestImplementation(libs.hilt.android.testing)
     kaptAndroidTest(libs.hilt.android.compiler) // si usas kapt (o ksp), para generación de Hilt en tests
 
-    // If you use instrumentation unit tests requiring Robolectric-like features:
-    // (robolectric is usually used in testImplementation (JVM tests), not androidTest)
-    testImplementation(kotlin("test"))
 }
 
 kapt {

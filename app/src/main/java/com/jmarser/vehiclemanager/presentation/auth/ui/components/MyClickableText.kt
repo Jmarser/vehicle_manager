@@ -16,10 +16,12 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import com.jmarser.vehiclemanager.R
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForPhone
+import com.jmarser.vehiclemanager.core.utils.TestTags
 import com.jmarser.vehiclemanager.ui.theme.MyAppTheme
 
 @Composable
@@ -49,6 +51,7 @@ fun MyClickableText(
         TextButton(
             modifier = Modifier
                 .semantics {
+                    testTag = TestTags.CLICKABLE_TEXT_COMPONENT
                     role = Role.Button
                     contentDescription = descriptionText
                 },
