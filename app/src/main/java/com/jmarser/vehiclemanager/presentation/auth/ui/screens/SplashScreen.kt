@@ -35,7 +35,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.navigation.NavHostController
 import com.jmarser.vehiclemanager.R
 import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceLarge
 import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceMedium
@@ -44,7 +43,6 @@ import com.jmarser.vehiclemanager.core.presentation.ui.appDimens
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForTablet
 import com.jmarser.vehiclemanager.core.presentation.ui.rememberDeviceOrientation
 import com.jmarser.vehiclemanager.core.utils.TestTags
-import com.jmarser.vehiclemanager.presentation.auth.ui.navigation.AuthNavGraph
 import com.jmarser.vehiclemanager.presentation.components.AppImages
 import com.jmarser.vehiclemanager.ui.theme.MyAppTheme
 import kotlinx.coroutines.delay

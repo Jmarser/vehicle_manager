@@ -46,7 +46,6 @@ coroutinesTest = "1.10.2"         # kotlinx-coroutines-test (compatible con coro
 archCoreTesting = "2.2.0"         # androidx.arch.core:core-testing (estable)
 turbine = "1.2.1"                 # app.cash.turbine para testing de Flows
 hiltTesting = "2.57.2"            # hilt-android-testing (misma versión que tu Hilt)
-kotlinxSerialization = "1.9.0"    # ya tenías esto; lo dejo si lo necesitas para tests
 junit = "4.13.2"
 junitVersion = "1.3.0"
 junitKtx = "1.3.0"
@@ -115,6 +114,7 @@ robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "
 
 # Mocking / helpers
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
 androidx-arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "archCoreTesting" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
