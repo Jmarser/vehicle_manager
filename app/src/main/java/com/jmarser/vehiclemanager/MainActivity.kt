@@ -25,7 +25,9 @@ import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForPhone
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForTablet
 import com.jmarser.vehiclemanager.presentation.navigation.AppNavGraph
 import com.jmarser.vehiclemanager.ui.theme.MyAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -35,6 +35,7 @@
     <string name="semantic_button_register">Realizar registro de nuevo usuario</string>
     <string name="have_account">¿Ya tienes cuenta?</string>
     <string name="signIn">Inicia sesión</string>
+    <string name="back_to_login">Volver a la pantalla de login</string>
 
     <string name="forgot_password">Recuperar contraseña</string>
     <string name="message_screen_forgot">Intruduce el correo electrónico que usastes al registrarte. Te enviaremos un enlace para restablecer tu contraseña.</string>
@@ -47,6 +48,14 @@
 
     <string name="error_email_invalid">Email no válido</string>
     <string name="error_password_invalid">Contraseña no válida</string>
-    <string name="back_to_login">Volver a la pantalla de login</string>
+    <string name="error_name_user_not_empty">El nombre no puede estar vacío</string>
+    <string name="error_password_not_match">Las contraseñas con coinciden</string>
+
+    <string name="error_uppercase_required">Debe contener una mayúscula</string>
+    <string name="error_lowercase_required">Debe contener una minúscula</string>
+    <string name="error_number_required">Debe contener un número</string>
+    <string name="error_special_char_required">Debe contener un caracter especial</string>
+    <string name="error_min_length_required">Debe ser de al menos 6 caracteres de largo</string>
+    <string name="error_not_spaces_required">No debe contener espacios</string>
 
 </resources>
