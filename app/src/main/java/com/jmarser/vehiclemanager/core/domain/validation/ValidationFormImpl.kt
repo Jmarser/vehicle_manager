@@ -15,8 +15,13 @@ class ValidationFormImpl: ValidationForm {
     }
 
     override fun validateEmail(email: String): Boolean {
-        // Esta función falla en los test
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        val emailPattern = Regex(
+            "^[A-Za-z0-9._%+-]+@" +
+                    "(?!.*\\.\\.)" +
+                    "[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*" +
+                    "\\.[A-Za-z]{2,}$"
+        )
+        return emailPattern.matches(email)
     }
 
     override fun validatePassword(password: String): Boolean {
