@@ -1,6 +1,7 @@
 package com.jmarser.vehiclemanager.domain.repository.auth
 
 import com.jmarser.vehiclemanager.data.model.AuthCredentialsData
+import com.jmarser.vehiclemanager.data.model.LoginData
 import com.jmarser.vehiclemanager.domain.model.User
 import kotlinx.coroutines.flow.Flow
 
@@ -12,6 +13,8 @@ import kotlinx.coroutines.flow.Flow
  */
  
 interface AuthRepository {
+
+    fun login(loginData: LoginData): Flow<Result<User>>
 
     fun register(authCredentials: AuthCredentialsData): Flow<Result<User>>
 }

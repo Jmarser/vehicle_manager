@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.jmarser.vehiclemanager.R
 import com.jmarser.vehiclemanager.core.utils.ResourceProvider
 import com.jmarser.vehiclemanager.domain.useCase.ValidationFormUseCase
+import com.jmarser.vehiclemanager.domain.useCase.auth.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,6 +13,10 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,7 +31,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val validateForm: ValidationFormUseCase,
-    private val resource: ResourceProvider
+    private val resource: ResourceProvider,
+    private val loginUseCase: LoginUseCase
 ) : ViewModel() {
 
     private val _formState = MutableStateFlow(LoginFormState())
@@ -84,19 +90,33 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun clearForm(){
+    private fun clearForm() {
         _formState.value = LoginFormState()
     }
 
-    private fun emitEffect(effect: LoginEffect){
+    private fun emitEffect(effect: LoginEffect) {
         viewModelScope.launch {
             _uiEffect.emit(effect)
         }
     }
 
-    private fun tryToLogin(){
-
+    private fun tryToLogin() {
+        loginUseCase(_formState.value.email, _formState.value.password)
+            .onStart {
+                _formState.update { it.copy(isLoading = true) }
+            }
+            .onEach { result ->
+                clearForm()
+                _formState.update { it.copy(isLoading = false) }
+                result.onSuccess { data ->
+                    emitEffect(LoginEffect.ShowToast(resource.getString(R.string.login_successfull)))
+                }
+                    .onFailure { error ->
+                        emitEffect(LoginEffect.ShowToast(resource.getString(R.string.error_login)))
+                    }
+            }.catch {
+                clearForm()
+                emitEffect(LoginEffect.ShowToast(resource.getString(R.string.error_unexpected_login)))
+            }.launchIn(viewModelScope)
     }
-
-
 }
