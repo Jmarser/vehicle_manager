@@ -1,16 +1,21 @@
 <resources>
+    <!--=========================================-->
+    <!--                GLOBALES                 -->
+    <!--=========================================-->
     <string name="app_name">Vehicle manager</string>
+    <string name="developer_name">by\nJmarser</string>
+    <string name="img_header_auth_description">Logo de la app</string>
+    <string name="back_to_login">Volver a la pantalla de login</string>
+    <string name="slogan_app">La gestión inteligente de tus vehículos.</string>
 
-    <!-- PANTALLAS AUTH -->
-    <string name="login_sesion">Inicio de sesión</string>
+    <!--=========================================-->
+    <!--            PANTALLAS AUTH               -->
+    <!--=========================================-->
+    <!--                 COMUNES                 -->
     <string name="email">Email</string>
     <string name="password">Contraseña</string>
     <string name="password_hide">Ocultar contraseña</string>
     <string name="password_show">Mostrar contraseña</string>
-    <string name="login">Iniciar sesión</string>
-    <string name="dont_have_account">¿No tienes cuenta?</string>
-    <string name="register_now">regístrate</string>
-    <string name="forgotten_yout_password">¿Has olvidado la contraseña?</string>
     <string name="email_placeholder">email@email.com</string>
     <string name="semantic_email">Introduce tu dirección de correo electrónico</string>
     <string name="semantic_password">Introduzca su contraseña de inicio de sesión</string>
@@ -21,12 +26,32 @@
     <string name="info_lower_case">* Una letra minúscula</string>
     <string name="info_one_number">* Al menos un número</string>
     <string name="info_caracter_special">* Un carácter especial</string>
-    <string name="fogotten_your_password">¿Has olvidado la contraseña?</string>
-    <string name="clickable_text_description_login">No tienes cuenta, navegar hacia la pantalla de registro</string>
-    <string name="clickable_text_description_register">Ya tienes cuenta, navegar hacia la pantalla de login</string>
-    <string name="semantic_button_login">Realizar inicio de sesión</string>
-    <string name="img_header_auth_description">Logo de la app</string>
+    <string name="semantic_button_back">Regresar a la pantalla anterior</string>
 
+    <string name="error_email_invalid">Email no válido</string>
+    <string name="error_password_invalid">Contraseña no válida</string>
+    <string name="error_uppercase_required">Debe contener una mayúscula</string>
+    <string name="error_lowercase_required">Debe contener una minúscula</string>
+    <string name="error_number_required">Debe contener un número</string>
+    <string name="error_special_char_required">Debe contener un caracter especial</string>
+    <string name="error_min_length_required">Debe ser de al menos 6 caracteres de largo</string>
+    <string name="error_not_spaces_required">No debe contener espacios</string>
+
+
+    <!--                  LOGIN                  -->
+    <string name="login_sesion">Inicio de sesión</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="dont_have_account">¿No tienes cuenta?</string>
+    <string name="register_now">regístrate</string>
+    <string name="clickable_text_description_login">No tienes cuenta, navegar hacia la pantalla de registro</string>
+    <string name="fogotten_your_password">¿Has olvidado la contraseña?</string>
+    <string name="semantic_button_login">Realizar inicio de sesión</string>
+    <string name="login_successfull">Inicio de sesión correcto</string>
+    <string name="error_login">Error al iniciar sesión</string>
+    <string name="error_unexpected_login">Error inesperado al inicar sesión</string>
+
+    <!--                REGISTRO                 -->
+    <string name="clickable_text_description_register">Ya tienes cuenta, navegar hacia la pantalla de login</string>
     <string name="register_user">Registrar usuario</string>
     <string name="user_name">Nombre de usuario</string>
     <string name="semantic_user_name">Ingrese un nombre de usuario</string>
@@ -35,31 +60,21 @@
     <string name="semantic_button_register">Realizar registro de nuevo usuario</string>
     <string name="have_account">¿Ya tienes cuenta?</string>
     <string name="signIn">Inicia sesión</string>
-    <string name="back_to_login">Volver a la pantalla de login</string>
+    <string name="register_user_successfully">Registro completado con éxito</string>
 
-    <string name="forgot_password">Recuperar contraseña</string>
-    <string name="message_screen_forgot">Intruduce el correo electrónico que usastes al registrarte. Te enviaremos un enlace para restablecer tu contraseña.</string>
-    <string name="send">Enviar</string>
-    <string name="semantic_button_back">Regresar a la pantalla anterior</string>
-    <string name="semantic_button_forgot">Solicitar restablecer contraseña</string>
-
-    <string name="slogan_app">La gestión inteligente de tus vehículos.</string>
-    <string name="developer_name">by\nJmarser</string>
-
-    <string name="error_email_invalid">Email no válido</string>
-    <string name="error_password_invalid">Contraseña no válida</string>
+    <string name="error_register_user">Error al registrar el usario</string>
+    <string name="error_unexpected_register">Error inesperado en el registro</string>
     <string name="error_name_user_not_empty">El nombre no puede estar vacío</string>
     <string name="error_password_not_match">Las contraseñas con coinciden</string>
 
-    <string name="error_uppercase_required">Debe contener una mayúscula</string>
-    <string name="error_lowercase_required">Debe contener una minúscula</string>
-    <string name="error_number_required">Debe contener un número</string>
-    <string name="error_special_char_required">Debe contener un caracter especial</string>
-    <string name="error_min_length_required">Debe ser de al menos 6 caracteres de largo</string>
-    <string name="error_not_spaces_required">No debe contener espacios</string>
+    <!--             FORGOT PASSWORD             -->
+    <string name="forgot_password">Recuperar contraseña</string>
+    <string name="message_screen_forgot">Intruduce el correo electrónico que usastes al registrarte. Te enviaremos un enlace para restablecer tu contraseña.</string>
+    <string name="send">Enviar</string>
+    <string name="semantic_button_forgot">Solicitar restablecer contraseña</string>
+    <string name="reset_requested">Restablecimiento solicitado</string>
+    <string name="error_requesting_reset">Error al solicitar el restablecimiento</string>
+    <string name="error_unexpected_request">Error inesperado en la solicitud</string>
 
-    <string name="register_user_successfully">Registro completado con éxito</string>
-    <string name="error_unexpected_register">Error inesperado en el registro</string>
-    <string name="error_register_user">Error al registrar el usario</string>
 
 </resources>

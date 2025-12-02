@@ -150,7 +150,7 @@ fun LoginScreenPhone(
                 }
             ) {
                 Text(
-                    text = stringResource(R.string.forgotten_yout_password),
+                    text = stringResource(R.string.fogotten_your_password),
                     textAlign = TextAlign.End,
                     style = MaterialTheme.typography.labelMedium
                 )
@@ -272,7 +272,7 @@ fun LoginScreenTablet(
                     }
                 ) {
                     Text(
-                        text = stringResource(R.string.forgotten_yout_password),
+                        text = stringResource(R.string.fogotten_your_password),
                         textAlign = TextAlign.End,
                         style = MaterialTheme.typography.labelMedium
                     )
