@@ -23,9 +23,8 @@ import javax.inject.Singleton
 class AuthRepositoryImpl @Inject constructor(
     private val authDataSource: AuthRemoteDataSource
 ) : AuthRepository {
-    override fun login(loginData: LoginData): Flow<Result<User>> {
-        TODO("Not yet implemented")
-    }
+
+    override fun login(loginData: LoginData): Flow<Result<User>> = authDataSource.login(loginData).mapResult { it.toDomain() }
 
     override fun register(authCredentials: AuthCredentialsData): Flow<Result<User>> = authDataSource.register(authCredentials).mapResult { it.toDomain() }
 }

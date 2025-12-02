@@ -194,8 +194,8 @@ fun LoginScreenPhone(
             onClick = {
                 viewModel.onEvent(LoginEvent.OnLoginClick)
             },
-            isEnabled = false,
-            displayProgressbar = false,
+            isEnabled = formState.isButtonEnabled,
+            displayProgressbar = formState.isLoading,
             semanticDescription = R.string.semantic_button_login
         )
 

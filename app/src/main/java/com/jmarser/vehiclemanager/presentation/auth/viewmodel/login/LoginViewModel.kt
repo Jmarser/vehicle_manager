@@ -109,7 +109,7 @@ class LoginViewModel @Inject constructor(
                 clearForm()
                 _formState.update { it.copy(isLoading = false) }
                 result.onSuccess { data ->
-                    emitEffect(LoginEffect.ShowToast(resource.getString(R.string.login_successfull)))
+                    emitEffect(LoginEffect.ShowToast("${resource.getString(R.string.login_successfull )} para ${data.name}"))
                 }
                     .onFailure { error ->
                         emitEffect(LoginEffect.ShowToast(resource.getString(R.string.error_login)))
