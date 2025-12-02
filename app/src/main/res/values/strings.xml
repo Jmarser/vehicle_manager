@@ -58,4 +58,8 @@
     <string name="error_min_length_required">Debe ser de al menos 6 caracteres de largo</string>
     <string name="error_not_spaces_required">No debe contener espacios</string>
 
+    <string name="register_user_successfully">Registro completado con éxito</string>
+    <string name="error_unexpected_register">Error inesperado en el registro</string>
+    <string name="error_register_user">Error al registrar el usario</string>
+
 </resources>

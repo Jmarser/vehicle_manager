@@ -3,6 +3,7 @@ package com.jmarser.vehiclemanager.presentation.auth.viewmodel.register
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jmarser.vehiclemanager.R
+import com.jmarser.vehiclemanager.core.utils.ResourceProvider
 import com.jmarser.vehiclemanager.domain.useCase.ValidationFormUseCase
 import com.jmarser.vehiclemanager.domain.useCase.auth.RegisterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,7 +31,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val validationForm: ValidationFormUseCase,
-    private val registerUseCase: RegisterUseCase
+    private val registerUseCase: RegisterUseCase,
+    private val resource: ResourceProvider
 ): ViewModel(){
 
     private val _formState = MutableStateFlow(RegisterFormState())
@@ -130,13 +132,13 @@ class RegisterViewModel @Inject constructor(
                 _formState.update { it.copy(isLoading = false) }
                 clearForm()
                 result.onSuccess { data ->
-                    _uiEffect.emit(RegisterEffect.ShowToast("Registro completado con éxito"))
+                    _uiEffect.emit(RegisterEffect.ShowToast(resource.getString(R.string.register_user_successfully)))
                 }.onFailure { error ->
-                    _uiEffect.emit(RegisterEffect.ShowToast("Error en el registro: ${error.message}"))
+                    _uiEffect.emit(RegisterEffect.ShowToast(resource.getString(R.string.error_register_user)))
                 }
             }.catch {
                 clearForm()
-                _uiEffect.emit(RegisterEffect.ShowToast("Error inesperado en el registro"))
+                _uiEffect.emit(RegisterEffect.ShowToast(resource.getString(R.string.error_unexpected_register)))
             }.launchIn(viewModelScope)
     }
 }
