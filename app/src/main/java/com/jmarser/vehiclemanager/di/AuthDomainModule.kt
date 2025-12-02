@@ -1,6 +1,7 @@
 package com.jmarser.vehiclemanager.di
 
 import com.jmarser.vehiclemanager.domain.repository.auth.AuthRepository
+import com.jmarser.vehiclemanager.domain.useCase.auth.LoginUseCase
 import com.jmarser.vehiclemanager.domain.useCase.auth.RegisterUseCase
 import dagger.Module
 import dagger.Provides
@@ -11,6 +12,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AuthDomainModule {
+
+    @Provides
+    @Singleton
+    fun provideLoginUseCase(repository: AuthRepository): LoginUseCase = LoginUseCase(repository)
 
     @Provides
     @Singleton

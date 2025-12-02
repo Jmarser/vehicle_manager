@@ -1,6 +1,7 @@
 package com.jmarser.vehiclemanager.data.dataSource
 
 import com.jmarser.vehiclemanager.data.model.AuthCredentialsData
+import com.jmarser.vehiclemanager.data.model.LoginData
 import com.jmarser.vehiclemanager.data.model.UserData
 import kotlinx.coroutines.flow.Flow
 
@@ -12,6 +13,8 @@ import kotlinx.coroutines.flow.Flow
  */
 
 interface AuthRemoteDataSource {
+
+    fun login(loginData: LoginData): Flow<Result<UserData>>
 
     fun register( authCredentials: AuthCredentialsData): Flow<Result<UserData>>
 }
