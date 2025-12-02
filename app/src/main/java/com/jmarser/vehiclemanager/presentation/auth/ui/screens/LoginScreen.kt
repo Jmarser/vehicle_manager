@@ -1,6 +1,7 @@
 package com.jmarser.vehiclemanager.presentation.auth.ui.screens
 
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,8 +16,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -24,6 +28,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jmarser.vehiclemanager.R
 import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceLarge
 import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceNormal
@@ -35,6 +41,10 @@ import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForTablet
 import com.jmarser.vehiclemanager.core.presentation.ui.rememberDeviceOrientation
 import com.jmarser.vehiclemanager.core.utils.TestTags
 import com.jmarser.vehiclemanager.presentation.auth.ui.components.MyClickableText
+import com.jmarser.vehiclemanager.presentation.auth.viewmodel.login.LoginEffect
+import com.jmarser.vehiclemanager.presentation.auth.viewmodel.login.LoginEvent
+import com.jmarser.vehiclemanager.presentation.auth.viewmodel.login.LoginFormState
+import com.jmarser.vehiclemanager.presentation.auth.viewmodel.login.LoginViewModel
 import com.jmarser.vehiclemanager.presentation.components.AppImages
 import com.jmarser.vehiclemanager.presentation.components.AppImages.logo
 import com.jmarser.vehiclemanager.presentation.components.ButtonWithPb
@@ -46,26 +56,40 @@ import com.jmarser.vehiclemanager.ui.theme.MyAppTheme
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
+    viewModel: LoginViewModel = hiltViewModel(),
     navigateToRegister: () -> Unit,
     navigateToHome: () -> Unit,
     navigateToForgotPassword: () -> Unit
 ) {
 
+    val context = LocalContext.current
+    val formState by viewModel.formState.collectAsStateWithLifecycle()
     val orientation = rememberDeviceOrientation()
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEffect.collect { effect ->
+            when(effect){
+                LoginEffect.NavigateToHome -> navigateToHome()
+                LoginEffect.NavigateToForgotPassword -> navigateToForgotPassword()
+                LoginEffect.NavigateToRegister -> navigateToRegister()
+                is LoginEffect.ShowToast -> {
+                    Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
     when (orientation) {
         DeviceOrientation.Portrait -> LoginScreenPhone(
             modifier = modifier,
-            navigateToHome = navigateToHome,
-            navigateToRegister = navigateToRegister,
-            navigateToForgotPassword = navigateToForgotPassword
+            viewModel = viewModel,
+            formState = formState
         )
         DeviceOrientation.Landscape,
         DeviceOrientation.Undefined -> LoginScreenTablet(
             modifier = modifier,
-            navigateToHome = navigateToHome,
-            navigateToRegister = navigateToRegister,
-            navigateToForgotPassword = navigateToForgotPassword
+            viewModel = viewModel,
+            formState = formState
         )
     }
 }
@@ -73,9 +97,8 @@ fun LoginScreen(
 @Composable
 fun LoginScreenPhone(
     modifier: Modifier = Modifier,
-    navigateToHome: () -> Unit,
-    navigateToRegister: () -> Unit,
-    navigateToForgotPassword: () -> Unit
+    viewModel: LoginViewModel,
+    formState: LoginFormState,
 ) {
     Column(
         modifier = modifier
@@ -101,16 +124,18 @@ fun LoginScreenPhone(
             modifier = Modifier
                 .padding(horizontal = appDimens.paddingMedium)
                 .testTag(TestTags.EMAIL_INPUT_LOGIN),
-            value = "",
-            onValueChange = {},
+            value = formState.email,
+            onValueChange = {
+                viewModel.onEvent(LoginEvent.SetEmail(it))
+            },
             placeholder = R.string.email_placeholder,
             label = R.string.email,
             semanticText = R.string.semantic_email,
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next,
-            isError = false,
-            textError = R.string.error_email_invalid,
-            leadingIcon = AppImages.ic_email
+            isError = (formState.isEmailValid == false),
+            textError = formState.emailErrorMessage,
+            leadingIcon = AppImages.ic_email,
         )
 
         VerticalSpaceNormal()
@@ -119,14 +144,16 @@ fun LoginScreenPhone(
             modifier = Modifier
                 .padding(horizontal = appDimens.paddingMedium)
                 .testTag(TestTags.PASSWORD_INPUT_LOGIN),
-            value = "",
-            onValueChange = {},
+            value = formState.password,
+            onValueChange = {
+                viewModel.onEvent(LoginEvent.SetPassword(it))
+            },
             label = R.string.password,
             semanticText = R.string.semantic_password,
             keyboardType = KeyboardType.Password,
             imeAction = ImeAction.Next,
-            isError = false,
-            textError = R.string.error_password_invalid,
+            isError = (formState.isPasswordValid == false),
+            textError = formState.passwordErrorMessage,
             leadingIcon = AppImages.ic_password,
             iconShow = AppImages.ic_eye_open,
             iconHide = AppImages.ic_eye_hide,
@@ -146,7 +173,7 @@ fun LoginScreenPhone(
                 modifier = Modifier
                     .testTag(TestTags.FORGOT_PASSWORD_BUTTON),
                 onClick = {
-                    navigateToForgotPassword()
+                    viewModel.onEvent(LoginEvent.OnForgotPasswordClick)
                 }
             ) {
                 Text(
@@ -164,7 +191,9 @@ fun LoginScreenPhone(
                 .testTag(TestTags.LOGIN_BUTTON),
             label = R.string.login,
             value = Unit,
-            onClick = {},
+            onClick = {
+                viewModel.onEvent(LoginEvent.OnLoginClick)
+            },
             isEnabled = false,
             displayProgressbar = false,
             semanticDescription = R.string.semantic_button_login
@@ -179,7 +208,7 @@ fun LoginScreenPhone(
             textClickable = R.string.register_now,
             textDescription = R.string.clickable_text_description_login,
             onClick = {
-                navigateToRegister()
+                viewModel.onEvent(LoginEvent.OnRegisterClick)
             }
         )
     }
@@ -188,9 +217,8 @@ fun LoginScreenPhone(
 @Composable
 fun LoginScreenTablet(
     modifier: Modifier = Modifier,
-    navigateToHome: () -> Unit,
-    navigateToRegister: () -> Unit,
-    navigateToForgotPassword: () -> Unit
+    viewModel: LoginViewModel,
+    formState: LoginFormState,
 ) {
     Row(
         modifier = modifier
@@ -223,16 +251,18 @@ fun LoginScreenTablet(
                 modifier = Modifier
                     .padding(horizontal = appDimens.paddingMedium)
                     .testTag(TestTags.EMAIL_INPUT_LOGIN),
-                value = "",
-                onValueChange = {},
+                value = formState.email,
+                onValueChange = {
+                    viewModel.onEvent(LoginEvent.SetEmail(it))
+                },
                 placeholder = R.string.email_placeholder,
                 label = R.string.email,
                 semanticText = R.string.semantic_email,
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next,
-                isError = false,
-                textError = R.string.error_email_invalid,
-                leadingIcon = AppImages.ic_email
+                isError = (formState.isEmailValid == false),
+                textError = formState.emailErrorMessage,
+                leadingIcon = AppImages.ic_email,
             )
 
             VerticalSpaceNormal()
@@ -241,14 +271,16 @@ fun LoginScreenTablet(
                 modifier = Modifier
                     .padding(horizontal = appDimens.paddingMedium)
                     .testTag(TestTags.PASSWORD_INPUT_LOGIN),
-                value = "",
-                onValueChange = {},
+                value = formState.password,
+                onValueChange = {
+                    viewModel.onEvent(LoginEvent.SetPassword(it))
+                },
                 label = R.string.password,
                 semanticText = R.string.semantic_password,
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Next,
-                isError = false,
-                textError = R.string.error_password_invalid,
+                isError = (formState.isPasswordValid == false),
+                textError = formState.passwordErrorMessage,
                 leadingIcon = AppImages.ic_password,
                 iconShow = AppImages.ic_eye_open,
                 iconHide = AppImages.ic_eye_hide,
@@ -268,7 +300,7 @@ fun LoginScreenTablet(
                     modifier = Modifier
                         .testTag(TestTags.FORGOT_PASSWORD_BUTTON),
                     onClick = {
-                        navigateToForgotPassword()
+                        viewModel.onEvent(LoginEvent.OnForgotPasswordClick)
                     }
                 ) {
                     Text(
@@ -286,7 +318,9 @@ fun LoginScreenTablet(
                     .testTag(TestTags.LOGIN_BUTTON),
                 label = R.string.login,
                 value = Unit,
-                onClick = {},
+                onClick = {
+                    viewModel.onEvent(LoginEvent.OnLoginClick)
+                },
                 isEnabled = false,
                 displayProgressbar = false,
                 semanticDescription = R.string.semantic_button_login
@@ -301,7 +335,7 @@ fun LoginScreenTablet(
                 textClickable = R.string.register_now,
                 textDescription = R.string.clickable_text_description_login,
                 onClick = {
-                    navigateToRegister()
+                    viewModel.onEvent(LoginEvent.OnRegisterClick)
                 }
             )
         }
