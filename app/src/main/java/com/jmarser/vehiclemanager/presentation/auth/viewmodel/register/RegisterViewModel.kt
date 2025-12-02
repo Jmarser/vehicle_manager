@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jmarser.vehiclemanager.R
 import com.jmarser.vehiclemanager.domain.useCase.ValidationFormUseCase
+import com.jmarser.vehiclemanager.domain.useCase.auth.RegisterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,6 +12,10 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,7 +29,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val validationForm: ValidationFormUseCase
+    private val validationForm: ValidationFormUseCase,
+    private val registerUseCase: RegisterUseCase
 ): ViewModel(){
 
     private val _formState = MutableStateFlow(RegisterFormState())
@@ -111,9 +117,26 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
+    private fun clearForm(){
+        _formState.value = RegisterFormState()
+    }
+
     private fun tryToRegister(){
-        viewModelScope.launch {
-            _uiEffect.emit(RegisterEffect.ShowToast("Solicitado registro"))
-        }
+        registerUseCase(_formState.value.name, _formState.value.email, _formState.value.password)
+            .onStart {
+                _formState.update { it.copy(isLoading = true) }
+            }
+            .onEach { result ->
+                _formState.update { it.copy(isLoading = false) }
+                clearForm()
+                result.onSuccess { data ->
+                    _uiEffect.emit(RegisterEffect.ShowToast("Registro completado con éxito"))
+                }.onFailure { error ->
+                    _uiEffect.emit(RegisterEffect.ShowToast("Error en el registro: ${error.message}"))
+                }
+            }.catch {
+                clearForm()
+                _uiEffect.emit(RegisterEffect.ShowToast("Error inesperado en el registro"))
+            }.launchIn(viewModelScope)
     }
 }
