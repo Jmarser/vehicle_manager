@@ -36,4 +36,6 @@ constructor(
         authDataSource.forgotPassword(email)
 
     override suspend fun getCurrentUser(): User? = authDataSource.getCurrentUser()?.toDomain()
+
+    override suspend fun logout() = authDataSource.logout()
 }

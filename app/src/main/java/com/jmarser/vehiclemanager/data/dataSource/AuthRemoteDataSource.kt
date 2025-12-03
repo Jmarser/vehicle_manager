@@ -20,4 +20,6 @@ interface AuthRemoteDataSource {
     fun forgotPassword(email: String): Flow<Result<Unit>>
 
     suspend fun getCurrentUser(): UserData?
+
+    suspend fun logout()
 }

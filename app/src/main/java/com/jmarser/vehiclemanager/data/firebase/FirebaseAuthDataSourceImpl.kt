@@ -75,4 +75,6 @@ class FirebaseAuthDataSourceImpl
             }
 
     override suspend fun getCurrentUser(): UserData? = firebaseAuth.currentUser?.toUserData()
+
+    override suspend fun logout() = firebaseAuth.signOut()
 }
