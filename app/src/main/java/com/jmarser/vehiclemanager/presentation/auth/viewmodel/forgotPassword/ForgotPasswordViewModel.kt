@@ -1,10 +1,12 @@
 package com.jmarser.vehiclemanager.presentation.auth.viewmodel.forgotPassword
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.jmarser.vehiclemanager.R
 import com.jmarser.vehiclemanager.core.utils.ResourceProvider
 import com.jmarser.vehiclemanager.domain.useCase.ValidationFormUseCase
+import com.jmarser.vehiclemanager.domain.useCase.auth.ForgotPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,6 +14,10 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,7 +32,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ForgotPasswordViewModel @Inject constructor(
     private val validateForm: ValidationFormUseCase,
-    private val resource: ResourceProvider
+    private val resource: ResourceProvider,
+    private val forgotPasswordUseCase: ForgotPasswordUseCase
 ): ViewModel(){
 
     private val _formState = MutableStateFlow(ForgotPasswordState())
@@ -73,6 +80,18 @@ class ForgotPasswordViewModel @Inject constructor(
     }
 
     private fun forgotPassword(){
-
+        forgotPasswordUseCase(_formState.value.email)
+            .onStart { _formState.update { it.copy(isLoading = true) } }
+            .onEach { result ->
+                clearForm()
+                result.onSuccess { data ->
+                    emitEffect(ForgotPasswordEffect.ShowToast(resource.getString(R.string.reset_requested)))
+                }.onFailure { error ->
+                    emitEffect(ForgotPasswordEffect.ShowToast(resource.getString(R.string.error_requesting_reset)))
+                }
+            }.catch {
+                clearForm()
+                emitEffect(ForgotPasswordEffect.ShowToast(resource.getString(R.string.error_unexpected_request)))
+            }.launchIn(viewModelScope)
     }
 }
