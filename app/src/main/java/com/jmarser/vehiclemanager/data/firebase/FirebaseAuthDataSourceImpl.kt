@@ -73,4 +73,6 @@ class FirebaseAuthDataSourceImpl
                     emit(Result.failure(e))
                 }
             }
-    }
+
+    override suspend fun getCurrentUser(): UserData? = firebaseAuth.currentUser?.toUserData()
+}

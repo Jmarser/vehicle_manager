@@ -20,16 +20,20 @@ import javax.inject.Singleton
 
 @Singleton
 class AuthRepositoryImpl
-    @Inject
-    constructor(
-        private val authDataSource: AuthRemoteDataSource,
-    ) : AuthRepository {
-        override fun login(loginData: LoginData): Flow<Result<User>> = authDataSource.login(loginData).mapResult { it.toDomain() }
+@Inject
+constructor(
+    private val authDataSource: AuthRemoteDataSource,
+) : AuthRepository {
+    override fun login(loginData: LoginData): Flow<Result<User>> =
+        authDataSource.login(loginData).mapResult { it.toDomain() }
 
-        override fun register(authCredentials: AuthCredentialsData): Flow<Result<User>> =
-            authDataSource.register(authCredentials).mapResult {
-                it.toDomain()
-            }
+    override fun register(authCredentials: AuthCredentialsData): Flow<Result<User>> =
+        authDataSource.register(authCredentials).mapResult {
+            it.toDomain()
+        }
 
-        override fun forgotPassword(email: String): Flow<Result<Unit>> = authDataSource.forgotPassword(email)
-    }
+    override fun forgotPassword(email: String): Flow<Result<Unit>> =
+        authDataSource.forgotPassword(email)
+
+    override suspend fun getCurrentUser(): User? = authDataSource.getCurrentUser()?.toDomain()
+}

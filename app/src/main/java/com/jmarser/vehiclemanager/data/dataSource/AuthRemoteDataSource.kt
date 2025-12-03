@@ -18,4 +18,6 @@ interface AuthRemoteDataSource {
     fun register(authCredentials: AuthCredentialsData): Flow<Result<UserData>>
 
     fun forgotPassword(email: String): Flow<Result<Unit>>
+
+    suspend fun getCurrentUser(): UserData?
 }

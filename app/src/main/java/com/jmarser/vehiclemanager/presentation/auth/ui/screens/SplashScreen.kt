@@ -1,6 +1,7 @@
 package com.jmarser.vehiclemanager.presentation.auth.ui.screens
 
 import android.app.Activity
+import android.widget.Toast
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -34,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.jmarser.vehiclemanager.R
 import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceLarge
 import com.jmarser.vehiclemanager.core.presentation.component.VerticalSpaceMedium
@@ -42,6 +44,8 @@ import com.jmarser.vehiclemanager.core.presentation.ui.appDimens
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForTablet
 import com.jmarser.vehiclemanager.core.presentation.ui.rememberDeviceOrientation
 import com.jmarser.vehiclemanager.core.utils.TestTags
+import com.jmarser.vehiclemanager.presentation.auth.viewmodel.splash.SplashEffect
+import com.jmarser.vehiclemanager.presentation.auth.viewmodel.splash.SplashViewModel
 import com.jmarser.vehiclemanager.presentation.components.AppImages
 import com.jmarser.vehiclemanager.ui.theme.MyAppTheme
 import kotlinx.coroutines.delay
@@ -49,6 +53,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(
     modifier: Modifier = Modifier,
+    viewModel: SplashViewModel = hiltViewModel(),
     navigateToHome: () -> Unit,
     navigateToLogin: () -> Unit,
 ) {
@@ -86,7 +91,16 @@ fun SplashScreen(
         startAnimation = true
         val delayMillis = (2000..4000).random().toLong()
         delay(delayMillis)
-        navigateToLogin()
+
+        viewModel.uiEffect.collect { effect ->
+            when (effect) {
+                SplashEffect.NavigateToHome -> navigateToLogin()
+                SplashEffect.NavigateToLogin -> navigateToLogin()
+                is SplashEffect.ShowToast -> {
+                    Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     val orientation = rememberDeviceOrientation()

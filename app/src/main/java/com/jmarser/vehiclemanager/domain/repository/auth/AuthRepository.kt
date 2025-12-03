@@ -18,4 +18,6 @@ interface AuthRepository {
     fun register(authCredentials: AuthCredentialsData): Flow<Result<User>>
 
     fun forgotPassword(email: String): Flow<Result<Unit>>
+
+    suspend fun getCurrentUser(): User?
 }

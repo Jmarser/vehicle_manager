@@ -2,6 +2,7 @@ package com.jmarser.vehiclemanager.di
 
 import com.jmarser.vehiclemanager.domain.repository.auth.AuthRepository
 import com.jmarser.vehiclemanager.domain.useCase.auth.ForgotPasswordUseCase
+import com.jmarser.vehiclemanager.domain.useCase.auth.GetCurrentUseCase
 import com.jmarser.vehiclemanager.domain.useCase.auth.LoginUseCase
 import com.jmarser.vehiclemanager.domain.useCase.auth.RegisterUseCase
 import dagger.Module
@@ -24,4 +25,8 @@ object AuthDomainModule {
     @Provides
     @Singleton
     fun provideForgotPasswordUseCase(repository: AuthRepository): ForgotPasswordUseCase = ForgotPasswordUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideGetCurrentUserUseCase(repository: AuthRepository): GetCurrentUseCase = GetCurrentUseCase(repository)
 }
