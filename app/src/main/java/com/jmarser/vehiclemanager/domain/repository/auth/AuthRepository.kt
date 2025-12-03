@@ -17,4 +17,6 @@ interface AuthRepository {
     fun login(loginData: LoginData): Flow<Result<User>>
 
     fun register(authCredentials: AuthCredentialsData): Flow<Result<User>>
+
+    fun forgotPassword(email: String): Flow<Result<Unit>>
 }

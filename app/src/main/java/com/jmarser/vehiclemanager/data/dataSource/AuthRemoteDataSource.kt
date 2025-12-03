@@ -17,4 +17,6 @@ interface AuthRemoteDataSource {
     fun login(loginData: LoginData): Flow<Result<UserData>>
 
     fun register( authCredentials: AuthCredentialsData): Flow<Result<UserData>>
+
+    fun forgotPassword(email: String): Flow<Result<Unit>>
 }
