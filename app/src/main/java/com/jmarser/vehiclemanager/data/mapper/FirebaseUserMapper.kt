@@ -9,12 +9,10 @@ import com.jmarser.vehiclemanager.data.model.UserData
  * Author: Tu Jmarser <aenur32@gmail.com>
  * Created: 02/12/2025
  */
- 
 
-fun FirebaseUser.toUserData(): UserData {
-    return UserData(
+fun FirebaseUser.toUserData(): UserData =
+    UserData(
         uid = this.uid,
         email = this.email,
         displayName = this.displayName ?: "",
     )
-}

@@ -9,3 +9,4 @@ plugins {
     id("org.jetbrains.kotlinx.kover") version "0.9.3"
     id("org.sonarqube") version "7.0.1.6134" apply false
 }
+

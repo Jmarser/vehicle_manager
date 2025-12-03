@@ -8,8 +8,9 @@ package com.jmarser.vehiclemanager.presentation.auth.viewmodel.forgotPassword
  */
 
 sealed interface ForgotPasswordEffect {
-
     object NavigateToLogin : ForgotPasswordEffect
-    data class ShowToast(val message: String) : ForgotPasswordEffect
 
+    data class ShowToast(
+        val message: String,
+    ) : ForgotPasswordEffect
 }

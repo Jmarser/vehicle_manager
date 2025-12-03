@@ -1,6 +1,5 @@
 package com.jmarser.vehiclemanager.presentation.components
 
-
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -72,9 +71,8 @@ fun PasswordInputField(
     imeAction: ImeAction = ImeAction.Next,
     shape: RoundedCornerShape = RoundedCornerShape(appDimens.roundedShapePercent25),
     isError: Boolean = false,
-    onSendAction: () -> Unit = {}
+    onSendAction: () -> Unit = {},
 ) {
-
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
     var passVisible by remember { mutableStateOf(false) }
@@ -82,58 +80,62 @@ fun PasswordInputField(
     val semanticMessage = stringResource(semanticText)
     val errorMessage = textError?.let { stringResource(it) }
 
-    Column (
-        modifier = modifier
-            .padding(bottom = textError?.let { 0.dp } ?: appDimens.paddingMedium)
-    ){
+    Column(
+        modifier =
+            modifier
+                .padding(bottom = textError?.let { 0.dp } ?: appDimens.paddingMedium),
+    ) {
         OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .onFocusChanged{focusState ->
-                    if(!focusState.isFocused) keyboardController?.hide()
-                }
-                .semantics{
-                    contentDescription = semanticMessage
-                },
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .onFocusChanged { focusState ->
+                        if (!focusState.isFocused) keyboardController?.hide()
+                    }.semantics {
+                        contentDescription = semanticMessage
+                    },
             value = value,
             onValueChange = onValueChange,
-            placeholder = placeholder?.let {
-                {
-                    Text(text = stringResource(it))
-                }
-            },
-            label = label?.let {
-                {
-                    Text(text = stringResource(it))
-                }
-            },
+            placeholder =
+                placeholder?.let {
+                    {
+                        Text(text = stringResource(it))
+                    }
+                },
+            label =
+                label?.let {
+                    {
+                        Text(text = stringResource(it))
+                    }
+                },
             singleLine = true,
             maxLines = 1,
             shape = shape,
-            leadingIcon = leadingIcon?.let {
-                {
-                    Icon(
-                        imageVector = it,
-                        contentDescription = null
-
-                    )
-                }
-            },
+            leadingIcon =
+                leadingIcon?.let {
+                    {
+                        Icon(
+                            imageVector = it,
+                            contentDescription = null,
+                        )
+                    }
+                },
             trailingIcon = {
-                Row (
-                    modifier = Modifier
-                        .wrapContentWidth(Alignment.End),
+                Row(
+                    modifier =
+                        Modifier
+                            .wrapContentWidth(Alignment.End),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(appDimens.spacerSmall)
-                ){
+                    horizontalArrangement = Arrangement.spacedBy(appDimens.spacerSmall),
+                ) {
                     IconToggleButton(
                         checked = passVisible,
-                        onCheckedChange = { passVisible = it}
+                        onCheckedChange = { passVisible = it },
                     ) {
                         Icon(
                             modifier = Modifier,
                             imageVector = if (passVisible) iconHide else iconShow,
-                            contentDescription = stringResource(if (passVisible) R.string.password_hide else R.string.password_show)
+                            contentDescription = stringResource(if (passVisible) R.string.password_hide else R.string.password_show),
                         )
                     }
 
@@ -146,16 +148,18 @@ fun PasswordInputField(
                             positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
                             state = tooltipState,
                             tooltip = {
-                                PlainTooltip (
-                                    modifier = Modifier
-                                        .wrapContentWidth()
-                                        .padding(appDimens.paddingNormal)
-                                        .verticalScroll(rememberScrollState()),
-                                ){
-                                    Column (
-                                        modifier = Modifier
+                                PlainTooltip(
+                                    modifier =
+                                        Modifier
+                                            .wrapContentWidth()
                                             .padding(appDimens.paddingNormal)
-                                    ){
+                                            .verticalScroll(rememberScrollState()),
+                                ) {
+                                    Column(
+                                        modifier =
+                                            Modifier
+                                                .padding(appDimens.paddingNormal),
+                                    ) {
                                         Text(
                                             text = stringResource(R.string.title_message_info_password),
                                             style = MaterialTheme.typography.labelLarge,
@@ -183,63 +187,65 @@ fun PasswordInputField(
                                     }
                                 }
                             },
-                            onDismissRequest = {tooltipState.dismiss()},
+                            onDismissRequest = { tooltipState.dismiss() },
                             focusable = true,
-                            hasAction = false
+                            hasAction = false,
                         ) {
                             IconButton(
                                 onClick = {
                                     scope.launch {
                                         if (tooltipState.isVisible) tooltipState.dismiss() else tooltipState.show()
                                     }
-                                }
+                                },
                             ) {
                                 Icon(
                                     imageVector = icon,
-                                    contentDescription = iconInfoDescription?.let { stringResource(it) }
+                                    contentDescription = iconInfoDescription?.let { stringResource(it) },
                                 )
                             }
                         }
                     }
-
                 }
             },
             visualTransformation = if (passVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = keyboardType,
-                imeAction = imeAction
-            ),
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    keyboardController?.hide()
-                    focusManager.clearFocus()
-                },
-                onGo = {
-                    keyboardController?.hide()
-                    focusManager.clearFocus()
-                },
-                onNext = {
-                    keyboardController?.hide()
-                    focusManager.clearFocus()
-                },
-                onSend = {
-                    keyboardController?.hide()
-                    focusManager.clearFocus()
-                    onSendAction()
-                }
-            ),
+            keyboardOptions =
+                KeyboardOptions.Default.copy(
+                    keyboardType = keyboardType,
+                    imeAction = imeAction,
+                ),
+            keyboardActions =
+                KeyboardActions(
+                    onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    },
+                    onGo = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    },
+                    onNext = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    },
+                    onSend = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                        onSendAction()
+                    },
+                ),
             isError = isError,
         )
 
         errorMessage?.let {
             Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end = appDimens.paddingMedium),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(end = appDimens.paddingMedium),
                 text = it,
                 textAlign = TextAlign.End,
                 color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall,
             )
         }
     }
@@ -247,12 +253,12 @@ fun PasswordInputField(
 
 @Preview(
     showSystemUi = false,
-    showBackground = true
+    showBackground = true,
 )
 @Composable
 fun PasswordInputFieldPreview() {
     MyAppTheme(
-        windowSizeClass = getSizeForPhone()
+        windowSizeClass = getSizeForPhone(),
     ) {
         PasswordInputField(
             modifier = Modifier,

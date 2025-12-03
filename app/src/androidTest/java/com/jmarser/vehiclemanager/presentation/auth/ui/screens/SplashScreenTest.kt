@@ -21,7 +21,6 @@ import org.junit.Test
  */
 
 class SplashScreenTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -34,23 +33,22 @@ class SplashScreenTest {
         every { mockNavigateToHome.invoke() } returns Unit
     }
 
-    private fun setSplashScreenContent(){
+    private fun setSplashScreenContent() {
         composeTestRule.mainClock.autoAdvance = false
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
                 SplashScreen(
                     navigateToLogin = mockNavigateToLogin,
-                    navigateToHome = mockNavigateToHome
+                    navigateToHome = mockNavigateToHome,
                 )
             }
         }
     }
 
     @Test
-    fun splashScreen_elements_are_displayed_and_button_disabled(){
-
+    fun splashScreen_elements_are_displayed_and_button_disabled() {
         setSplashScreenContent()
 
         composeTestRule.onNodeWithTag(TestTags.NAME_APP_SPLASH).assertIsDisplayed()
@@ -63,8 +61,7 @@ class SplashScreenTest {
     }
 
     @Test
-    fun splashScreen_delay_elapsed_naviagte_to_login(){
-
+    fun splashScreen_delay_elapsed_naviagte_to_login() {
         setSplashScreenContent()
 
         composeTestRule.mainClock.advanceTimeBy(4500L)

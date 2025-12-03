@@ -21,51 +21,56 @@ import javax.inject.Singleton
  */
 
 @Singleton
-class FirebaseAuthDataSourceImpl @Inject constructor(
-    private val firebaseAuth: FirebaseAuth
-): AuthRemoteDataSource{
-    override fun login(loginData: LoginData): Flow<Result<UserData>> = flow {
-        try {
-            val result = firebaseAuth.signInWithEmailAndPassword(loginData.email, loginData.password).await()
-            val userData = result.user?.toUserData()
-            if (userData != null) {
-                emit(Result.success(userData))
-            }else{
-                emit(Result.failure(Exception("Usuario no encontrado")))
+class FirebaseAuthDataSourceImpl
+    @Inject
+    constructor(
+        private val firebaseAuth: FirebaseAuth,
+    ) : AuthRemoteDataSource {
+        override fun login(loginData: LoginData): Flow<Result<UserData>> =
+            flow {
+                try {
+                    val result = firebaseAuth.signInWithEmailAndPassword(loginData.email, loginData.password).await()
+                    val userData = result.user?.toUserData()
+                    if (userData != null) {
+                        emit(Result.success(userData))
+                    } else {
+                        emit(Result.failure(Exception("Usuario no encontrado")))
+                    }
+                } catch (e: Exception) {
+                    emit(Result.failure(e))
+                }
             }
-        }catch (e: Exception){
-            emit(Result.failure(e))
-        }
-    }
 
-    override fun register(authCredentials: AuthCredentialsData): Flow<Result<UserData>>  = flow{
-        try {
-            val result = firebaseAuth.createUserWithEmailAndPassword(authCredentials.email, authCredentials.password).await()
+        override fun register(authCredentials: AuthCredentialsData): Flow<Result<UserData>> =
+            flow {
+                try {
+                    val result = firebaseAuth.createUserWithEmailAndPassword(authCredentials.email, authCredentials.password).await()
 
-            result.user?.let { user ->
-                val profileUpdate = UserProfileChangeRequest.Builder()
-                    .setDisplayName(authCredentials.name)
-                    .build()
+                    result.user?.let { user ->
+                        val profileUpdate =
+                            UserProfileChangeRequest
+                                .Builder()
+                                .setDisplayName(authCredentials.name)
+                                .build()
 
-                user.updateProfile(profileUpdate).await()
+                        user.updateProfile(profileUpdate).await()
 
-                emit(Result.success(user.toUserData()))
-
-            }?: run{
-                emit(Result.failure(Exception("Error al registrar usuario")))
+                        emit(Result.success(user.toUserData()))
+                    } ?: run {
+                        emit(Result.failure(Exception("Error al registrar usuario")))
+                    }
+                } catch (e: Exception) {
+                    emit(Result.failure(e))
+                }
             }
-        }catch (e: Exception){
-            emit(Result.failure(e))
-        }
-    }
 
-    override fun forgotPassword(email: String): Flow<Result<Unit>> = flow {
-        try{
-            firebaseAuth.sendPasswordResetEmail(email).await()
-            emit(Result.success(Unit))
-        }catch (e: Exception){
-            emit(Result.failure(e))
-        }
+        override fun forgotPassword(email: String): Flow<Result<Unit>> =
+            flow {
+                try {
+                    firebaseAuth.sendPasswordResetEmail(email).await()
+                    emit(Result.success(Unit))
+                } catch (e: Exception) {
+                    emit(Result.failure(e))
+                }
+            }
     }
-
-}

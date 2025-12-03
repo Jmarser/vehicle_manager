@@ -29,116 +29,118 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class RegisterViewModel @Inject constructor(
-    private val validationForm: ValidationFormUseCase,
-    private val registerUseCase: RegisterUseCase,
-    private val resource: ResourceProvider
-): ViewModel(){
+class RegisterViewModel
+    @Inject
+    constructor(
+        private val validationForm: ValidationFormUseCase,
+        private val registerUseCase: RegisterUseCase,
+        private val resource: ResourceProvider,
+    ) : ViewModel() {
+        private val _formState = MutableStateFlow(RegisterFormState())
+        val formState: StateFlow<RegisterFormState> = _formState.asStateFlow()
 
-    private val _formState = MutableStateFlow(RegisterFormState())
-    val formState: StateFlow<RegisterFormState> = _formState.asStateFlow()
+        private val _uiEffect = MutableSharedFlow<RegisterEffect>()
+        val uiEffect: SharedFlow<RegisterEffect> = _uiEffect.asSharedFlow()
 
-    private val _uiEffect = MutableSharedFlow<RegisterEffect>()
-    val uiEffect: SharedFlow<RegisterEffect> = _uiEffect.asSharedFlow()
-
-    fun onEvent(event: RegisterEvent){
-        when(event){
-            is RegisterEvent.SetName -> setName(event.name)
-            is RegisterEvent.SetEmail -> setEmail(event.email)
-            is RegisterEvent.SetPassword -> setPassword(event.password)
-            is RegisterEvent.SetRepeatPassword -> setRepeatPassword(event.repeatPassword)
-            RegisterEvent.OnRegisterClick -> tryToRegister()
-            RegisterEvent.OnBackClick -> onBackClick()
-        }
-    }
-
-    private fun setName(name: String){
-        val isValid = validationForm.validateFiledNotEmpty(name)
-        _formState.update {
-            it.copy(
-                name = name,
-                isNameValid = isValid,
-                nameErrorMessage = if (isValid) null else R.string.error_name_user_not_empty
-            )
-        }
-        validateButton()
-    }
-
-    private fun setEmail(email: String){
-        val isValid = validationForm.validateEmail(email)
-        _formState.update {
-            it.copy(
-                email = email,
-                isEmailValid = isValid,
-                emailErrorMessage = if (isValid) null else R.string.error_email_invalid
-            )
-        }
-        validateButton()
-    }
-
-    private fun setPassword(password: String){
-        val result = validationForm.validatePasswordDetails(password)
-        _formState.update {
-            it.copy(
-                password = password,
-                isPasswordValid = result.isValid,
-                passwordErrorMessage = if (result.isValid) null else result.errorMessage
-            )
-        }
-        validateButton()
-    }
-
-    private fun setRepeatPassword(repeatPassword: String){
-        val isValid = validationForm.validateConfirmPassword(_formState.value.password, repeatPassword)
-        _formState.update {
-            it.copy(
-                confirmPassword = repeatPassword,
-                isConfirmPasswordValid = isValid,
-                confirmPasswordErrorMessage = if (isValid) null else R.string.error_password_not_match
-            )
-        }
-        validateButton()
-    }
-
-    private fun validateButton(){
-        _formState.update {
-            it.copy(
-                isButtonEnabled = validationForm.validateFields(
-                    _formState.value.isNameValid,
-                    _formState.value.isEmailValid,
-                    _formState.value.isPasswordValid,
-                    _formState.value.isConfirmPasswordValid
-                )
-            )
-        }
-    }
-
-    private fun onBackClick(){
-        viewModelScope.launch {
-            _uiEffect.emit(RegisterEffect.NavigateToBack)
-        }
-    }
-
-    private fun clearForm(){
-        _formState.value = RegisterFormState()
-    }
-
-    private fun tryToRegister(){
-        registerUseCase(_formState.value.name, _formState.value.email, _formState.value.password)
-            .onStart {
-                _formState.update { it.copy(isLoading = true) }
+        fun onEvent(event: RegisterEvent) {
+            when (event) {
+                is RegisterEvent.SetName -> setName(event.name)
+                is RegisterEvent.SetEmail -> setEmail(event.email)
+                is RegisterEvent.SetPassword -> setPassword(event.password)
+                is RegisterEvent.SetRepeatPassword -> setRepeatPassword(event.repeatPassword)
+                RegisterEvent.OnRegisterClick -> tryToRegister()
+                RegisterEvent.OnBackClick -> onBackClick()
             }
-            .onEach { result ->
-                _formState.update { it.copy(isLoading = false) }
-                clearForm()
-                result.onSuccess { data ->
-                    _uiEffect.emit(RegisterEffect.ShowToast(resource.getString(R.string.register_user_successfully)))
-                }.onFailure { error ->
-                    _uiEffect.emit(RegisterEffect.ShowToast(resource.getString(R.string.error_register_user)))
-                }
-            }.catch {
-                clearForm()
-                _uiEffect.emit(RegisterEffect.ShowToast(resource.getString(R.string.error_unexpected_register)))
-            }.launchIn(viewModelScope)
+        }
+
+        private fun setName(name: String) {
+            val isValid = validationForm.validateFiledNotEmpty(name)
+            _formState.update {
+                it.copy(
+                    name = name,
+                    isNameValid = isValid,
+                    nameErrorMessage = if (isValid) null else R.string.error_name_user_not_empty,
+                )
+            }
+            validateButton()
+        }
+
+        private fun setEmail(email: String) {
+            val isValid = validationForm.validateEmail(email)
+            _formState.update {
+                it.copy(
+                    email = email,
+                    isEmailValid = isValid,
+                    emailErrorMessage = if (isValid) null else R.string.error_email_invalid,
+                )
+            }
+            validateButton()
+        }
+
+        private fun setPassword(password: String) {
+            val result = validationForm.validatePasswordDetails(password)
+            _formState.update {
+                it.copy(
+                    password = password,
+                    isPasswordValid = result.isValid,
+                    passwordErrorMessage = if (result.isValid) null else result.errorMessage,
+                )
+            }
+            validateButton()
+        }
+
+        private fun setRepeatPassword(repeatPassword: String) {
+            val isValid = validationForm.validateConfirmPassword(_formState.value.password, repeatPassword)
+            _formState.update {
+                it.copy(
+                    confirmPassword = repeatPassword,
+                    isConfirmPasswordValid = isValid,
+                    confirmPasswordErrorMessage = if (isValid) null else R.string.error_password_not_match,
+                )
+            }
+            validateButton()
+        }
+
+        private fun validateButton() {
+            _formState.update {
+                it.copy(
+                    isButtonEnabled =
+                        validationForm.validateFields(
+                            _formState.value.isNameValid,
+                            _formState.value.isEmailValid,
+                            _formState.value.isPasswordValid,
+                            _formState.value.isConfirmPasswordValid,
+                        ),
+                )
+            }
+        }
+
+        private fun onBackClick() {
+            viewModelScope.launch {
+                _uiEffect.emit(RegisterEffect.NavigateToBack)
+            }
+        }
+
+        private fun clearForm() {
+            _formState.value = RegisterFormState()
+        }
+
+        private fun tryToRegister() {
+            registerUseCase(_formState.value.name, _formState.value.email, _formState.value.password)
+                .onStart {
+                    _formState.update { it.copy(isLoading = true) }
+                }.onEach { result ->
+                    _formState.update { it.copy(isLoading = false) }
+                    clearForm()
+                    result
+                        .onSuccess { data ->
+                            _uiEffect.emit(RegisterEffect.ShowToast(resource.getString(R.string.register_user_successfully)))
+                        }.onFailure { error ->
+                            _uiEffect.emit(RegisterEffect.ShowToast(resource.getString(R.string.error_register_user)))
+                        }
+                }.catch {
+                    clearForm()
+                    _uiEffect.emit(RegisterEffect.ShowToast(resource.getString(R.string.error_unexpected_register)))
+                }.launchIn(viewModelScope)
+        }
     }
-}

@@ -23,29 +23,28 @@ import org.junit.Test
  */
 
 class PasswordInputFieldTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Test
-    fun passwordInputFiled_allowsTyping_andStartsHidden(){
+    fun passwordInputFiled_allowsTyping_andStartsHidden() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val showPassDesc = context.getString(R.string.password_show)
         val semanticText = context.getString(R.string.semantic_password)
 
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
                 val textState = remember { mutableStateOf("") }
 
                 PasswordInputField(
                     value = textState.value,
-                    onValueChange = {textState.value = it},
+                    onValueChange = { textState.value = it },
                     semanticText = R.string.semantic_password,
                     iconShow = AppImages.ic_eye_open,
                     iconHide = AppImages.ic_eye_hide,
-                    leadingIcon = AppImages.ic_password
+                    leadingIcon = AppImages.ic_password,
                 )
             }
         }
@@ -60,21 +59,21 @@ class PasswordInputFieldTest {
     }
 
     @Test
-    fun passwordInputField_toggles_visibility_icon(){
+    fun passwordInputField_toggles_visibility_icon() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val showPassDesc = context.getString(R.string.password_show)
         val hidePassDesc = context.getString(R.string.password_hide)
 
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
                 PasswordInputField(
                     value = "Secret",
                     onValueChange = {},
                     semanticText = R.string.semantic_password,
                     iconShow = AppImages.ic_eye_open,
-                    iconHide = AppImages.ic_eye_hide
+                    iconHide = AppImages.ic_eye_hide,
                 )
             }
         }
@@ -93,14 +92,14 @@ class PasswordInputFieldTest {
     }
 
     @Test
-    fun passwordInputField_showsTooltip_onClick(){
+    fun passwordInputField_showsTooltip_onClick() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val infoDesc = context.getString(R.string.info_password_description)
         val tooltipTitle = context.getString(R.string.title_message_info_password)
 
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
                 PasswordInputField(
                     value = "",
@@ -125,14 +124,14 @@ class PasswordInputFieldTest {
     }
 
     @Test
-    fun passwordInputField_showsErrorText_whenErrorState(){
+    fun passwordInputField_showsErrorText_whenErrorState() {
         val errorResId = R.string.error_password_invalid
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val errorString = context.getString(errorResId)
 
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
                 PasswordInputField(
                     value = "Password invalido",

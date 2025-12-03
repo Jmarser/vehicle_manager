@@ -14,18 +14,15 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AuthDataModule {
-
     @Provides
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 
     @Provides
     @Singleton
-    fun provideAuthRemoteDataSource(auth: FirebaseAuth): AuthRemoteDataSource =
-        FirebaseAuthDataSourceImpl(auth)
+    fun provideAuthRemoteDataSource(auth: FirebaseAuth): AuthRemoteDataSource = FirebaseAuthDataSourceImpl(auth)
 
     @Provides
     @Singleton
-    fun provideRepository(remoteDataSource: AuthRemoteDataSource): AuthRepository =
-        AuthRepositoryImpl(remoteDataSource)
+    fun provideRepository(remoteDataSource: AuthRemoteDataSource): AuthRepository = AuthRepositoryImpl(remoteDataSource)
 }

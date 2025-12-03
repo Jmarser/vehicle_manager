@@ -7,17 +7,14 @@ data class RegisterFormState(
     val email: String = "",
     val password: String = "",
     val confirmPassword: String = "",
-
     @StringRes val nameErrorMessage: Int? = null,
     @StringRes val emailErrorMessage: Int? = null,
     @StringRes val passwordErrorMessage: Int? = null,
     @StringRes val confirmPasswordErrorMessage: Int? = null,
-
     val isNameValid: Boolean? = null,
     val isEmailValid: Boolean? = null,
     val isPasswordValid: Boolean? = null,
     val isConfirmPasswordValid: Boolean? = null,
-
     val isLoading: Boolean = false,
-    val isButtonEnabled: Boolean = false
+    val isButtonEnabled: Boolean = false,
 )

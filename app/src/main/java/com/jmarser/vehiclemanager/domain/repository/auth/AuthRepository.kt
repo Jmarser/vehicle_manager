@@ -11,9 +11,8 @@ import kotlinx.coroutines.flow.Flow
  * Author: Tu Jmarser <aenur32@gmail.com>
  * Created: 02/12/2025
  */
- 
-interface AuthRepository {
 
+interface AuthRepository {
     fun login(loginData: LoginData): Flow<Result<User>>
 
     fun register(authCredentials: AuthCredentialsData): Flow<Result<User>>

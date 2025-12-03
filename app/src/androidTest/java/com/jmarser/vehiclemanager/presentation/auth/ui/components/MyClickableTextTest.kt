@@ -29,7 +29,6 @@ import org.junit.Test
  */
 
 class MyClickableTextTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -42,13 +41,13 @@ class MyClickableTextTest {
 
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
                 MyClickableText(
                     textNormal = R.string.dont_have_account,
                     textClickable = R.string.register_now,
                     textDescription = R.string.clickable_text_description_login,
-                    onClick = {}
+                    onClick = {},
                 )
             }
         }
@@ -63,7 +62,7 @@ class MyClickableTextTest {
     }
 
     @Test
-    fun myClickableText_performClickAndHasButtonRole(){
+    fun myClickableText_performClickAndHasButtonRole() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
 
         val descriptionText = context.getString(R.string.clickable_text_description_login)
@@ -72,13 +71,13 @@ class MyClickableTextTest {
 
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
                 MyClickableText(
                     textNormal = R.string.dont_have_account,
                     textClickable = R.string.register_now,
                     textDescription = R.string.clickable_text_description_login,
-                    onClick = { clickCount++}
+                    onClick = { clickCount++ },
                 )
             }
         }
@@ -90,24 +89,23 @@ class MyClickableTextTest {
         node.performClick()
 
         assertEquals(1, clickCount.toLong())
-
     }
 
     @Test
-    fun myClickableText_performsSemanticsClickAction(){
+    fun myClickableText_performsSemanticsClickAction() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val descriptionText = context.getString(R.string.clickable_text_description_login)
         var clickCount by mutableIntStateOf(0)
 
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
                 MyClickableText(
                     textNormal = R.string.dont_have_account,
                     textClickable = R.string.register_now,
                     textDescription = R.string.clickable_text_description_login,
-                    onClick = { clickCount += 2}
+                    onClick = { clickCount += 2 },
                 )
             }
         }
@@ -116,5 +114,4 @@ class MyClickableTextTest {
         node.performSemanticsAction(SemanticsActions.OnClick)
         assertEquals(2, clickCount.toLong())
     }
-
 }

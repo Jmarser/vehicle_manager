@@ -23,24 +23,22 @@ import org.junit.Test
  */
 
 class TestInputFieldTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Test
-    fun textInputField_displaysCorrectSemanticDescription(){
-
+    fun textInputField_displaysCorrectSemanticDescription() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val semanticText = context.getText(R.string.semantic_email)
 
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
                 TextInputField(
                     value = "",
                     onValueChange = {},
-                    semanticText = R.string.semantic_email
+                    semanticText = R.string.semantic_email,
                 )
             }
         }
@@ -51,22 +49,21 @@ class TestInputFieldTest {
     }
 
     @Test
-    fun textInputField_allowsTyping(){
+    fun textInputField_allowsTyping() {
         val testText = "test@email.com"
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val semanticText = context.getText(R.string.semantic_email)
 
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
-
                 val textState = remember { mutableStateOf("") }
 
                 TextInputField(
                     value = textState.value,
-                    onValueChange = {textState.value = it},
-                    semanticText = R.string.semantic_email
+                    onValueChange = { textState.value = it },
+                    semanticText = R.string.semantic_email,
                 )
             }
         }
@@ -76,25 +73,24 @@ class TestInputFieldTest {
         inputNode.performTextInput(testText)
 
         inputNode.assertTextContains(testText)
-
     }
 
     @Test
-    fun textInputField_showsErrorText_whenErrorState(){
+    fun textInputField_showsErrorText_whenErrorState() {
         val errorResId = R.string.error_email_invalid
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val errorString = context.getString(errorResId)
 
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
                 TextInputField(
                     value = "Texto inválido",
                     onValueChange = {},
                     semanticText = R.string.semantic_email,
                     isError = true,
-                    textError = errorResId
+                    textError = errorResId,
                 )
             }
         }

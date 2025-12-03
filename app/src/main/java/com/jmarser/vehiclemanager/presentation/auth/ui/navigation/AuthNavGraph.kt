@@ -12,44 +12,47 @@ import com.jmarser.vehiclemanager.presentation.auth.ui.screens.SplashScreen
 import com.jmarser.vehiclemanager.presentation.navigation.BaseNavGraph
 import kotlinx.serialization.Serializable
 
-object AuthNavGraph: BaseNavGraph {
+object AuthNavGraph : BaseNavGraph {
+    sealed interface Dest {
+        @Serializable
+        data object Root : Dest
 
-    sealed interface Dest{
         @Serializable
-        data object Root: Dest
+        data object Splash : Dest
+
         @Serializable
-        data object Splash: Dest
+        data object Login : Dest
+
         @Serializable
-        data object Login: Dest
+        data object Register : Dest
+
         @Serializable
-        data object Register: Dest
-        @Serializable
-        data object ForgotPassword: Dest
+        data object ForgotPassword : Dest
     }
 
     override fun build(
         modifier: Modifier,
         navController: NavHostController,
-        navGraphBuilder: NavGraphBuilder
+        navGraphBuilder: NavGraphBuilder,
     ) {
         navGraphBuilder.navigation<Dest.Root>(
             startDestination = Dest.Splash,
-        ){
-            composable <Dest.Splash>{
+        ) {
+            composable<Dest.Splash> {
                 SplashScreen(
                     modifier = modifier,
                     navigateToHome = {},
                     navigateToLogin = {
-                        navController.navigate(Dest.Login){
-                            popUpTo(Dest.Splash){
+                        navController.navigate(Dest.Login) {
+                            popUpTo(Dest.Splash) {
                                 inclusive = true
                             }
                         }
-                    }
+                    },
                 )
             }
 
-            composable <Dest.Login>{
+            composable<Dest.Login> {
                 LoginScreen(
                     modifier = modifier,
                     navigateToRegister = {
@@ -58,21 +61,21 @@ object AuthNavGraph: BaseNavGraph {
                     navigateToForgotPassword = {
                         navController.navigate(Dest.ForgotPassword)
                     },
-                    navigateToHome = {}
+                    navigateToHome = {},
                 )
             }
 
-            composable <Dest.Register>{
+            composable<Dest.Register> {
                 RegisterScreen(
                     modifier = modifier,
                     navigateToLogin = {
                         navController.popBackStack()
                     },
-                    navigateToHome = {}
+                    navigateToHome = {},
                 )
             }
 
-            composable <Dest.ForgotPassword>{
+            composable<Dest.ForgotPassword> {
                 ForgotPasswordScreen(
                     modifier = modifier,
                     navigateToLogin = {
@@ -81,6 +84,5 @@ object AuthNavGraph: BaseNavGraph {
                 )
             }
         }
-
     }
 }

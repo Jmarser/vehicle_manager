@@ -10,7 +10,12 @@ import androidx.annotation.StringRes
  */
 
 interface ResourceProvider {
-    fun getString(@StringRes id: Int): String
+    fun getString(
+        @StringRes id: Int,
+    ): String
 
-    fun getStringWithArgs(@StringRes id: Int, vararg args: Any): String
+    fun getStringWithArgs(
+        @StringRes id: Int,
+        vararg args: Any,
+    ): String
 }

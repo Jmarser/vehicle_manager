@@ -1,6 +1,5 @@
 package com.jmarser.vehiclemanager.presentation.components
 
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -20,22 +19,21 @@ import org.junit.Test
  */
 
 class HeaderAuthTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Test
-    fun headerAuth_withTitle_displaysLogoAndTitle(){
+    fun headerAuth_withTitle_displaysLogoAndTitle() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val expectedTitle = context.getString(R.string.login_sesion)
 
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
                 HeaderAuth(
                     title = R.string.login_sesion,
-                    logo = AppImages.logo()
+                    logo = AppImages.logo(),
                 )
             }
         }
@@ -53,11 +51,11 @@ class HeaderAuthTest {
     fun headerAuth_withoutTitle_displaysOnlyLogo() {
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
                 HeaderAuth(
                     title = null,
-                    logo = AppImages.logo()
+                    logo = AppImages.logo(),
                 )
             }
         }
@@ -73,5 +71,4 @@ class HeaderAuthTest {
             .onNodeWithText(expectedTitle)
             .assertDoesNotExist()
     }
-
 }

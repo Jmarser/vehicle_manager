@@ -13,16 +13,10 @@ import androidx.compose.ui.unit.dp
  */
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-fun getSizeForPhone(): WindowSizeClass {
-    return WindowSizeClass.calculateFromSize(DpSize(360.dp, 800.dp))
-}
+fun getSizeForPhone(): WindowSizeClass = WindowSizeClass.calculateFromSize(DpSize(360.dp, 800.dp))
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-fun getSizeForTablet(): WindowSizeClass {
-    return WindowSizeClass.calculateFromSize(DpSize(800.dp, 1280.dp))
-}
+fun getSizeForTablet(): WindowSizeClass = WindowSizeClass.calculateFromSize(DpSize(800.dp, 1280.dp))
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-fun getSizeForDesktop(): WindowSizeClass {
-    return WindowSizeClass.calculateFromSize(DpSize(1280.dp, 900.dp))
-}
+fun getSizeForDesktop(): WindowSizeClass = WindowSizeClass.calculateFromSize(DpSize(1280.dp, 900.dp))

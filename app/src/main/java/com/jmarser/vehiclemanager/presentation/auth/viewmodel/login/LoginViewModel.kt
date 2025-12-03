@@ -29,94 +29,95 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val validateForm: ValidationFormUseCase,
-    private val resource: ResourceProvider,
-    private val loginUseCase: LoginUseCase
-) : ViewModel() {
+class LoginViewModel
+    @Inject
+    constructor(
+        private val validateForm: ValidationFormUseCase,
+        private val resource: ResourceProvider,
+        private val loginUseCase: LoginUseCase,
+    ) : ViewModel() {
+        private val _formState = MutableStateFlow(LoginFormState())
+        val formState: StateFlow<LoginFormState> = _formState.asStateFlow()
 
-    private val _formState = MutableStateFlow(LoginFormState())
-    val formState: StateFlow<LoginFormState> = _formState.asStateFlow()
+        private val _uiEffect = MutableSharedFlow<LoginEffect>()
+        val uiEffect: SharedFlow<LoginEffect> = _uiEffect.asSharedFlow()
 
-    private val _uiEffect = MutableSharedFlow<LoginEffect>()
-    val uiEffect: SharedFlow<LoginEffect> = _uiEffect.asSharedFlow()
-
-    fun onEvent(event: LoginEvent) {
-        when (event) {
-            is LoginEvent.SetEmail -> setEmail(event.email)
-            is LoginEvent.SetPassword -> setPassword(event.password)
-            LoginEvent.OnLoginClick -> tryToLogin()
-            LoginEvent.OnForgotPasswordClick -> emitEffect(LoginEffect.NavigateToForgotPassword)
-            LoginEvent.OnRegisterClick -> emitEffect(LoginEffect.NavigateToRegister)
-        }
-    }
-
-    private fun setEmail(email: String) {
-        val isValid = validateForm.validateEmail(email)
-
-        _formState.update {
-            it.copy(
-                email = email,
-                isEmailValid = isValid,
-                emailErrorMessage = if (isValid) null else R.string.error_email_invalid
-            )
-        }
-
-        validateSubmit()
-    }
-
-    private fun setPassword(password: String) {
-        val result = validateForm.validatePasswordDetails(password)
-
-        _formState.update {
-            it.copy(
-                password = password,
-                isPasswordValid = result.isValid,
-                passwordErrorMessage = if (result.isValid) null else result.errorMessage
-            )
-        }
-
-        validateSubmit()
-    }
-
-    private fun validateSubmit() {
-        _formState.update {
-            it.copy(
-                isButtonEnabled = validateForm.validateFields(
-                    _formState.value.isEmailValid,
-                    _formState.value.isPasswordValid
-                )
-            )
-        }
-    }
-
-    private fun clearForm() {
-        _formState.value = LoginFormState()
-    }
-
-    private fun emitEffect(effect: LoginEffect) {
-        viewModelScope.launch {
-            _uiEffect.emit(effect)
-        }
-    }
-
-    private fun tryToLogin() {
-        loginUseCase(_formState.value.email, _formState.value.password)
-            .onStart {
-                _formState.update { it.copy(isLoading = true) }
+        fun onEvent(event: LoginEvent) {
+            when (event) {
+                is LoginEvent.SetEmail -> setEmail(event.email)
+                is LoginEvent.SetPassword -> setPassword(event.password)
+                LoginEvent.OnLoginClick -> tryToLogin()
+                LoginEvent.OnForgotPasswordClick -> emitEffect(LoginEffect.NavigateToForgotPassword)
+                LoginEvent.OnRegisterClick -> emitEffect(LoginEffect.NavigateToRegister)
             }
-            .onEach { result ->
-                clearForm()
-                _formState.update { it.copy(isLoading = false) }
-                result.onSuccess { data ->
-                    emitEffect(LoginEffect.ShowToast("${resource.getString(R.string.login_successfull )} para ${data.name}"))
-                }
-                    .onFailure { error ->
-                        emitEffect(LoginEffect.ShowToast(resource.getString(R.string.error_login)))
-                    }
-            }.catch {
-                clearForm()
-                emitEffect(LoginEffect.ShowToast(resource.getString(R.string.error_unexpected_login)))
-            }.launchIn(viewModelScope)
+        }
+
+        private fun setEmail(email: String) {
+            val isValid = validateForm.validateEmail(email)
+
+            _formState.update {
+                it.copy(
+                    email = email,
+                    isEmailValid = isValid,
+                    emailErrorMessage = if (isValid) null else R.string.error_email_invalid,
+                )
+            }
+
+            validateSubmit()
+        }
+
+        private fun setPassword(password: String) {
+            val result = validateForm.validatePasswordDetails(password)
+
+            _formState.update {
+                it.copy(
+                    password = password,
+                    isPasswordValid = result.isValid,
+                    passwordErrorMessage = if (result.isValid) null else result.errorMessage,
+                )
+            }
+
+            validateSubmit()
+        }
+
+        private fun validateSubmit() {
+            _formState.update {
+                it.copy(
+                    isButtonEnabled =
+                        validateForm.validateFields(
+                            _formState.value.isEmailValid,
+                            _formState.value.isPasswordValid,
+                        ),
+                )
+            }
+        }
+
+        private fun clearForm() {
+            _formState.value = LoginFormState()
+        }
+
+        private fun emitEffect(effect: LoginEffect) {
+            viewModelScope.launch {
+                _uiEffect.emit(effect)
+            }
+        }
+
+        private fun tryToLogin() {
+            loginUseCase(_formState.value.email, _formState.value.password)
+                .onStart {
+                    _formState.update { it.copy(isLoading = true) }
+                }.onEach { result ->
+                    clearForm()
+                    _formState.update { it.copy(isLoading = false) }
+                    result
+                        .onSuccess { data ->
+                            emitEffect(LoginEffect.ShowToast("${resource.getString(R.string.login_successfull)} para ${data.name}"))
+                        }.onFailure { error ->
+                            emitEffect(LoginEffect.ShowToast(resource.getString(R.string.error_login)))
+                        }
+                }.catch {
+                    clearForm()
+                    emitEffect(LoginEffect.ShowToast(resource.getString(R.string.error_unexpected_login)))
+                }.launchIn(viewModelScope)
+        }
     }
-}

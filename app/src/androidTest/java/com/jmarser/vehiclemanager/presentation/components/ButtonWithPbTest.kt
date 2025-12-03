@@ -28,12 +28,11 @@ import org.junit.Test
  */
 
 class ButtonWithPbTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Test
-    fun buttonWithPb_defaultState_isClickable(){
+    fun buttonWithPb_defaultState_isClickable() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val labelText = context.getString(R.string.login)
         val descText = context.getString(R.string.semantic_button_login)
@@ -42,7 +41,7 @@ class ButtonWithPbTest {
 
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
                 ButtonWithPb(
                     label = R.string.login,
@@ -50,7 +49,7 @@ class ButtonWithPbTest {
                     isEnabled = true,
                     displayProgressbar = false,
                     value = "data",
-                    onClick = { clickCount++ }
+                    onClick = { clickCount++ },
                 )
             }
         }
@@ -65,13 +64,13 @@ class ButtonWithPbTest {
     }
 
     @Test
-    fun buttonWithPb_loadingState_showsProgressBarAndHidesText(){
+    fun buttonWithPb_loadingState_showsProgressBarAndHidesText() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val labelText = context.getString(R.string.login)
 
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
                 ButtonWithPb(
                     label = R.string.login,
@@ -79,7 +78,7 @@ class ButtonWithPbTest {
                     isEnabled = true,
                     displayProgressbar = true,
                     value = "data",
-                    onClick = { }
+                    onClick = { },
                 )
             }
         }
@@ -90,7 +89,7 @@ class ButtonWithPbTest {
     }
 
     @Test
-    fun buttonWithPb_disabledState_isNotClickable(){
+    fun buttonWithPb_disabledState_isNotClickable() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val descText = context.getString(R.string.semantic_button_login)
 
@@ -98,7 +97,7 @@ class ButtonWithPbTest {
 
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
                 ButtonWithPb(
                     label = R.string.login,
@@ -106,7 +105,7 @@ class ButtonWithPbTest {
                     isEnabled = false,
                     displayProgressbar = false,
                     value = "data",
-                    onClick = { clickCount++ }
+                    onClick = { clickCount++ },
                 )
             }
         }

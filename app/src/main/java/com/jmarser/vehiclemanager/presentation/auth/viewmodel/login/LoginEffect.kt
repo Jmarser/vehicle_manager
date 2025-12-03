@@ -8,9 +8,13 @@ package com.jmarser.vehiclemanager.presentation.auth.viewmodel.login
  */
 
 sealed interface LoginEffect {
+    object NavigateToHome : LoginEffect
 
-    object NavigateToHome: LoginEffect
-    object NavigateToRegister: LoginEffect
-    object NavigateToForgotPassword: LoginEffect
-    data class ShowToast(val message: String): LoginEffect
+    object NavigateToRegister : LoginEffect
+
+    object NavigateToForgotPassword : LoginEffect
+
+    data class ShowToast(
+        val message: String,
+    ) : LoginEffect
 }

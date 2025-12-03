@@ -10,10 +10,9 @@ import com.jmarser.vehiclemanager.domain.model.User
  * Created: 02/12/2025
  */
 
-fun UserData.toDomain() : User{
-    return User(
+fun UserData.toDomain(): User =
+    User(
         id = this.uid,
         email = this.email.orEmpty(),
-        name = this.displayName.orEmpty()
+        name = this.displayName.orEmpty(),
     )
-}

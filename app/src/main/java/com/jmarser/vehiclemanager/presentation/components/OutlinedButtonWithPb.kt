@@ -1,6 +1,5 @@
 package com.jmarser.vehiclemanager.presentation.components
 
-
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.tween
@@ -47,48 +46,51 @@ fun <T> OutlinedButtonWithPb(
     semanticMessage: String? = null,
     shape: RoundedCornerShape = RoundedCornerShape(appDimens.roundedShapePercent50),
     value: T,
-    onClick: (T) -> Unit
+    onClick: (T) -> Unit,
 ) {
-
-    val buttonSemantics = Modifier.semantics{
-        role = Role.Button
-        contentDescription = semanticMessage ?: "Button"
-    }
+    val buttonSemantics =
+        Modifier.semantics {
+            role = Role.Button
+            contentDescription = semanticMessage ?: "Button"
+        }
 
     AnimatedContent(
         targetState = displayProgressbar,
         transitionSpec = {
             fadeIn(tween(250)) + scaleIn(tween(250)) togetherWith fadeOut(tween(250)) + scaleOut(tween(250))
         },
-        label = "AnimatedButton"
-    ) {isLoading ->
-        if (isLoading){
+        label = "AnimatedButton",
+    ) { isLoading ->
+        if (isLoading) {
             CircularProgressIndicator(
-                modifier = modifier
-                    .size(appDimens.buttonHeightNormal)
-                    .padding(appDimens.paddingMedium),
-                strokeWidth = appDimens.borderNormal
+                modifier =
+                    modifier
+                        .size(appDimens.buttonHeightNormal)
+                        .padding(appDimens.paddingMedium),
+                strokeWidth = appDimens.borderNormal,
             )
-        }else{
+        } else {
             OutlinedButton(
-                modifier = modifier
-                    .height(appDimens.buttonHeightNormal)
-                    .padding(horizontal = appDimens.paddingMedium)
-                    .then(buttonSemantics),
+                modifier =
+                    modifier
+                        .height(appDimens.buttonHeightNormal)
+                        .padding(horizontal = appDimens.paddingMedium)
+                        .then(buttonSemantics),
                 shape = shape,
                 onClick = { onClick(value) },
                 enabled = isEnabled,
-                border = ButtonDefaults.outlinedButtonBorder().copy(width = appDimens.borderNormal)
+                border = ButtonDefaults.outlinedButtonBorder().copy(width = appDimens.borderNormal),
             ) {
-                Row (
+                Row(
                     modifier = Modifier,
                     horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    iconStart?.let {icon ->
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    iconStart?.let { icon ->
                         Icon(
-                            modifier = Modifier
-                                .padding(end = appDimens.paddingSmall),
+                            modifier =
+                                Modifier
+                                    .padding(end = appDimens.paddingSmall),
                             imageVector = icon,
                             contentDescription = null,
                         )
@@ -97,14 +99,15 @@ fun <T> OutlinedButtonWithPb(
                     textbtn?.let { text ->
                         Text(
                             text = stringResource(id = text),
-                            style = MaterialTheme.typography.bodyLarge
+                            style = MaterialTheme.typography.bodyLarge,
                         )
                     }
 
-                    iconEnd?.let {icon ->
+                    iconEnd?.let { icon ->
                         Icon(
-                            modifier = Modifier
-                                .padding(start = appDimens.paddingSmall),
+                            modifier =
+                                Modifier
+                                    .padding(start = appDimens.paddingSmall),
                             imageVector = icon,
                             contentDescription = null,
                         )
@@ -117,12 +120,12 @@ fun <T> OutlinedButtonWithPb(
 
 @Preview(
     showSystemUi = false,
-    showBackground = true
+    showBackground = true,
 )
 @Composable
 fun OutlinedButtonWithPbPreview() {
     MyAppTheme(
-        windowSizeClass = getSizeForPhone()
+        windowSizeClass = getSizeForPhone(),
     ) {
         OutlinedButtonWithPb(
             modifier = Modifier,
@@ -131,7 +134,7 @@ fun OutlinedButtonWithPbPreview() {
             textbtn = R.string.login,
             value = Unit,
             displayProgressbar = false,
-            onClick = {}
+            onClick = {},
         )
     }
 }

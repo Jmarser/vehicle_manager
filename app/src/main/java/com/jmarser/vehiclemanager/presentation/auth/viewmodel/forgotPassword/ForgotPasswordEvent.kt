@@ -8,9 +8,11 @@ package com.jmarser.vehiclemanager.presentation.auth.viewmodel.forgotPassword
  */
 
 sealed interface ForgotPasswordEvent {
+    data class SetEmail(
+        val email: String,
+    ) : ForgotPasswordEvent
 
-    data class SetEmail(val email: String): ForgotPasswordEvent
-    object OnForgotPasswordClick: ForgotPasswordEvent
-    object OnBackClick: ForgotPasswordEvent
+    object OnForgotPasswordClick : ForgotPasswordEvent
 
+    object OnBackClick : ForgotPasswordEvent
 }

@@ -8,8 +8,11 @@ package com.jmarser.vehiclemanager.presentation.auth.viewmodel.register
  */
 
 sealed interface RegisterEffect {
+    object NavigateToHome : RegisterEffect
 
-    object NavigateToHome: RegisterEffect
-    object NavigateToBack: RegisterEffect
-    data class ShowToast(val message: String): RegisterEffect
+    object NavigateToBack : RegisterEffect
+
+    data class ShowToast(
+        val message: String,
+    ) : RegisterEffect
 }

@@ -13,7 +13,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AuthDomainModule {
-
     @Provides
     @Singleton
     fun provideLoginUseCase(repository: AuthRepository): LoginUseCase = LoginUseCase(repository)

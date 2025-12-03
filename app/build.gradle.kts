@@ -7,6 +7,7 @@ plugins {
     id("kotlin-kapt")
     alias(libs.plugins.kotlin.serialization)
     id("org.sonarqube") version "7.0.1.6134"
+    id("org.jlleitschuh.gradle.ktlint") version "14.0.1"
 }
 
 android {
@@ -28,7 +29,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -48,20 +49,21 @@ android {
 
     packaging {
         resources {
-            excludes += setOf(
-                "META-INF/AL2.0",
-                "META-INF/LGPL2.1",
-                "META-INF/licenses/**",
-                "META-INF/DEPENDENCIES",
-                "META-INF/NOTICE",
-                "META-INF/NOTICE.txt",
-                "META-INF/LICENSE",
-                "META-INF/LICENSE.txt",
-                "META-INF/ASL2.0",
-                "META-INF/NOTICE.md",
-                "META-INF/LICENSE.md",
-                "META-INF/LICENSE-notice.md"
-            )
+            excludes +=
+                setOf(
+                    "META-INF/AL2.0",
+                    "META-INF/LGPL2.1",
+                    "META-INF/licenses/**",
+                    "META-INF/DEPENDENCIES",
+                    "META-INF/NOTICE",
+                    "META-INF/NOTICE.txt",
+                    "META-INF/LICENSE",
+                    "META-INF/LICENSE.txt",
+                    "META-INF/ASL2.0",
+                    "META-INF/NOTICE.md",
+                    "META-INF/LICENSE.md",
+                    "META-INF/LICENSE-notice.md",
+                )
         }
     }
 }
@@ -97,7 +99,7 @@ dependencies {
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    //coroutines
+    // coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.google)
@@ -105,7 +107,6 @@ dependencies {
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
-    //implementation(libs.firebase.database.ktx)
 
     // Coil
     implementation(libs.coil.compose)
@@ -133,7 +134,6 @@ dependencies {
 
     // Hilt testing (annotation processor + testing artifact)
     kaptAndroidTest(libs.hilt.android.compiler) // si usas kapt (o ksp), para generación de Hilt en tests
-
 }
 
 kapt {

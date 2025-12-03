@@ -1,7 +1,6 @@
 package com.jmarser.vehiclemanager.presentation.auth.viewmodel.forgotPassword
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.jmarser.vehiclemanager.R
 import com.jmarser.vehiclemanager.core.utils.ResourceProvider
@@ -30,68 +29,71 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class ForgotPasswordViewModel @Inject constructor(
-    private val validateForm: ValidationFormUseCase,
-    private val resource: ResourceProvider,
-    private val forgotPasswordUseCase: ForgotPasswordUseCase
-): ViewModel(){
+class ForgotPasswordViewModel
+    @Inject
+    constructor(
+        private val validateForm: ValidationFormUseCase,
+        private val resource: ResourceProvider,
+        private val forgotPasswordUseCase: ForgotPasswordUseCase,
+    ) : ViewModel() {
+        private val _formState = MutableStateFlow(ForgotPasswordState())
+        val formState: StateFlow<ForgotPasswordState> = _formState.asStateFlow()
 
-    private val _formState = MutableStateFlow(ForgotPasswordState())
-    val formState: StateFlow<ForgotPasswordState> = _formState.asStateFlow()
+        private val _uiEffect = MutableSharedFlow<ForgotPasswordEffect>()
+        val uiEffect: SharedFlow<ForgotPasswordEffect> = _uiEffect.asSharedFlow()
 
-    private val _uiEffect = MutableSharedFlow<ForgotPasswordEffect>()
-    val uiEffect: SharedFlow<ForgotPasswordEffect> = _uiEffect.asSharedFlow()
+        fun onEvent(event: ForgotPasswordEvent) {
+            when (event) {
+                is ForgotPasswordEvent.SetEmail -> setEmail(event.email)
+                ForgotPasswordEvent.OnBackClick -> emitEffect(ForgotPasswordEffect.NavigateToLogin)
+                ForgotPasswordEvent.OnForgotPasswordClick -> forgotPassword()
+            }
+        }
 
-    fun onEvent(event: ForgotPasswordEvent){
-        when(event){
-            is ForgotPasswordEvent.SetEmail -> setEmail(event.email)
-            ForgotPasswordEvent.OnBackClick -> emitEffect(ForgotPasswordEffect.NavigateToLogin)
-            ForgotPasswordEvent.OnForgotPasswordClick -> forgotPassword()
+        private fun setEmail(email: String) {
+            val isValid = validateForm.validateEmail(email)
+            _formState.value =
+                _formState.value.copy(
+                    email = email,
+                    isEmailValid = isValid,
+                    emailErrorMessage = if (isValid) null else R.string.error_email_invalid,
+                )
+
+            validateSubmit()
+        }
+
+        private fun validateSubmit() {
+            _formState.update {
+                it.copy(
+                    isButtonEnabled = validateForm.validateFields(_formState.value.isEmailValid),
+                )
+            }
+        }
+
+        private fun clearForm() {
+            _formState.value = ForgotPasswordState()
+        }
+
+        private fun emitEffect(effect: ForgotPasswordEffect) {
+            viewModelScope.launch {
+                _uiEffect.emit(effect)
+            }
+        }
+
+        private fun forgotPassword() {
+            forgotPasswordUseCase(_formState.value.email)
+                .onStart { _formState.update { it.copy(isLoading = true) } }
+                .onEach { result ->
+                    clearForm()
+                    result
+                        .onSuccess { data ->
+                            emitEffect(ForgotPasswordEffect.ShowToast(resource.getString(R.string.reset_requested)))
+                        }.onFailure { error ->
+                            emitEffect(ForgotPasswordEffect.ShowToast(resource.getString(R.string.error_requesting_reset)))
+                        }
+                }.catch {
+                    clearForm()
+                    emitEffect(ForgotPasswordEffect.ShowToast(resource.getString(R.string.error_unexpected_request)))
+                }.launchIn(viewModelScope)
         }
     }
-
-    private fun setEmail(email: String){
-        val isValid = validateForm.validateEmail(email)
-        _formState.value = _formState.value.copy(
-            email = email,
-            isEmailValid = isValid,
-            emailErrorMessage = if (isValid) null else R.string.error_email_invalid
-        )
-
-        validateSubmit()
-    }
-
-    private fun validateSubmit(){
-        _formState.update {
-            it.copy(
-                isButtonEnabled = validateForm.validateFields(_formState.value.isEmailValid)
-            )
-        }
-    }
-
-    private fun clearForm(){
-        _formState.value = ForgotPasswordState()
-    }
-
-    private fun emitEffect(effect: ForgotPasswordEffect){
-        viewModelScope.launch {
-            _uiEffect.emit(effect)
-        }
-    }
-
-    private fun forgotPassword(){
-        forgotPasswordUseCase(_formState.value.email)
-            .onStart { _formState.update { it.copy(isLoading = true) } }
-            .onEach { result ->
-                clearForm()
-                result.onSuccess { data ->
-                    emitEffect(ForgotPasswordEffect.ShowToast(resource.getString(R.string.reset_requested)))
-                }.onFailure { error ->
-                    emitEffect(ForgotPasswordEffect.ShowToast(resource.getString(R.string.error_requesting_reset)))
-                }
-            }.catch {
-                clearForm()
-                emitEffect(ForgotPasswordEffect.ShowToast(resource.getString(R.string.error_unexpected_request)))
-            }.launchIn(viewModelScope)
-    }
-}

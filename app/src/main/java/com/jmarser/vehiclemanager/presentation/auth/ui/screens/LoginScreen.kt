@@ -1,6 +1,5 @@
 package com.jmarser.vehiclemanager.presentation.auth.ui.screens
 
-
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -59,16 +58,15 @@ fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
     navigateToRegister: () -> Unit,
     navigateToHome: () -> Unit,
-    navigateToForgotPassword: () -> Unit
+    navigateToForgotPassword: () -> Unit,
 ) {
-
     val context = LocalContext.current
     val formState by viewModel.formState.collectAsStateWithLifecycle()
     val orientation = rememberDeviceOrientation()
 
     LaunchedEffect(Unit) {
         viewModel.uiEffect.collect { effect ->
-            when(effect){
+            when (effect) {
                 LoginEffect.NavigateToHome -> navigateToHome()
                 LoginEffect.NavigateToForgotPassword -> navigateToForgotPassword()
                 LoginEffect.NavigateToRegister -> navigateToRegister()
@@ -80,17 +78,20 @@ fun LoginScreen(
     }
 
     when (orientation) {
-        DeviceOrientation.Portrait -> LoginScreenPhone(
-            modifier = modifier,
-            viewModel = viewModel,
-            formState = formState
-        )
+        DeviceOrientation.Portrait ->
+            LoginScreenPhone(
+                modifier = modifier,
+                viewModel = viewModel,
+                formState = formState,
+            )
         DeviceOrientation.Landscape,
-        DeviceOrientation.Undefined -> LoginScreenTablet(
-            modifier = modifier,
-            viewModel = viewModel,
-            formState = formState
-        )
+        DeviceOrientation.Undefined,
+        ->
+            LoginScreenTablet(
+                modifier = modifier,
+                viewModel = viewModel,
+                formState = formState,
+            )
     }
 }
 
@@ -101,29 +102,31 @@ fun LoginScreenPhone(
     formState: LoginFormState,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(appDimens.paddingMedium)
-            .systemBarsPadding()
-            .imePadding()
-            .verticalScroll(rememberScrollState()),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(appDimens.paddingMedium)
+                .systemBarsPadding()
+                .imePadding()
+                .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
+        verticalArrangement = Arrangement.Top,
     ) {
         HeaderAuth(
-            modifier = Modifier
-                .testTag(TestTags.HEADER_LOGIN),
+            modifier =
+                Modifier
+                    .testTag(TestTags.HEADER_LOGIN),
             title = R.string.login_sesion,
-            logo = logo()
+            logo = logo(),
         )
 
         VerticalSpaceLarge()
 
-
         TextInputField(
-            modifier = Modifier
-                .padding(horizontal = appDimens.paddingMedium)
-                .testTag(TestTags.EMAIL_INPUT_LOGIN),
+            modifier =
+                Modifier
+                    .padding(horizontal = appDimens.paddingMedium)
+                    .testTag(TestTags.EMAIL_INPUT_LOGIN),
             value = formState.email,
             onValueChange = {
                 viewModel.onEvent(LoginEvent.SetEmail(it))
@@ -141,9 +144,10 @@ fun LoginScreenPhone(
         VerticalSpaceNormal()
 
         PasswordInputField(
-            modifier = Modifier
-                .padding(horizontal = appDimens.paddingMedium)
-                .testTag(TestTags.PASSWORD_INPUT_LOGIN),
+            modifier =
+                Modifier
+                    .padding(horizontal = appDimens.paddingMedium)
+                    .testTag(TestTags.PASSWORD_INPUT_LOGIN),
             value = formState.password,
             onValueChange = {
                 viewModel.onEvent(LoginEvent.SetPassword(it))
@@ -164,22 +168,24 @@ fun LoginScreenPhone(
         VerticalSpaceSmall()
 
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = appDimens.paddingMedium),
-            horizontalArrangement = Arrangement.End
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = appDimens.paddingMedium),
+            horizontalArrangement = Arrangement.End,
         ) {
             TextButton(
-                modifier = Modifier
-                    .testTag(TestTags.FORGOT_PASSWORD_BUTTON),
+                modifier =
+                    Modifier
+                        .testTag(TestTags.FORGOT_PASSWORD_BUTTON),
                 onClick = {
                     viewModel.onEvent(LoginEvent.OnForgotPasswordClick)
-                }
+                },
             ) {
                 Text(
                     text = stringResource(R.string.fogotten_your_password),
                     textAlign = TextAlign.End,
-                    style = MaterialTheme.typography.labelMedium
+                    style = MaterialTheme.typography.labelMedium,
                 )
             }
         }
@@ -187,8 +193,9 @@ fun LoginScreenPhone(
         VerticalSpaceLarge()
 
         ButtonWithPb(
-            modifier = Modifier
-                .testTag(TestTags.LOGIN_BUTTON),
+            modifier =
+                Modifier
+                    .testTag(TestTags.LOGIN_BUTTON),
             label = R.string.login,
             value = Unit,
             onClick = {
@@ -196,20 +203,21 @@ fun LoginScreenPhone(
             },
             isEnabled = formState.isButtonEnabled,
             displayProgressbar = formState.isLoading,
-            semanticDescription = R.string.semantic_button_login
+            semanticDescription = R.string.semantic_button_login,
         )
 
         VerticalSpaceNormal()
 
         MyClickableText(
-            modifier = Modifier
-                .testTag(TestTags.REGISTER_LINK),
+            modifier =
+                Modifier
+                    .testTag(TestTags.REGISTER_LINK),
             textNormal = R.string.dont_have_account,
             textClickable = R.string.register_now,
             textDescription = R.string.clickable_text_description_login,
             onClick = {
                 viewModel.onEvent(LoginEvent.OnRegisterClick)
-            }
+            },
         )
     }
 }
@@ -221,36 +229,41 @@ fun LoginScreenTablet(
     formState: LoginFormState,
 ) {
     Row(
-        modifier = modifier
-            .fillMaxSize()
-            .systemBarsPadding()
-            .padding(horizontal = appDimens.paddingLarge),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .systemBarsPadding()
+                .padding(horizontal = appDimens.paddingLarge),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.Center,
     ) {
         Column(
-            modifier = Modifier
-                .weight(1f),
+            modifier =
+                Modifier
+                    .weight(1f),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             HeaderAuth(
-                modifier = Modifier
-                    .testTag(TestTags.HEADER_LOGIN),
+                modifier =
+                    Modifier
+                        .testTag(TestTags.HEADER_LOGIN),
                 title = R.string.login_sesion,
-                logo = logo()
+                logo = logo(),
             )
         }
         Column(
-            modifier = Modifier
-                .weight(1f),
+            modifier =
+                Modifier
+                    .weight(1f),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             TextInputField(
-                modifier = Modifier
-                    .padding(horizontal = appDimens.paddingMedium)
-                    .testTag(TestTags.EMAIL_INPUT_LOGIN),
+                modifier =
+                    Modifier
+                        .padding(horizontal = appDimens.paddingMedium)
+                        .testTag(TestTags.EMAIL_INPUT_LOGIN),
                 value = formState.email,
                 onValueChange = {
                     viewModel.onEvent(LoginEvent.SetEmail(it))
@@ -268,9 +281,10 @@ fun LoginScreenTablet(
             VerticalSpaceNormal()
 
             PasswordInputField(
-                modifier = Modifier
-                    .padding(horizontal = appDimens.paddingMedium)
-                    .testTag(TestTags.PASSWORD_INPUT_LOGIN),
+                modifier =
+                    Modifier
+                        .padding(horizontal = appDimens.paddingMedium)
+                        .testTag(TestTags.PASSWORD_INPUT_LOGIN),
                 value = formState.password,
                 onValueChange = {
                     viewModel.onEvent(LoginEvent.SetPassword(it))
@@ -291,22 +305,24 @@ fun LoginScreenTablet(
             VerticalSpaceSmall()
 
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = appDimens.paddingMedium),
-                horizontalArrangement = Arrangement.End
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = appDimens.paddingMedium),
+                horizontalArrangement = Arrangement.End,
             ) {
                 TextButton(
-                    modifier = Modifier
-                        .testTag(TestTags.FORGOT_PASSWORD_BUTTON),
+                    modifier =
+                        Modifier
+                            .testTag(TestTags.FORGOT_PASSWORD_BUTTON),
                     onClick = {
                         viewModel.onEvent(LoginEvent.OnForgotPasswordClick)
-                    }
+                    },
                 ) {
                     Text(
                         text = stringResource(R.string.fogotten_your_password),
                         textAlign = TextAlign.End,
-                        style = MaterialTheme.typography.labelMedium
+                        style = MaterialTheme.typography.labelMedium,
                     )
                 }
             }
@@ -314,8 +330,9 @@ fun LoginScreenTablet(
             VerticalSpaceLarge()
 
             ButtonWithPb(
-                modifier = Modifier
-                    .testTag(TestTags.LOGIN_BUTTON),
+                modifier =
+                    Modifier
+                        .testTag(TestTags.LOGIN_BUTTON),
                 label = R.string.login,
                 value = Unit,
                 onClick = {
@@ -323,41 +340,41 @@ fun LoginScreenTablet(
                 },
                 isEnabled = false,
                 displayProgressbar = false,
-                semanticDescription = R.string.semantic_button_login
+                semanticDescription = R.string.semantic_button_login,
             )
 
             VerticalSpaceNormal()
 
             MyClickableText(
-                modifier = Modifier
-                    .testTag(TestTags.REGISTER_LINK),
+                modifier =
+                    Modifier
+                        .testTag(TestTags.REGISTER_LINK),
                 textNormal = R.string.dont_have_account,
                 textClickable = R.string.register_now,
                 textDescription = R.string.clickable_text_description_login,
                 onClick = {
                     viewModel.onEvent(LoginEvent.OnRegisterClick)
-                }
+                },
             )
         }
     }
 }
 
-
 @Preview(
     showSystemUi = true,
     showBackground = true,
-    device = Devices.PHONE
+    device = Devices.PHONE,
 )
 @Composable
 fun LoginScreenPreview() {
     MyAppTheme(
-        windowSizeClass = getSizeForPhone()
+        windowSizeClass = getSizeForPhone(),
     ) {
         LoginScreen(
             modifier = Modifier,
             navigateToHome = {},
             navigateToRegister = {},
-            navigateToForgotPassword = {}
+            navigateToForgotPassword = {},
         )
     }
 }
@@ -365,18 +382,18 @@ fun LoginScreenPreview() {
 @Preview(
     showSystemUi = true,
     showBackground = true,
-    device = Devices.FOLDABLE
+    device = Devices.FOLDABLE,
 )
 @Composable
 fun LoginScreenPreview3() {
     MyAppTheme(
-        windowSizeClass = getSizeForPhone()
+        windowSizeClass = getSizeForPhone(),
     ) {
         LoginScreen(
             modifier = Modifier,
             navigateToHome = {},
             navigateToRegister = {},
-            navigateToForgotPassword = {}
+            navigateToForgotPassword = {},
         )
     }
 }
@@ -384,18 +401,18 @@ fun LoginScreenPreview3() {
 @Preview(
     showSystemUi = true,
     showBackground = true,
-    device = Devices.TABLET
+    device = Devices.TABLET,
 )
 @Composable
 fun LoginScreenPreview2() {
     MyAppTheme(
-        windowSizeClass = getSizeForTablet()
+        windowSizeClass = getSizeForTablet(),
     ) {
         LoginScreen(
             modifier = Modifier,
             navigateToHome = {},
             navigateToRegister = {},
-            navigateToForgotPassword = {}
+            navigateToForgotPassword = {},
         )
     }
 }

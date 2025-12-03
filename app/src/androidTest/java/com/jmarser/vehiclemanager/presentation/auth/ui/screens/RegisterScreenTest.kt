@@ -23,7 +23,6 @@ import org.junit.Test
  */
 
 class RegisterScreenTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -32,17 +31,16 @@ class RegisterScreenTest {
 
     @Before
     fun setUp() {
-
         every { mockNavigateToLogin.invoke() } returns Unit
         every { mockNavigateToHome.invoke() } returns Unit
 
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
                 RegisterScreen(
                     navigateToLogin = mockNavigateToLogin,
-                    navigateToHome = mockNavigateToHome
+                    navigateToHome = mockNavigateToHome,
                 )
             }
         }
@@ -50,7 +48,6 @@ class RegisterScreenTest {
 
     @Test
     fun RegisterScreen_elementsAreDisplayedAndButtonDisabled() {
-
         composeTestRule.onNodeWithTag(TestTags.ON_BACK_BUTTON_REGISTER).assertIsDisplayed()
         composeTestRule.onNodeWithTag(TestTags.HEADER_REGISTER).assertIsDisplayed()
         composeTestRule.onNodeWithTag(TestTags.NAME_INPUT_REGISTER).assertIsDisplayed()
@@ -78,5 +75,4 @@ class RegisterScreenTest {
         verify(exactly = 1) { mockNavigateToLogin.invoke() }
         verify(exactly = 0) { mockNavigateToHome.invoke() }
     }
-
 }

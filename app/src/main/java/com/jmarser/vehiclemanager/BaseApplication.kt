@@ -11,4 +11,4 @@ import dagger.hilt.android.HiltAndroidApp
  */
 
 @HiltAndroidApp
-class BaseApplication: Application()
+class BaseApplication : Application()

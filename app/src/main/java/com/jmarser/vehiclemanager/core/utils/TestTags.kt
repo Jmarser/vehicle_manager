@@ -1,7 +1,6 @@
 package com.jmarser.vehiclemanager.core.utils
 
 object TestTags {
-
     const val CLICKABLE_TEXT_COMPONENT = "clickable_text_component"
 
     const val HEADER_LOGIN = "header_login"

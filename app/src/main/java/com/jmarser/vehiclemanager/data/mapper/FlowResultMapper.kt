@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.map
  * Created: 02/12/2025
  */
 
-inline fun <T, R> Flow<Result<T>>.mapResult(crossinline mapper: (T) -> R): Flow<Result<R>> {
-    return this.map { result -> result.map{mapper(it)}}
-}
+inline fun <T, R> Flow<Result<T>>.mapResult(crossinline mapper: (T) -> R): Flow<Result<R>> =
+    this.map { result ->
+        result.map {
+            mapper(it)
+        }
+    }

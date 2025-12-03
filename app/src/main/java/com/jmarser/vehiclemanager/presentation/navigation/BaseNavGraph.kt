@@ -12,10 +12,9 @@ import androidx.navigation.NavHostController
  */
 
 interface BaseNavGraph {
-
     fun build(
         modifier: Modifier,
         navController: NavHostController,
-        navGraphBuilder: NavGraphBuilder
+        navGraphBuilder: NavGraphBuilder,
     )
 }

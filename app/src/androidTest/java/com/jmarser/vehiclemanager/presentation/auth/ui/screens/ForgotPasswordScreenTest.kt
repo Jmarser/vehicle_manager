@@ -23,7 +23,6 @@ import org.junit.Test
  */
 
 class ForgotPasswordScreenTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -34,18 +33,17 @@ class ForgotPasswordScreenTest {
         every { mockNavigateToLogin.invoke() } returns Unit
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
                 ForgotPasswordScreen(
-                    navigateToLogin = mockNavigateToLogin
+                    navigateToLogin = mockNavigateToLogin,
                 )
             }
         }
     }
 
     @Test
-    fun forgotPasswordScreen_elementsAreDisplayedAndButtonDisabled(){
-
+    fun forgotPasswordScreen_elementsAreDisplayedAndButtonDisabled() {
         composeTestRule.onNodeWithTag(TestTags.ON_BACK_BUTTON_FORGOT).assertIsDisplayed()
         composeTestRule.onNodeWithTag(TestTags.HEADER_FORGOT).assertIsDisplayed()
         composeTestRule.onNodeWithTag(TestTags.EMAIL_INPUT_FORGOT).assertIsDisplayed()
@@ -57,7 +55,7 @@ class ForgotPasswordScreenTest {
     }
 
     @Test
-    fun forgotPasswordScreen_on_back_button_click_navigate_to_login(){
+    fun forgotPasswordScreen_on_back_button_click_navigate_to_login() {
         composeTestRule.onNodeWithTag(TestTags.ON_BACK_BUTTON_FORGOT).performClick()
         verify(exactly = 1) { mockNavigateToLogin.invoke() }
     }

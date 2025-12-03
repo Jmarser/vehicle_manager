@@ -11,11 +11,15 @@ import javax.inject.Inject
  * Created: 02/12/2025
  */
 
-class LoginUseCase @Inject constructor(
-    private val repository: AuthRepository
-) {
-
-    operator fun invoke(email: String, password: String) = repository.login(
-        LoginData(email = email, password = password)
-    )
-}
+class LoginUseCase
+    @Inject
+    constructor(
+        private val repository: AuthRepository,
+    ) {
+        operator fun invoke(
+            email: String,
+            password: String,
+        ) = repository.login(
+            LoginData(email = email, password = password),
+        )
+    }

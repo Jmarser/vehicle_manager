@@ -13,14 +13,21 @@ import javax.inject.Inject
  * Created: 02/12/2025
  */
 
-class RegisterUseCase @Inject constructor(
-    private val repository: AuthRepository
-) {
-    operator fun invoke(name: String, email: String, password: String): Flow<Result<User>> = repository.register(
-        AuthCredentialsData(
-            email = email,
-            password = password,
-            name = name
-        )
-    )
-}
+class RegisterUseCase
+    @Inject
+    constructor(
+        private val repository: AuthRepository,
+    ) {
+        operator fun invoke(
+            name: String,
+            email: String,
+            password: String,
+        ): Flow<Result<User>> =
+            repository.register(
+                AuthCredentialsData(
+                    email = email,
+                    password = password,
+                    name = name,
+                ),
+            )
+    }

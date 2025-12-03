@@ -1,6 +1,5 @@
 package com.jmarser.vehiclemanager.presentation.auth.ui.screens
 
-
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -53,88 +52,93 @@ fun RegisterScreen(
     modifier: Modifier = Modifier,
     viewModel: RegisterViewModel = hiltViewModel(),
     navigateToLogin: () -> Unit,
-    navigateToHome: () -> Unit
+    navigateToHome: () -> Unit,
 ) {
-
     val context = LocalContext.current
     val orientation = rememberDeviceOrientation()
     val formState by viewModel.formState.collectAsStateWithLifecycle()
 
-    when(orientation){
-        DeviceOrientation.Portrait -> RegisterScreenPhone(
-            modifier = modifier,
-            viewModel = viewModel,
-            formState = formState
-        )
+    when (orientation) {
+        DeviceOrientation.Portrait ->
+            RegisterScreenPhone(
+                modifier = modifier,
+                viewModel = viewModel,
+                formState = formState,
+            )
         DeviceOrientation.Landscape,
-                DeviceOrientation.Undefined -> RegisterScreenTablet(
-            modifier = modifier,
-            viewModel = viewModel,
-            formState = formState
-        )
+        DeviceOrientation.Undefined,
+        ->
+            RegisterScreenTablet(
+                modifier = modifier,
+                viewModel = viewModel,
+                formState = formState,
+            )
     }
 
     LaunchedEffect(Unit) {
         viewModel.uiEffect.collect { effect ->
-            when(effect){
+            when (effect) {
                 RegisterEffect.NavigateToBack -> navigateToLogin()
                 RegisterEffect.NavigateToHome -> navigateToHome()
                 is RegisterEffect.ShowToast -> {
-                    Toast.makeText( context, effect.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
-
 }
 
 @Composable
 fun RegisterScreenPhone(
     modifier: Modifier = Modifier,
     viewModel: RegisterViewModel,
-    formState: RegisterFormState
-){
-
-    Column (
-        modifier = modifier
-            .fillMaxSize()
-            .systemBarsPadding()
-            .verticalScroll(rememberScrollState())
-            .imePadding()
-            .padding(horizontal = appDimens.paddingMedium),
+    formState: RegisterFormState,
+) {
+    Column(
+        modifier =
+            modifier
+                .fillMaxSize()
+                .systemBarsPadding()
+                .verticalScroll(rememberScrollState())
+                .imePadding()
+                .padding(horizontal = appDimens.paddingMedium),
         verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        Row (
-            modifier = Modifier
-                .fillMaxWidth()
-        ){
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Row(
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
+        ) {
             IconButton(
-                modifier = Modifier
-                    .testTag(TestTags.ON_BACK_BUTTON_REGISTER),
+                modifier =
+                    Modifier
+                        .testTag(TestTags.ON_BACK_BUTTON_REGISTER),
                 onClick = {
                     viewModel.onEvent(RegisterEvent.OnBackClick)
                 },
             ) {
                 Icon(
                     imageVector = AppImages.ic_back,
-                    contentDescription = stringResource(R.string.back_to_login)
+                    contentDescription = stringResource(R.string.back_to_login),
                 )
             }
         }
         HeaderAuth(
-            modifier = Modifier
-                .testTag(TestTags.HEADER_REGISTER),
+            modifier =
+                Modifier
+                    .testTag(TestTags.HEADER_REGISTER),
             title = R.string.register_user,
-            logo = AppImages.logo()
+            logo = AppImages.logo(),
         )
 
         VerticalSpaceLarge()
 
         TextInputField(
-            modifier = Modifier
-                .padding(horizontal = appDimens.paddingMedium)
-                .testTag(TestTags.NAME_INPUT_REGISTER),
+            modifier =
+                Modifier
+                    .padding(horizontal = appDimens.paddingMedium)
+                    .testTag(TestTags.NAME_INPUT_REGISTER),
             value = formState.name,
             onValueChange = {
                 viewModel.onEvent(RegisterEvent.SetName(it))
@@ -145,13 +149,14 @@ fun RegisterScreenPhone(
             imeAction = ImeAction.Next,
             isError = (formState.isNameValid == false),
             leadingIcon = AppImages.ic_user,
-            textError = formState.nameErrorMessage
+            textError = formState.nameErrorMessage,
         )
 
         TextInputField(
-            modifier = Modifier
-                .padding(horizontal = appDimens.paddingMedium)
-                .testTag(TestTags.EMAIL_INPUT_REGISTER),
+            modifier =
+                Modifier
+                    .padding(horizontal = appDimens.paddingMedium)
+                    .testTag(TestTags.EMAIL_INPUT_REGISTER),
             value = formState.email,
             onValueChange = {
                 viewModel.onEvent(RegisterEvent.SetEmail(it))
@@ -162,13 +167,14 @@ fun RegisterScreenPhone(
             imeAction = ImeAction.Next,
             isError = (formState.isEmailValid == false),
             leadingIcon = AppImages.ic_email,
-            textError = formState.emailErrorMessage
+            textError = formState.emailErrorMessage,
         )
 
         PasswordInputField(
-            modifier = Modifier
-                .padding(horizontal = appDimens.paddingMedium)
-                .testTag(TestTags.PASSWORD_INPUT_REGISTER),
+            modifier =
+                Modifier
+                    .padding(horizontal = appDimens.paddingMedium)
+                    .testTag(TestTags.PASSWORD_INPUT_REGISTER),
             value = formState.password,
             onValueChange = {
                 viewModel.onEvent(RegisterEvent.SetPassword(it))
@@ -183,13 +189,14 @@ fun RegisterScreenPhone(
             iconHide = AppImages.ic_eye_hide,
             iconInfo = AppImages.ic_info,
             iconInfoDescription = R.string.info_password_description,
-            textError = formState.passwordErrorMessage
+            textError = formState.passwordErrorMessage,
         )
 
         PasswordInputField(
-            modifier = Modifier
-                .padding(horizontal = appDimens.paddingMedium)
-                .testTag(TestTags.CONFIRM_PASSWORD_INPUT_REGISTER),
+            modifier =
+                Modifier
+                    .padding(horizontal = appDimens.paddingMedium)
+                    .testTag(TestTags.CONFIRM_PASSWORD_INPUT_REGISTER),
             value = formState.confirmPassword,
             onValueChange = {
                 viewModel.onEvent(RegisterEvent.SetRepeatPassword(it))
@@ -202,14 +209,15 @@ fun RegisterScreenPhone(
             leadingIcon = AppImages.ic_password,
             iconShow = AppImages.ic_eye_open,
             iconHide = AppImages.ic_eye_hide,
-            textError = formState.confirmPasswordErrorMessage
+            textError = formState.confirmPasswordErrorMessage,
         )
 
         VerticalSpaceLarge()
 
         ButtonWithPb(
-            modifier = Modifier
-                .testTag(TestTags.REGISTER_BUTTON),
+            modifier =
+                Modifier
+                    .testTag(TestTags.REGISTER_BUTTON),
             isEnabled = formState.isButtonEnabled,
             label = R.string.register,
             displayProgressbar = formState.isLoading,
@@ -217,18 +225,19 @@ fun RegisterScreenPhone(
                 viewModel.onEvent(RegisterEvent.OnRegisterClick)
             },
             value = Unit,
-            semanticDescription = R.string.semantic_button_register
+            semanticDescription = R.string.semantic_button_register,
         )
 
         MyClickableText(
-            modifier = Modifier
-                .testTag(TestTags.LOGIN_LINK),
+            modifier =
+                Modifier
+                    .testTag(TestTags.LOGIN_LINK),
             textNormal = R.string.have_account,
             textClickable = R.string.signIn,
             textDescription = R.string.clickable_text_description_register,
             onClick = {
                 viewModel.onEvent(RegisterEvent.OnBackClick)
-            }
+            },
         )
     }
 }
@@ -237,61 +246,71 @@ fun RegisterScreenPhone(
 fun RegisterScreenTablet(
     modifier: Modifier = Modifier,
     viewModel: RegisterViewModel,
-    formState: RegisterFormState
-){
-    Column (
-        modifier = modifier
-            .fillMaxSize()
-            .systemBarsPadding()
-    ){
-        Row (
-            modifier = Modifier
-                .fillMaxWidth()
-        ){
-            IconButton(modifier = Modifier
-                .testTag(TestTags.ON_BACK_BUTTON_REGISTER),
+    formState: RegisterFormState,
+) {
+    Column(
+        modifier =
+            modifier
+                .fillMaxSize()
+                .systemBarsPadding(),
+    ) {
+        Row(
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
+        ) {
+            IconButton(
+                modifier =
+                    Modifier
+                        .testTag(TestTags.ON_BACK_BUTTON_REGISTER),
                 onClick = {
                     viewModel.onEvent(RegisterEvent.OnBackClick)
                 },
             ) {
                 Icon(
                     imageVector = AppImages.ic_back,
-                    contentDescription = stringResource(R.string.back_to_login)
+                    contentDescription = stringResource(R.string.back_to_login),
                 )
             }
         }
 
         Row(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(horizontal = appDimens.paddingLarge),
+            modifier =
+                modifier
+                    .fillMaxSize()
+                    .padding(horizontal = appDimens.paddingLarge),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
         ) {
             Column(
-                modifier = Modifier
-                    .weight(1f),
+                modifier =
+                    Modifier
+                        .weight(1f),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Center,
             ) {
-                HeaderAuth(modifier = Modifier
-                    .testTag(TestTags.HEADER_REGISTER),
+                HeaderAuth(
+                    modifier =
+                        Modifier
+                            .testTag(TestTags.HEADER_REGISTER),
                     title = R.string.register_user,
-                    logo = AppImages.logo()
+                    logo = AppImages.logo(),
                 )
             }
             Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .verticalScroll(rememberScrollState())
-                    .imePadding(),
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .verticalScroll(rememberScrollState())
+                        .imePadding(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Center,
             ) {
                 TextInputField(
-                    modifier = Modifier
-                        .padding(horizontal = appDimens.paddingMedium)
-                        .testTag(TestTags.NAME_INPUT_REGISTER),
+                    modifier =
+                        Modifier
+                            .padding(horizontal = appDimens.paddingMedium)
+                            .testTag(TestTags.NAME_INPUT_REGISTER),
                     value = formState.name,
                     onValueChange = {
                         viewModel.onEvent(RegisterEvent.SetName(it))
@@ -302,13 +321,14 @@ fun RegisterScreenTablet(
                     imeAction = ImeAction.Next,
                     isError = (formState.isNameValid == false),
                     leadingIcon = AppImages.ic_user,
-                    textError = formState.nameErrorMessage
+                    textError = formState.nameErrorMessage,
                 )
 
                 TextInputField(
-                    modifier = Modifier
-                        .padding(horizontal = appDimens.paddingMedium)
-                        .testTag(TestTags.EMAIL_INPUT_REGISTER),
+                    modifier =
+                        Modifier
+                            .padding(horizontal = appDimens.paddingMedium)
+                            .testTag(TestTags.EMAIL_INPUT_REGISTER),
                     value = formState.email,
                     onValueChange = {
                         viewModel.onEvent(RegisterEvent.SetEmail(it))
@@ -319,13 +339,14 @@ fun RegisterScreenTablet(
                     imeAction = ImeAction.Next,
                     isError = (formState.isEmailValid == false),
                     leadingIcon = AppImages.ic_email,
-                    textError = formState.emailErrorMessage
+                    textError = formState.emailErrorMessage,
                 )
 
                 PasswordInputField(
-                    modifier = Modifier
-                        .padding(horizontal = appDimens.paddingMedium)
-                        .testTag(TestTags.PASSWORD_INPUT_REGISTER),
+                    modifier =
+                        Modifier
+                            .padding(horizontal = appDimens.paddingMedium)
+                            .testTag(TestTags.PASSWORD_INPUT_REGISTER),
                     value = formState.password,
                     onValueChange = {
                         viewModel.onEvent(RegisterEvent.SetPassword(it))
@@ -340,13 +361,14 @@ fun RegisterScreenTablet(
                     iconHide = AppImages.ic_eye_hide,
                     iconInfo = AppImages.ic_info,
                     iconInfoDescription = R.string.info_password_description,
-                    textError = formState.passwordErrorMessage
+                    textError = formState.passwordErrorMessage,
                 )
 
                 PasswordInputField(
-                    modifier = Modifier
-                        .padding(horizontal = appDimens.paddingMedium)
-                        .testTag(TestTags.CONFIRM_PASSWORD_INPUT_REGISTER),
+                    modifier =
+                        Modifier
+                            .padding(horizontal = appDimens.paddingMedium)
+                            .testTag(TestTags.CONFIRM_PASSWORD_INPUT_REGISTER),
                     value = formState.confirmPassword,
                     onValueChange = {
                         viewModel.onEvent(RegisterEvent.SetRepeatPassword(it))
@@ -359,14 +381,15 @@ fun RegisterScreenTablet(
                     leadingIcon = AppImages.ic_password,
                     iconShow = AppImages.ic_eye_open,
                     iconHide = AppImages.ic_eye_hide,
-                    textError = formState.confirmPasswordErrorMessage
+                    textError = formState.confirmPasswordErrorMessage,
                 )
 
                 VerticalSpaceLarge()
 
                 ButtonWithPb(
-                    modifier = Modifier
-                        .testTag(TestTags.REGISTER_BUTTON),
+                    modifier =
+                        Modifier
+                            .testTag(TestTags.REGISTER_BUTTON),
                     isEnabled = formState.isButtonEnabled,
                     label = R.string.register,
                     displayProgressbar = formState.isLoading,
@@ -374,39 +397,39 @@ fun RegisterScreenTablet(
                         viewModel.onEvent(RegisterEvent.OnRegisterClick)
                     },
                     value = Unit,
-                    semanticDescription = R.string.semantic_button_register
+                    semanticDescription = R.string.semantic_button_register,
                 )
 
                 MyClickableText(
-                    modifier = Modifier
-                        .testTag(TestTags.LOGIN_LINK),
+                    modifier =
+                        Modifier
+                            .testTag(TestTags.LOGIN_LINK),
                     textNormal = R.string.have_account,
                     textClickable = R.string.signIn,
                     textDescription = R.string.clickable_text_description_register,
                     onClick = {
                         viewModel.onEvent(RegisterEvent.OnBackClick)
-                    }
+                    },
                 )
             }
         }
     }
-
 }
 
 @Preview(
     showSystemUi = true,
     showBackground = true,
-    device = Devices.PHONE
+    device = Devices.PHONE,
 )
 @Composable
 fun RegisterScreenPreview() {
     MyAppTheme(
-        windowSizeClass = getSizeForPhone()
+        windowSizeClass = getSizeForPhone(),
     ) {
         RegisterScreen(
             modifier = Modifier,
             navigateToLogin = {},
-            navigateToHome = {}
+            navigateToHome = {},
         )
     }
 }
@@ -414,17 +437,17 @@ fun RegisterScreenPreview() {
 @Preview(
     showSystemUi = true,
     showBackground = true,
-    device = Devices.FOLDABLE
+    device = Devices.FOLDABLE,
 )
 @Composable
 fun RegisterScreenPreview2() {
     MyAppTheme(
-        windowSizeClass = getSizeForPhone()
+        windowSizeClass = getSizeForPhone(),
     ) {
         RegisterScreen(
             modifier = Modifier,
             navigateToLogin = {},
-            navigateToHome = {}
+            navigateToHome = {},
         )
     }
 }
@@ -432,17 +455,17 @@ fun RegisterScreenPreview2() {
 @Preview(
     showSystemUi = true,
     showBackground = true,
-    device = Devices.TABLET
+    device = Devices.TABLET,
 )
 @Composable
 fun RegisterScreenPreview3() {
     MyAppTheme(
-        windowSizeClass = getSizeForTablet()
+        windowSizeClass = getSizeForTablet(),
     ) {
         RegisterScreen(
             modifier = Modifier,
             navigateToLogin = {},
-            navigateToHome = {}
+            navigateToHome = {},
         )
     }
 }

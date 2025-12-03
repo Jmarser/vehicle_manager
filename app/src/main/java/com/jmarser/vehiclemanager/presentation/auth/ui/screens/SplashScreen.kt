@@ -1,6 +1,5 @@
 package com.jmarser.vehiclemanager.presentation.auth.ui.screens
 
-
 import android.app.Activity
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -51,16 +50,17 @@ import kotlinx.coroutines.delay
 fun SplashScreen(
     modifier: Modifier = Modifier,
     navigateToHome: () -> Unit,
-    navigateToLogin: () -> Unit
+    navigateToLogin: () -> Unit,
 ) {
-
     val context = LocalContext.current
     val activity = context as Activity
 
     DisposableEffect(Unit) {
-        val windowInsetsController = WindowCompat.getInsetsController(
-            activity.window, activity.window.decorView
-        )
+        val windowInsetsController =
+            WindowCompat.getInsetsController(
+                activity.window,
+                activity.window.decorView,
+            )
 
         windowInsetsController.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
@@ -75,11 +75,11 @@ fun SplashScreen(
 
     val alphaAnim by animateFloatAsState(
         targetValue = if (startAnimation) 1f else 0f,
-        animationSpec = tween(1500)
+        animationSpec = tween(1500),
     )
     val scaleAnim by animateFloatAsState(
         targetValue = if (startAnimation) 1f else .8f,
-        animationSpec = tween(1500)
+        animationSpec = tween(1500),
     )
 
     LaunchedEffect(Unit) {
@@ -91,74 +91,80 @@ fun SplashScreen(
 
     val orientation = rememberDeviceOrientation()
 
-    when(orientation){
-        DeviceOrientation.Portrait -> SplashScreenPhone(
-            modifier = modifier,
-            alphaAnim = alphaAnim,
-            scaleAnim = scaleAnim
-        )
+    when (orientation) {
+        DeviceOrientation.Portrait ->
+            SplashScreenPhone(
+                modifier = modifier,
+                alphaAnim = alphaAnim,
+                scaleAnim = scaleAnim,
+            )
         DeviceOrientation.Landscape,
-        DeviceOrientation.Undefined -> SplashScreenTablet(
-            modifier = modifier,
-            alphaAnim = alphaAnim,
-            scaleAnim = scaleAnim
-        )
+        DeviceOrientation.Undefined,
+        ->
+            SplashScreenTablet(
+                modifier = modifier,
+                alphaAnim = alphaAnim,
+                scaleAnim = scaleAnim,
+            )
     }
-
-
 }
 
 @Composable
 fun SplashScreenPhone(
     modifier: Modifier = Modifier,
     alphaAnim: Float,
-    scaleAnim: Float
-){
-    Column (
-        modifier = modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    scaleAnim: Float,
+) {
+    Column(
+        modifier =
+            modifier
+                .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
         Text(
-            modifier = Modifier
-                .padding(top = appDimens.paddingXL)
-                .alpha(alphaAnim)
-                .scale(scaleAnim)
-                .testTag(TestTags.NAME_APP_SPLASH),
+            modifier =
+                Modifier
+                    .padding(top = appDimens.paddingXL)
+                    .alpha(alphaAnim)
+                    .scale(scaleAnim)
+                    .testTag(TestTags.NAME_APP_SPLASH),
             text = stringResource(R.string.app_name),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.headlineLarge
+            style = MaterialTheme.typography.headlineLarge,
         )
         Spacer(Modifier.weight(.8f))
         Image(
-            modifier = Modifier
-                .size(appDimens.logoSize)
-                .alpha(alphaAnim)
-                .scale(scaleAnim)
-                .testTag(TestTags.LOGO_APP_SPLASH),
+            modifier =
+                Modifier
+                    .size(appDimens.logoSize)
+                    .alpha(alphaAnim)
+                    .scale(scaleAnim)
+                    .testTag(TestTags.LOGO_APP_SPLASH),
             painter = AppImages.logo(),
-            contentDescription = null
+            contentDescription = null,
         )
         VerticalSpaceMedium()
         Text(
-            modifier = Modifier
-                .testTag(TestTags.SLOGAN_APP_SPLASH)
-                .alpha(alphaAnim)
-                .scale(scaleAnim),
+            modifier =
+                Modifier
+                    .testTag(TestTags.SLOGAN_APP_SPLASH)
+                    .alpha(alphaAnim)
+                    .scale(scaleAnim),
             text = stringResource(R.string.slogan_app),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleSmall
+            style = MaterialTheme.typography.titleSmall,
         )
         Spacer(Modifier.weight(1.2f))
         Text(
-            modifier = Modifier
-                .padding(bottom = appDimens.paddingNormal)
-                .alpha(alphaAnim)
-                .scale(scaleAnim)
-                .testTag(TestTags.DEVELOPER_NAME_SPLASH),
+            modifier =
+                Modifier
+                    .padding(bottom = appDimens.paddingNormal)
+                    .alpha(alphaAnim)
+                    .scale(scaleAnim)
+                    .testTag(TestTags.DEVELOPER_NAME_SPLASH),
             text = stringResource(R.string.developer_name),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.labelMedium
+            style = MaterialTheme.typography.labelMedium,
         )
     }
 }
@@ -167,79 +173,88 @@ fun SplashScreenPhone(
 fun SplashScreenTablet(
     modifier: Modifier = Modifier,
     alphaAnim: Float,
-    scaleAnim: Float
-){
-    Column (
-        modifier = modifier
-            .fillMaxSize()
-            .padding(vertical = appDimens.paddingLarge),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        Row (
-            modifier = Modifier
-                .weight(1f),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ){
-            Column (
-                modifier = Modifier
+    scaleAnim: Float,
+) {
+    Column(
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(vertical = appDimens.paddingLarge),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Row(
+            modifier =
+                Modifier
                     .weight(1f),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            Column(
+                modifier =
+                    Modifier
+                        .weight(1f),
                 verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
                 Text(
-                    modifier = Modifier
-                        .alpha(alphaAnim)
-                        .scale(scaleAnim)
-                        .testTag(TestTags.NAME_APP_SPLASH),
+                    modifier =
+                        Modifier
+                            .alpha(alphaAnim)
+                            .scale(scaleAnim)
+                            .testTag(TestTags.NAME_APP_SPLASH),
                     text = stringResource(R.string.app_name),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineLarge
+                    style = MaterialTheme.typography.headlineLarge,
                 )
                 VerticalSpaceLarge()
                 Text(
-                    modifier = Modifier
-                        .alpha(alphaAnim)
-                        .scale(scaleAnim)
-                        .testTag(TestTags.SLOGAN_APP_SPLASH),
+                    modifier =
+                        Modifier
+                            .alpha(alphaAnim)
+                            .scale(scaleAnim)
+                            .testTag(TestTags.SLOGAN_APP_SPLASH),
                     text = stringResource(R.string.slogan_app),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleSmall
+                    style = MaterialTheme.typography.titleSmall,
                 )
             }
-            Column (
-                modifier = Modifier
-                    .weight(1f),
+            Column(
+                modifier =
+                    Modifier
+                        .weight(1f),
                 verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
                 Image(
-                    modifier = Modifier
-                        .size(appDimens.logoSize)
-                        .alpha(alphaAnim)
-                        .scale(scaleAnim)
-                        .testTag(TestTags.LOGO_APP_SPLASH),
+                    modifier =
+                        Modifier
+                            .size(appDimens.logoSize)
+                            .alpha(alphaAnim)
+                            .scale(scaleAnim)
+                            .testTag(TestTags.LOGO_APP_SPLASH),
                     painter = AppImages.logo(),
-                    contentDescription = null
+                    contentDescription = null,
                 )
             }
         }
-        Row (
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = appDimens.paddingMedium),
+        Row(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = appDimens.paddingMedium),
             horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.Bottom
-        ){
+            verticalAlignment = Alignment.Bottom,
+        ) {
             Text(
-                modifier = Modifier
-                    .padding(bottom = appDimens.paddingNormal)
-                    .alpha(alphaAnim)
-                    .scale(scaleAnim)
-                    .testTag(TestTags.DEVELOPER_NAME_SPLASH),
+                modifier =
+                    Modifier
+                        .padding(bottom = appDimens.paddingNormal)
+                        .alpha(alphaAnim)
+                        .scale(scaleAnim)
+                        .testTag(TestTags.DEVELOPER_NAME_SPLASH),
                 text = stringResource(R.string.developer_name),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.labelMedium
+                style = MaterialTheme.typography.labelMedium,
             )
         }
     }
@@ -248,16 +263,16 @@ fun SplashScreenTablet(
 @Preview(
     showSystemUi = true,
     showBackground = true,
-    device = Devices.TABLET
+    device = Devices.TABLET,
 )
 @Composable
 fun SplashScreenPreview() {
     MyAppTheme(
-        windowSizeClass = getSizeForTablet()
+        windowSizeClass = getSizeForTablet(),
     ) {
         SplashScreen(
             navigateToHome = {},
-            navigateToLogin = {}
+            navigateToLogin = {},
         )
     }
 }

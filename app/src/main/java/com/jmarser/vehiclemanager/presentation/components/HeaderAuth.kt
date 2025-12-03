@@ -1,6 +1,5 @@
 package com.jmarser.vehiclemanager.presentation.components
 
-
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -21,24 +20,24 @@ import com.jmarser.vehiclemanager.core.presentation.ui.appDimens
 import com.jmarser.vehiclemanager.core.presentation.ui.getSizeForPhone
 import com.jmarser.vehiclemanager.ui.theme.MyAppTheme
 
-
 @Composable
 fun HeaderAuth(
     modifier: Modifier = Modifier,
     @StringRes title: Int? = null,
-    logo: Painter
+    logo: Painter,
 ) {
-
-    Column (
-        modifier = modifier
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    Column(
+        modifier =
+            modifier
+                .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
         Image(
-            modifier = Modifier
-                .size(appDimens.logoSize),
+            modifier =
+                Modifier
+                    .size(appDimens.logoSize),
             painter = logo,
-            contentDescription = stringResource(R.string.img_header_auth_description)
+            contentDescription = stringResource(R.string.img_header_auth_description),
         )
 
         VerticalSpaceNormal()
@@ -46,7 +45,7 @@ fun HeaderAuth(
         title?.let {
             Text(
                 text = stringResource(id = it),
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleLarge,
             )
         }
     }
@@ -54,18 +53,19 @@ fun HeaderAuth(
 
 @Preview(
     showSystemUi = true,
-    showBackground = true
+    showBackground = true,
 )
 @Composable
 fun HeaderAuthPreview() {
     MyAppTheme(
-        windowSizeClass = getSizeForPhone()
+        windowSizeClass = getSizeForPhone(),
     ) {
         HeaderAuth(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
             logo = painterResource(id = R.drawable.img_header),
-            title = R.string.login
+            title = R.string.login,
         )
     }
 }

@@ -1,6 +1,5 @@
 package com.jmarser.vehiclemanager.presentation.auth.ui.screens
 
-
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -53,9 +52,8 @@ import com.jmarser.vehiclemanager.ui.theme.MyAppTheme
 fun ForgotPasswordScreen(
     modifier: Modifier = Modifier,
     viewModel: ForgotPasswordViewModel = hiltViewModel(),
-    navigateToLogin: () -> Unit
+    navigateToLogin: () -> Unit,
 ) {
-
     val context = LocalContext.current
     val formState by viewModel.formState.collectAsStateWithLifecycle()
 
@@ -63,7 +61,7 @@ fun ForgotPasswordScreen(
 
     LaunchedEffect(Unit) {
         viewModel.uiEffect.collect { effect ->
-            when(effect){
+            when (effect) {
                 ForgotPasswordEffect.NavigateToLogin -> navigateToLogin()
                 is ForgotPasswordEffect.ShowToast -> {
                     Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
@@ -72,24 +70,26 @@ fun ForgotPasswordScreen(
         }
     }
 
-
     val orientation = rememberDeviceOrientation()
 
     when (orientation) {
-        DeviceOrientation.Landscape -> ForgotPasswordScreenTablet(
-            modifier = modifier,
-            viewModel = viewModel,
-            formState = formState,
-            semanticBackButton = semantic
-        )
+        DeviceOrientation.Landscape ->
+            ForgotPasswordScreenTablet(
+                modifier = modifier,
+                viewModel = viewModel,
+                formState = formState,
+                semanticBackButton = semantic,
+            )
 
         DeviceOrientation.Portrait,
-        DeviceOrientation.Undefined -> ForgotPasswordScreenPhone(
-            modifier = modifier,
-            semanticBackButton = semantic,
-            viewModel = viewModel,
-            formState = formState,
-        )
+        DeviceOrientation.Undefined,
+        ->
+            ForgotPasswordScreenPhone(
+                modifier = modifier,
+                semanticBackButton = semantic,
+                viewModel = viewModel,
+                formState = formState,
+            )
     }
 }
 
@@ -98,51 +98,55 @@ fun ForgotPasswordScreenPhone(
     modifier: Modifier = Modifier,
     semanticBackButton: String,
     viewModel: ForgotPasswordViewModel,
-    formState: ForgotPasswordState
+    formState: ForgotPasswordState,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .systemBarsPadding()
-            .imePadding(),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .systemBarsPadding()
+                .imePadding(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
+        verticalArrangement = Arrangement.Top,
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Start
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start,
         ) {
             IconButton(
-                modifier = Modifier
-                    .semantics {
-                        contentDescription = semanticBackButton
-                    }
-                    .testTag(TestTags.ON_BACK_BUTTON_FORGOT),
+                modifier =
+                    Modifier
+                        .semantics {
+                            contentDescription = semanticBackButton
+                        }.testTag(TestTags.ON_BACK_BUTTON_FORGOT),
                 onClick = {
                     viewModel.onEvent(ForgotPasswordEvent.OnBackClick)
-                }
+                },
             ) {
                 Icon(
                     imageVector = AppImages.ic_back,
-                    contentDescription = null
+                    contentDescription = null,
                 )
             }
         }
 
         HeaderAuth(
-            modifier = Modifier
-                .testTag(TestTags.HEADER_FORGOT),
+            modifier =
+                Modifier
+                    .testTag(TestTags.HEADER_FORGOT),
             title = R.string.forgot_password,
-            logo = AppImages.logo()
+            logo = AppImages.logo(),
         )
 
         VerticalSpaceLarge()
 
         TextInputField(
-            modifier = Modifier
-                .padding(horizontal = appDimens.paddingMedium)
-                .testTag(TestTags.EMAIL_INPUT_FORGOT),
+            modifier =
+                Modifier
+                    .padding(horizontal = appDimens.paddingMedium)
+                    .testTag(TestTags.EMAIL_INPUT_FORGOT),
             value = formState.email,
             onValueChange = {
                 viewModel.onEvent(ForgotPasswordEvent.SetEmail(it))
@@ -154,25 +158,28 @@ fun ForgotPasswordScreenPhone(
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Send,
             textError = formState.emailErrorMessage,
-            isError = (formState.isEmailValid == false)
+            isError = (formState.isEmailValid == false),
         )
 
         Text(
-            modifier = Modifier
-                .padding(horizontal = appDimens.paddingXL)
-                .testTag(TestTags.MESSAGE_INFO_FORGOT),
+            modifier =
+                Modifier
+                    .padding(horizontal = appDimens.paddingXL)
+                    .testTag(TestTags.MESSAGE_INFO_FORGOT),
             text = stringResource(R.string.message_screen_forgot),
-            style = MaterialTheme.typography.bodySmall.copy(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Start
-            )
+            style =
+                MaterialTheme.typography.bodySmall.copy(
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Start,
+                ),
         )
 
         VerticalSpaceLarge()
 
         ButtonWithPb(
-            modifier = Modifier
-                .testTag(TestTags.FORGOT_BUTTON),
+            modifier =
+                Modifier
+                    .testTag(TestTags.FORGOT_BUTTON),
             label = R.string.send,
             value = Unit,
             onClick = {
@@ -180,7 +187,7 @@ fun ForgotPasswordScreenPhone(
             },
             isEnabled = formState.isButtonEnabled,
             displayProgressbar = formState.isLoading,
-            semanticDescription = R.string.semantic_button_forgot
+            semanticDescription = R.string.semantic_button_forgot,
         )
     }
 }
@@ -190,66 +197,73 @@ fun ForgotPasswordScreenTablet(
     modifier: Modifier = Modifier,
     semanticBackButton: String,
     viewModel: ForgotPasswordViewModel,
-    formState: ForgotPasswordState
+    formState: ForgotPasswordState,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .systemBarsPadding(),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .systemBarsPadding(),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Start
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start,
         ) {
             IconButton(
-                modifier = Modifier
-                    .semantics {
-                        contentDescription = semanticBackButton
-                    }
-                    .testTag(TestTags.ON_BACK_BUTTON_FORGOT),
+                modifier =
+                    Modifier
+                        .semantics {
+                            contentDescription = semanticBackButton
+                        }.testTag(TestTags.ON_BACK_BUTTON_FORGOT),
                 onClick = {
                     viewModel.onEvent(ForgotPasswordEvent.OnBackClick)
-                }
+                },
             ) {
                 Icon(
                     imageVector = AppImages.ic_back,
-                    contentDescription = null
+                    contentDescription = null,
                 )
             }
         }
 
         Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = appDimens.paddingLarge),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = appDimens.paddingLarge),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
         ) {
             Column(
-                modifier = Modifier
-                    .weight(1f),
+                modifier =
+                    Modifier
+                        .weight(1f),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Center,
             ) {
                 HeaderAuth(
-                    modifier = Modifier
-                        .testTag(TestTags.HEADER_REGISTER),
+                    modifier =
+                        Modifier
+                            .testTag(TestTags.HEADER_REGISTER),
                     title = R.string.register_user,
-                    logo = AppImages.logo()
+                    logo = AppImages.logo(),
                 )
             }
 
             Column(
-                modifier = Modifier
-                    .weight(1f),
+                modifier =
+                    Modifier
+                        .weight(1f),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Center,
             ) {
                 TextInputField(
-                    modifier = Modifier
-                        .padding(horizontal = appDimens.paddingMedium)
-                        .testTag(TestTags.EMAIL_INPUT_FORGOT),
+                    modifier =
+                        Modifier
+                            .padding(horizontal = appDimens.paddingMedium)
+                            .testTag(TestTags.EMAIL_INPUT_FORGOT),
                     value = formState.email,
                     onValueChange = {
                         viewModel.onEvent(ForgotPasswordEvent.SetEmail(it))
@@ -261,25 +275,28 @@ fun ForgotPasswordScreenTablet(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Send,
                     textError = formState.emailErrorMessage,
-                    isError = (formState.isEmailValid == false)
+                    isError = (formState.isEmailValid == false),
                 )
 
                 Text(
-                    modifier = Modifier
-                        .padding(horizontal = appDimens.paddingXL)
-                        .testTag(TestTags.MESSAGE_INFO_FORGOT),
+                    modifier =
+                        Modifier
+                            .padding(horizontal = appDimens.paddingXL)
+                            .testTag(TestTags.MESSAGE_INFO_FORGOT),
                     text = stringResource(R.string.message_screen_forgot),
-                    style = MaterialTheme.typography.bodySmall.copy(
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        textAlign = TextAlign.Start
-                    )
+                    style =
+                        MaterialTheme.typography.bodySmall.copy(
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = TextAlign.Start,
+                        ),
                 )
 
                 VerticalSpaceLarge()
 
                 ButtonWithPb(
-                    modifier = Modifier
-                        .testTag(TestTags.FORGOT_BUTTON),
+                    modifier =
+                        Modifier
+                            .testTag(TestTags.FORGOT_BUTTON),
                     label = R.string.send,
                     value = Unit,
                     onClick = {
@@ -287,7 +304,7 @@ fun ForgotPasswordScreenTablet(
                     },
                     isEnabled = formState.isButtonEnabled,
                     displayProgressbar = formState.isLoading,
-                    semanticDescription = R.string.semantic_button_forgot
+                    semanticDescription = R.string.semantic_button_forgot,
                 )
             }
         }
@@ -297,12 +314,12 @@ fun ForgotPasswordScreenTablet(
 @Preview(
     showSystemUi = true,
     showBackground = true,
-    device = Devices.PHONE
+    device = Devices.PHONE,
 )
 @Composable
 fun ForgotPasswordScreenPreview() {
     MyAppTheme(
-        windowSizeClass = getSizeForPhone()
+        windowSizeClass = getSizeForPhone(),
     ) {
         ForgotPasswordScreen(modifier = Modifier, navigateToLogin = {})
     }
@@ -311,12 +328,12 @@ fun ForgotPasswordScreenPreview() {
 @Preview(
     showSystemUi = true,
     showBackground = true,
-    device = Devices.FOLDABLE
+    device = Devices.FOLDABLE,
 )
 @Composable
 fun ForgotPasswordScreenPreview2() {
     MyAppTheme(
-        windowSizeClass = getSizeForPhone()
+        windowSizeClass = getSizeForPhone(),
     ) {
         ForgotPasswordScreen(modifier = Modifier, navigateToLogin = {})
     }
@@ -325,12 +342,12 @@ fun ForgotPasswordScreenPreview2() {
 @Preview(
     showSystemUi = true,
     showBackground = true,
-    device = Devices.TABLET
+    device = Devices.TABLET,
 )
 @Composable
 fun ForgotPasswordScreenPreview3() {
     MyAppTheme(
-        windowSizeClass = getSizeForTablet()
+        windowSizeClass = getSizeForTablet(),
     ) {
         ForgotPasswordScreen(modifier = Modifier, navigateToLogin = {})
     }

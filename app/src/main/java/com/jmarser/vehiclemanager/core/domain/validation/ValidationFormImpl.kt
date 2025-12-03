@@ -9,18 +9,17 @@ import com.jmarser.vehiclemanager.R
  * Created: 01/12/2025
  */
 
-class ValidationFormImpl: ValidationForm {
-    override fun validateFieldNotEmpty(texto: String): Boolean {
-        return texto.isNotEmpty() && texto.isNotBlank()
-    }
+class ValidationFormImpl : ValidationForm {
+    override fun validateFieldNotEmpty(texto: String): Boolean = texto.isNotEmpty() && texto.isNotBlank()
 
     override fun validateEmail(email: String): Boolean {
-        val emailPattern = Regex(
-            "^[A-Za-z0-9._%+-]+@" +
+        val emailPattern =
+            Regex(
+                "^[A-Za-z0-9._%+-]+@" +
                     "(?!.*\\.\\.)" +
                     "[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*" +
-                    "\\.[A-Za-z]{2,}$"
-        )
+                    "\\.[A-Za-z]{2,}$",
+            )
         return emailPattern.matches(email)
     }
 
@@ -37,10 +36,8 @@ class ValidationFormImpl: ValidationForm {
 
     override fun validateConfirmPassword(
         password: String,
-        confirmPassword: String
-    ): Boolean {
-        return password == confirmPassword
-    }
+        confirmPassword: String,
+    ): Boolean = password == confirmPassword
 
     override fun validatePasswordDetails(password: String): PasswordValidationResult {
         val errors = mutableListOf<Int>()
@@ -54,7 +51,7 @@ class ValidationFormImpl: ValidationForm {
 
         return PasswordValidationResult(
             isValid = errors.isEmpty(),
-            errorMessage = errors.firstOrNull()
+            errorMessage = errors.firstOrNull(),
         )
     }
 
@@ -65,28 +62,18 @@ class ValidationFormImpl: ValidationForm {
         return areAllNotNull && areAllTrue
     }
 
-    override fun validHasUpperCase(password: String): Boolean {
-        return password.any{it.isUpperCase()}
-    }
+    override fun validHasUpperCase(password: String): Boolean = password.any { it.isUpperCase() }
 
-    override fun validHasLowerCase(password: String): Boolean {
-        return password.any { it.isLowerCase() }
-    }
+    override fun validHasLowerCase(password: String): Boolean = password.any { it.isLowerCase() }
 
-    override fun validHasNumber(password: String): Boolean {
-        return password.any { it.isDigit() }
-    }
+    override fun validHasNumber(password: String): Boolean = password.any { it.isDigit() }
 
     override fun validHasSpecialChar(password: String): Boolean {
         val regex = Regex("[!@#\$%^&*(),.?\":{}|<>]")
         return regex.containsMatchIn(password)
     }
 
-    override fun validLength(password: String): Boolean {
-        return password.length >= 6
-    }
+    override fun validLength(password: String): Boolean = password.length >= 6
 
-    override fun validNotHasSpaces(password: String): Boolean {
-        return !password.contains(" ")
-    }
+    override fun validNotHasSpaces(password: String): Boolean = !password.contains(" ")
 }

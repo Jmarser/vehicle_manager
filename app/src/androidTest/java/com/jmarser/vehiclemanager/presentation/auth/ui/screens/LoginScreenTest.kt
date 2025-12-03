@@ -23,7 +23,6 @@ import org.junit.Test
  */
 
 class LoginScreenTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -32,27 +31,26 @@ class LoginScreenTest {
     private val mockNaviagteToHome = mockk<() -> Unit>()
 
     @Before
-    fun setUp(){
+    fun setUp() {
         every { mockNavigateToRegister.invoke() } returns Unit
         every { mockNavigateToForgotPassword.invoke() } returns Unit
         every { mockNaviagteToHome.invoke() } returns Unit
 
         composeTestRule.setContent {
             MyAppTheme(
-                windowSizeClass = getSizeForPhone()
+                windowSizeClass = getSizeForPhone(),
             ) {
                 LoginScreen(
                     navigateToRegister = mockNavigateToRegister,
                     navigateToForgotPassword = mockNavigateToForgotPassword,
-                    navigateToHome = mockNaviagteToHome
+                    navigateToHome = mockNaviagteToHome,
                 )
             }
         }
     }
 
     @Test
-    fun loginScreen_initialState_elementsAreDisplayedAndButtonDisabled(){
-
+    fun loginScreen_initialState_elementsAreDisplayedAndButtonDisabled() {
         composeTestRule.onNodeWithTag(TestTags.HEADER_LOGIN).assertIsDisplayed()
         composeTestRule.onNodeWithTag(TestTags.EMAIL_INPUT_LOGIN).assertIsDisplayed()
         composeTestRule.onNodeWithTag(TestTags.PASSWORD_INPUT_LOGIN).assertIsDisplayed()
@@ -67,7 +65,7 @@ class LoginScreenTest {
     }
 
     @Test
-    fun loginScreen_forgot_password_click_navigate_to_forgot_password(){
+    fun loginScreen_forgot_password_click_navigate_to_forgot_password() {
         composeTestRule.onNodeWithTag(TestTags.FORGOT_PASSWORD_BUTTON).performClick()
 
         verify(exactly = 1) { mockNavigateToForgotPassword.invoke() }
@@ -76,12 +74,11 @@ class LoginScreenTest {
     }
 
     @Test
-    fun loginScreen_register_link_click_navigate_to_register(){
+    fun loginScreen_register_link_click_navigate_to_register() {
         composeTestRule.onNodeWithTag(TestTags.CLICKABLE_TEXT_COMPONENT).performClick()
 
         verify(exactly = 0) { mockNavigateToForgotPassword.invoke() }
         verify(exactly = 1) { mockNavigateToRegister.invoke() }
         verify(exactly = 0) { mockNaviagteToHome.invoke() }
     }
-
 }

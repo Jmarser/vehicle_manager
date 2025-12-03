@@ -15,9 +15,8 @@ import kotlin.test.assertTrue
  * Author: Tu Jmarser <aenur32@gmail.com>
  * Created: 01/12/2025
  */
- 
-class ValidationFormTest {
 
+class ValidationFormTest {
     private lateinit var validation: ValidationFormImpl
 
     @Before
@@ -26,22 +25,22 @@ class ValidationFormTest {
     }
 
     @Test
-    fun validateFieldNotEmpty_returns_true_for_non_empty(){
+    fun validateFieldNotEmpty_returns_true_for_non_empty() {
         assertTrue(validation.validateFieldNotEmpty("Test"))
     }
 
     @Test
-    fun validateFieldNotEmpty_returns_false_for_empty(){
+    fun validateFieldNotEmpty_returns_false_for_empty() {
         assertFalse(validation.validateFieldNotEmpty(""))
     }
 
     @Test
-    fun validateFieldNotEmpty_returns_false_for_blank(){
+    fun validateFieldNotEmpty_returns_false_for_blank() {
         assertFalse(validation.validateFieldNotEmpty("   "))
     }
 
     @Test
-    fun validateEmail_returns_true_for_valid_email(){
+    fun validateEmail_returns_true_for_valid_email() {
         assertTrue(validation.validateEmail("test@test.com"))
         assertTrue(validation.validateEmail("test.test@test.com"))
         assertTrue(validation.validateEmail("test_name@test.com"))
@@ -94,7 +93,7 @@ class ValidationFormTest {
     }
 
     @Test
-    fun validatePasswordDetails_returns_false_for_invalid_password_with_error_message(){
+    fun validatePasswordDetails_returns_false_for_invalid_password_with_error_message() {
         val resulUpper = validation.validatePasswordDetails("pass123!")
         assertEquals(R.string.error_uppercase_required, resulUpper.errorMessage)
         val resultLower = validation.validatePasswordDetails("PASS123!")
@@ -120,31 +119,31 @@ class ValidationFormTest {
     }
 
     @Test
-    fun validateHasUpper_valid_and_invalid(){
+    fun validateHasUpper_valid_and_invalid() {
         assertTrue(validation.validHasUpperCase("Password1#"))
         assertFalse(validation.validHasUpperCase("password1#"))
     }
 
     @Test
-    fun validateHasLower_valid_and_invalid(){
+    fun validateHasLower_valid_and_invalid() {
         assertTrue(validation.validHasLowerCase("Password1#"))
         assertFalse(validation.validHasLowerCase("PASSWORD1#"))
     }
 
     @Test
-    fun validateHasDigit_valid_and_invalid(){
+    fun validateHasDigit_valid_and_invalid() {
         assertTrue(validation.validHasNumber("Password1#"))
         assertFalse(validation.validHasNumber("Password#"))
     }
 
     @Test
-    fun validateHasSpecial_valid_and_invalid(){
+    fun validateHasSpecial_valid_and_invalid() {
         assertTrue(validation.validHasSpecialChar("Password1#"))
         assertFalse(validation.validHasSpecialChar("Password1"))
     }
 
     @Test
-    fun validateLength_valid_and_invalid(){
+    fun validateLength_valid_and_invalid() {
         assertTrue(validation.validLength("Password1#"))
         assertFalse(validation.validLength("Pa1#"))
     }
@@ -156,55 +155,55 @@ class ValidationFormTest {
     }
 
     @Test
-    fun validateFields_all_fields_are_true_returns_true(){
+    fun validateFields_all_fields_are_true_returns_true() {
         val result = validation.validateFields(true, true, true)
         assertTrue(result)
     }
 
     @Test
-    fun validateFields_one_field_is_false_returns_false(){
+    fun validateFields_one_field_is_false_returns_false() {
         val result = validation.validateFields(true, false, true)
         assertFalse(result)
     }
 
     @Test
-    fun validateFields_all_fields_are_false_returns_false(){
+    fun validateFields_all_fields_are_false_returns_false() {
         val result = validation.validateFields(false, false, false)
         assertFalse(result)
     }
 
     @Test
-    fun validateFields_one_field_is_null_returns_false(){
+    fun validateFields_one_field_is_null_returns_false() {
         val result = validation.validateFields(true, null, true)
         assertFalse(result)
     }
 
     @Test
-    fun validateFields_all_fields_are_null_returns_false(){
+    fun validateFields_all_fields_are_null_returns_false() {
         val result = validation.validateFields(null, null, null)
         assertFalse(result)
     }
 
     @Test
-    fun validateFields_a_combinated_of_cases_returns_false(){
+    fun validateFields_a_combinated_of_cases_returns_false() {
         val result = validation.validateFields(true, false, null)
         assertFalse(result)
     }
 
     @Test
-    fun validateFields_a_single_field_is_true_returns_true(){
+    fun validateFields_a_single_field_is_true_returns_true() {
         val result = validation.validateFields(true)
         assertTrue(result)
     }
 
     @Test
-    fun validateFields_a_single_field_is_false_returns_false(){
+    fun validateFields_a_single_field_is_false_returns_false() {
         val result = validation.validateFields(false)
         assertFalse(result)
     }
 
     @Test
-    fun validateFields_a_single_field_is_null_returns_false(){
+    fun validateFields_a_single_field_is_null_returns_false() {
         val result = validation.validateFields(null)
         assertFalse(result)
     }

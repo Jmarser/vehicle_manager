@@ -11,9 +11,10 @@ import javax.inject.Inject
  * Created: 03/12/2025
  */
 
-class ForgotPasswordUseCase @Inject constructor(
-    private val repository: AuthRepository
-) {
-
-    operator fun invoke(email: String): Flow<Result<Unit>> = repository.forgotPassword(email)
-}
+class ForgotPasswordUseCase
+    @Inject
+    constructor(
+        private val repository: AuthRepository,
+    ) {
+        operator fun invoke(email: String): Flow<Result<Unit>> = repository.forgotPassword(email)
+    }

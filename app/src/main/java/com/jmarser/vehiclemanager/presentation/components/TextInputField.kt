@@ -1,6 +1,5 @@
 package com.jmarser.vehiclemanager.presentation.components
 
-
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -48,93 +47,100 @@ fun TextInputField(
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Next,
     shape: RoundedCornerShape = RoundedCornerShape(appDimens.roundedShapePercent25),
-    isError: Boolean = false
+    isError: Boolean = false,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
     val semanticsMessage = stringResource(semanticText)
 
-    Column (
-        modifier = modifier
-    ){
+    Column(
+        modifier = modifier,
+    ) {
         OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = textError?.let { 0.dp } ?: appDimens.paddingMedium)
-                .onFocusChanged{focusState ->
-                    if(!focusState.isFocused){
-                        keyboardController?.hide()
-                    }
-                }
-                .semantics{
-                    contentDescription = semanticsMessage
-                },
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = textError?.let { 0.dp } ?: appDimens.paddingMedium)
+                    .onFocusChanged { focusState ->
+                        if (!focusState.isFocused) {
+                            keyboardController?.hide()
+                        }
+                    }.semantics {
+                        contentDescription = semanticsMessage
+                    },
             value = value,
             onValueChange = onValueChange,
-            placeholder = placeholder?.let {
-                { Text(text = stringResource(it)) }
-            },
-            label = label?.let {
-                {
-                    Text( text = stringResource(it) )
-                }
-            },
+            placeholder =
+                placeholder?.let {
+                    { Text(text = stringResource(it)) }
+                },
+            label =
+                label?.let {
+                    {
+                        Text(text = stringResource(it))
+                    }
+                },
             shape = shape,
-            leadingIcon = leadingIcon?.let {
-                {
-                    Icon(
-                        imageVector = leadingIcon,
-                        contentDescription = null
-                    )
-                }
-            },
-            trailingIcon = trealingIcon?.let {
-                {
-                    IconButton(
-                        onClick = trealingIconClick
-                    ) {
+            leadingIcon =
+                leadingIcon?.let {
+                    {
                         Icon(
-                            imageVector = it,
-                            contentDescription = trealingIconDescription?.let { stringResource(it) }
+                            imageVector = leadingIcon,
+                            contentDescription = null,
                         )
                     }
-                }
-            },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = keyboardType,
-                imeAction = imeAction
-            ),
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    keyboardController?.hide()
-                    focusManager.clearFocus()
                 },
-                onGo = {
-                    keyboardController?.hide()
-                    focusManager.clearFocus()
+            trailingIcon =
+                trealingIcon?.let {
+                    {
+                        IconButton(
+                            onClick = trealingIconClick,
+                        ) {
+                            Icon(
+                                imageVector = it,
+                                contentDescription = trealingIconDescription?.let { stringResource(it) },
+                            )
+                        }
+                    }
                 },
-                onNext = {
-                    keyboardController?.hide()
-                    focusManager.clearFocus()
-                },
-                onSend = {
-                    keyboardController?.hide()
-                    focusManager.clearFocus()
-                }
-            ),
-            isError = isError
+            keyboardOptions =
+                KeyboardOptions.Default.copy(
+                    keyboardType = keyboardType,
+                    imeAction = imeAction,
+                ),
+            keyboardActions =
+                KeyboardActions(
+                    onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    },
+                    onGo = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    },
+                    onNext = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    },
+                    onSend = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    },
+                ),
+            isError = isError,
         )
 
         textError?.let {
             Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end = appDimens.paddingMedium),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(end = appDimens.paddingMedium),
                 text = stringResource(it),
                 textAlign = TextAlign.End,
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.error
+                color = MaterialTheme.colorScheme.error,
             )
         }
     }
@@ -142,12 +148,12 @@ fun TextInputField(
 
 @Preview(
     showSystemUi = false,
-    showBackground = true
+    showBackground = true,
 )
 @Composable
 fun TextInputFieldPreview() {
     MyAppTheme(
-        windowSizeClass = getSizeForPhone()
+        windowSizeClass = getSizeForPhone(),
     ) {
         TextInputField(
             modifier = Modifier,
@@ -160,7 +166,7 @@ fun TextInputFieldPreview() {
             imeAction = ImeAction.Next,
             isError = false,
             textError = R.string.error_email_invalid,
-            leadingIcon = AppImages.ic_email
+            leadingIcon = AppImages.ic_email,
         )
     }
 }

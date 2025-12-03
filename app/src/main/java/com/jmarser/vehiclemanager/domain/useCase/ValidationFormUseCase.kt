@@ -11,19 +11,23 @@ import javax.inject.Inject
  * Created: 01/12/2025
  */
 
-class ValidationFormUseCase @Inject constructor(
-    private val validationForm: ValidationForm
-) {
+class ValidationFormUseCase
+    @Inject
+    constructor(
+        private val validationForm: ValidationForm,
+    ) {
+        fun validateFiledNotEmpty(texto: String): Boolean = validationForm.validateFieldNotEmpty(texto)
 
-    fun validateFiledNotEmpty(texto: String): Boolean = validationForm.validateFieldNotEmpty(texto)
+        fun validateEmail(email: String): Boolean = validationForm.validateEmail(email)
 
-    fun validateEmail(email: String): Boolean = validationForm.validateEmail(email)
+        fun validatePassword(password: String): Boolean = validationForm.validatePassword(password)
 
-    fun validatePassword(password: String): Boolean = validationForm.validatePassword(password)
+        fun validateConfirmPassword(
+            password: String,
+            confirmPassword: String,
+        ): Boolean = validationForm.validateConfirmPassword(password, confirmPassword)
 
-    fun validateConfirmPassword(password: String, confirmPassword: String): Boolean = validationForm.validateConfirmPassword(password, confirmPassword)
+        fun validatePasswordDetails(password: String): PasswordValidationResult = validationForm.validatePasswordDetails(password)
 
-    fun validatePasswordDetails(password: String): PasswordValidationResult = validationForm.validatePasswordDetails(password)
-
-    fun validateFields (vararg validations: Boolean?): Boolean = validationForm.validateFields(*validations)
-}
+        fun validateFields(vararg validations: Boolean?): Boolean = validationForm.validateFields(*validations)
+    }

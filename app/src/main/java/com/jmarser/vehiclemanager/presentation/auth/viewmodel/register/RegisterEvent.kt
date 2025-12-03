@@ -8,11 +8,23 @@ package com.jmarser.vehiclemanager.presentation.auth.viewmodel.register
  */
 
 sealed interface RegisterEvent {
+    data class SetName(
+        val name: String,
+    ) : RegisterEvent
 
-    data class SetName(val name: String): RegisterEvent
-    data class SetEmail(val email: String): RegisterEvent
-    data class SetPassword(val password: String): RegisterEvent
-    data class SetRepeatPassword(val repeatPassword: String): RegisterEvent
-    object OnRegisterClick: RegisterEvent
-    object OnBackClick: RegisterEvent
+    data class SetEmail(
+        val email: String,
+    ) : RegisterEvent
+
+    data class SetPassword(
+        val password: String,
+    ) : RegisterEvent
+
+    data class SetRepeatPassword(
+        val repeatPassword: String,
+    ) : RegisterEvent
+
+    object OnRegisterClick : RegisterEvent
+
+    object OnBackClick : RegisterEvent
 }

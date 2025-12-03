@@ -34,16 +34,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-
             val windowSizeClass = calculateWindowSizeClass(this)
 
             MyAppTheme(
-                windowSizeClass = windowSizeClass
+                windowSizeClass = windowSizeClass,
             ) {
                 val navController = rememberNavController()
                 AppNavGraph(
                     modifier = Modifier,
-                    navController = navController
+                    navController = navController,
                 )
             }
         }
@@ -51,44 +50,46 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting(
+    name: String,
+    modifier: Modifier = Modifier,
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = "Hello $name!",
             modifier = modifier,
-            style = MaterialTheme.typography.displayLarge
+            style = MaterialTheme.typography.displayLarge,
         )
         VerticalSpaceNormal()
         Text(
             text = "Nuevo Texto",
-            style = MaterialTheme.typography.bodyLarge
+            style = MaterialTheme.typography.bodyLarge,
         )
         VerticalSpaceNormal()
         Button(
             modifier = Modifier.padding(top = 24.dp),
-            onClick = {}
+            onClick = {},
         ) {
             Text(
-                text = "Prueba Button"
+                text = "Prueba Button",
             )
         }
     }
-
 }
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Preview(
     showBackground = true,
-    showSystemUi = true
+    showSystemUi = true,
 )
 @Composable
 fun GreetingPreview() {
     MyAppTheme(
-        windowSizeClass = getSizeForPhone()
+        windowSizeClass = getSizeForPhone(),
     ) {
         Greeting("Android")
     }
@@ -98,12 +99,12 @@ fun GreetingPreview() {
 @Preview(
     showBackground = true,
     showSystemUi = true,
-    device = Devices.TABLET
+    device = Devices.TABLET,
 )
 @Composable
 fun GreetingPreview2() {
     MyAppTheme(
-        windowSizeClass = getSizeForTablet()
+        windowSizeClass = getSizeForTablet(),
     ) {
         Greeting("Android")
     }

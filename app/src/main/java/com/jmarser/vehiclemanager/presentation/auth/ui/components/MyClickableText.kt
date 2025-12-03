@@ -1,6 +1,5 @@
 package com.jmarser.vehiclemanager.presentation.auth.ui.components
 
-
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -30,38 +29,39 @@ fun MyClickableText(
     @StringRes textNormal: Int,
     @StringRes textClickable: Int,
     @StringRes textDescription: Int,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
-
     val normalText = stringResource(textNormal)
     val clickableText = stringResource(textClickable)
     val descriptionText = stringResource(textDescription)
 
     Row(
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier =
+            modifier
+                .fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = normalText,
-            style = MaterialTheme.typography.labelMedium
+            style = MaterialTheme.typography.labelMedium,
         )
 
         TextButton(
-            modifier = Modifier
-                .semantics {
-                    testTag = TestTags.CLICKABLE_TEXT_COMPONENT
-                    role = Role.Button
-                    contentDescription = descriptionText
-                },
-            onClick = onClick
+            modifier =
+                Modifier
+                    .semantics {
+                        testTag = TestTags.CLICKABLE_TEXT_COMPONENT
+                        role = Role.Button
+                        contentDescription = descriptionText
+                    },
+            onClick = onClick,
         ) {
             Text(
                 text = clickableText,
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
-                textDecoration = TextDecoration.Underline
+                textDecoration = TextDecoration.Underline,
             )
         }
     }
@@ -69,19 +69,19 @@ fun MyClickableText(
 
 @Preview(
     showSystemUi = false,
-    showBackground = true
+    showBackground = true,
 )
 @Composable
 fun MyClickableTextPreview() {
     MyAppTheme(
-        windowSizeClass = getSizeForPhone()
+        windowSizeClass = getSizeForPhone(),
     ) {
         MyClickableText(
             modifier = Modifier,
             textNormal = R.string.dont_have_account,
             textClickable = R.string.register_now,
             textDescription = R.string.clickable_text_description_login,
-            onClick = {}
+            onClick = {},
         )
     }
 }

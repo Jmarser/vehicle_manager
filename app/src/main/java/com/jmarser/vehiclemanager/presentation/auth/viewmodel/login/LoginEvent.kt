@@ -8,9 +8,17 @@ package com.jmarser.vehiclemanager.presentation.auth.viewmodel.login
  */
 
 sealed interface LoginEvent {
-    data class SetEmail(val email: String) : LoginEvent
-    data class SetPassword(val password: String) : LoginEvent
+    data class SetEmail(
+        val email: String,
+    ) : LoginEvent
+
+    data class SetPassword(
+        val password: String,
+    ) : LoginEvent
+
     object OnForgotPasswordClick : LoginEvent
+
     object OnLoginClick : LoginEvent
+
     object OnRegisterClick : LoginEvent
 }

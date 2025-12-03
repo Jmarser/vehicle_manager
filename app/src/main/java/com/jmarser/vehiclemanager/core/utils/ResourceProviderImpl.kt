@@ -10,13 +10,12 @@ import android.content.Context
  */
 
 class ResourceProviderImpl(
-    private val context: Context
-): ResourceProvider {
-    override fun getString(id: Int): String {
-        return context.getString(id)
-    }
+    private val context: Context,
+) : ResourceProvider {
+    override fun getString(id: Int): String = context.getString(id)
 
-    override fun getStringWithArgs(id: Int, vararg args: Any): String {
-        return context.getString(id, *args)
-    }
+    override fun getStringWithArgs(
+        id: Int,
+        vararg args: Any,
+    ): String = context.getString(id, *args)
 }
