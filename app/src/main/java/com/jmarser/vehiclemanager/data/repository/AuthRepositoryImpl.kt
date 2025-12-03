@@ -27,7 +27,5 @@ class AuthRepositoryImpl @Inject constructor(
 
     override fun register(authCredentials: AuthCredentialsData): Flow<Result<User>> = authDataSource.register(authCredentials).mapResult { it.toDomain() }
 
-    override fun forgotPassword(email: String): Flow<Result<Unit>> {
-        TODO("Not yet implemented")
-    }
+    override fun forgotPassword(email: String): Flow<Result<Unit>> = authDataSource.forgotPassword(email)
 }
