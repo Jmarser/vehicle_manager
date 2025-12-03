@@ -20,4 +20,6 @@ interface AuthRepository {
     fun forgotPassword(email: String): Flow<Result<Unit>>
 
     suspend fun getCurrentUser(): User?
+
+    suspend fun logout()
 }
