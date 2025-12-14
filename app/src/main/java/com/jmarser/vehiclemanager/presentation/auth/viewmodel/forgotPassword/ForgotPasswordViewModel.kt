@@ -6,6 +6,7 @@ import com.jmarser.vehiclemanager.R
 import com.jmarser.vehiclemanager.core.utils.ResourceProvider
 import com.jmarser.vehiclemanager.domain.useCase.ValidationFormUseCase
 import com.jmarser.vehiclemanager.domain.useCase.auth.ForgotPasswordUseCase
+import com.jmarser.vehiclemanager.presentation.utils.ExceptionStringMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,6 +36,7 @@ class ForgotPasswordViewModel
         private val validateForm: ValidationFormUseCase,
         private val resource: ResourceProvider,
         private val forgotPasswordUseCase: ForgotPasswordUseCase,
+        private val stringMapper: ExceptionStringMapper
     ) : ViewModel() {
         private val _formState = MutableStateFlow(ForgotPasswordState())
         val formState: StateFlow<ForgotPasswordState> = _formState.asStateFlow()
@@ -89,7 +91,7 @@ class ForgotPasswordViewModel
                         .onSuccess { data ->
                             emitEffect(ForgotPasswordEffect.ShowToast(resource.getString(R.string.reset_requested)))
                         }.onFailure { error ->
-                            emitEffect(ForgotPasswordEffect.ShowToast(resource.getString(R.string.error_requesting_reset)))
+                            emitEffect(ForgotPasswordEffect.ShowToast(resource.getString(stringMapper.mapExceptionToResourceId(error))))
                         }
                 }.catch {
                     clearForm()

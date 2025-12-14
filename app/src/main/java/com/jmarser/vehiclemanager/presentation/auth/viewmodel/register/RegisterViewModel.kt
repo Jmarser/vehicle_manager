@@ -6,6 +6,7 @@ import com.jmarser.vehiclemanager.R
 import com.jmarser.vehiclemanager.core.utils.ResourceProvider
 import com.jmarser.vehiclemanager.domain.useCase.ValidationFormUseCase
 import com.jmarser.vehiclemanager.domain.useCase.auth.RegisterUseCase
+import com.jmarser.vehiclemanager.presentation.utils.ExceptionStringMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,6 +36,7 @@ class RegisterViewModel
         private val validationForm: ValidationFormUseCase,
         private val registerUseCase: RegisterUseCase,
         private val resource: ResourceProvider,
+        private val stringMapper: ExceptionStringMapper
     ) : ViewModel() {
         private val _formState = MutableStateFlow(RegisterFormState())
         val formState: StateFlow<RegisterFormState> = _formState.asStateFlow()
@@ -136,7 +138,7 @@ class RegisterViewModel
                         .onSuccess { data ->
                             _uiEffect.emit(RegisterEffect.ShowToast(resource.getString(R.string.register_user_successfully)))
                         }.onFailure { error ->
-                            _uiEffect.emit(RegisterEffect.ShowToast(resource.getString(R.string.error_register_user)))
+                            _uiEffect.emit(RegisterEffect.ShowToast(resource.getString(stringMapper.mapExceptionToResourceId(error))))
                         }
                 }.catch {
                     clearForm()

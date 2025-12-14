@@ -36,6 +36,13 @@
     <string name="error_special_char_required">Debe contener un caracter especial</string>
     <string name="error_min_length_required">Debe ser de al menos 6 caracteres de largo</string>
     <string name="error_not_spaces_required">No debe contener espacios</string>
+    <!-- Errores de Autenticación -->
+    <string name="error_invalid_credentials">Credenciales inválidas. Verifica tu email y contraseña.</string>
+    <string name="error_user_not_found">Usuario no encontrado. ¿Ya tienes una cuenta?</string>
+    <string name="error_network_connection">No se pudo conectar. Revisa tu conexión de red.</string>
+    <string name="error_email_already_in_use">Ese email ya está asociado a una cuenta.</string>
+    <string name="error_weak_password">La contraseña es demasiado débil. Necesita al menos 6 caracteres.</string>
+    <string name="error_unknown_authentication">Ha ocurrido un error inesperado al autenticar.</string>
 
 
     <!--                  LOGIN                  -->

@@ -39,7 +39,6 @@ class SplashViewModel @Inject constructor(
                 _uiEffect.emit(SplashEffect.ShowToast(resource.getString(R.string.login_successfull)))
                 _uiEffect.emit(SplashEffect.NavigateToLogin)
             } ?: run {
-                _uiEffect.emit(SplashEffect.ShowToast("Imposible hacer login"))
                 _uiEffect.emit(SplashEffect.NavigateToLogin)
             }
         }
