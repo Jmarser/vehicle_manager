@@ -13,6 +13,6 @@ import com.jmarser.vehiclemanager.data.model.UserData
 fun FirebaseUser.toUserData(): UserData =
     UserData(
         uid = this.uid,
-        email = this.email,
+        email = this.email ?: "",
         displayName = this.displayName ?: "",
     )
