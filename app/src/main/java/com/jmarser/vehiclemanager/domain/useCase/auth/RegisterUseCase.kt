@@ -22,7 +22,7 @@ class RegisterUseCase
             name: String,
             email: String,
             password: String,
-        ): Flow<Result<User>> =
+        ) =
             repository.register(
                 AuthCredentialsData(
                     email = email,
