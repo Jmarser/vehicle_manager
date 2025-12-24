@@ -7,6 +7,7 @@ plugins {
     id("kotlin-kapt")
     alias(libs.plugins.kotlin.serialization)
     id("org.sonarqube") version "7.0.1.6134"
+    id("org.jlleitschuh.gradle.ktlint") version "14.0.1"
 }
 
 android {
@@ -28,7 +29,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -42,20 +43,27 @@ android {
     buildFeatures {
         compose = true
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "2.2.21"
+    }
 
     packaging {
         resources {
-            excludes += setOf(
-                "META-INF/AL2.0",
-                "META-INF/LGPL2.1",
-                "META-INF/licenses/**",
-                "META-INF/DEPENDENCIES",
-                "META-INF/NOTICE",
-                "META-INF/NOTICE.txt",
-                "META-INF/LICENSE",
-                "META-INF/LICENSE.txt",
-                "META-INF/ASL2.0"
-            )
+            excludes +=
+                setOf(
+                    "META-INF/AL2.0",
+                    "META-INF/LGPL2.1",
+                    "META-INF/licenses/**",
+                    "META-INF/DEPENDENCIES",
+                    "META-INF/NOTICE",
+                    "META-INF/NOTICE.txt",
+                    "META-INF/LICENSE",
+                    "META-INF/LICENSE.txt",
+                    "META-INF/ASL2.0",
+                    "META-INF/NOTICE.md",
+                    "META-INF/LICENSE.md",
+                    "META-INF/LICENSE-notice.md",
+                )
         }
     }
 }
@@ -66,11 +74,7 @@ dependencies {
     implementation(libs.androidx.foundation)
     implementation(libs.material3)
     implementation(libs.androidx.junit.ktx)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
+
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
@@ -95,7 +99,7 @@ dependencies {
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    //coroutines
+    // coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.google)
@@ -103,7 +107,6 @@ dependencies {
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
-    //implementation(libs.firebase.database.ktx)
 
     // Coil
     implementation(libs.coil.compose)
@@ -115,24 +118,22 @@ dependencies {
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.arch.core.testing)
     testImplementation(libs.turbine)
-
-    // Optionally: core test ktx for JVM unit tests that rely on androidx.test core
     testImplementation(libs.androidx.test.core.ktx)
+    testImplementation(kotlin("test"))
 
     // --- Android instrumented tests (androidTest) ---
-    androidTestImplementation(platform(libs.androidx.compose.bom)) // Compose BOM for test artifacts
-    androidTestImplementation(libs.compose.ui.test.junit4) // Compose UI tests (managed by BOM)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.androidx.test.rules)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.hilt.android.testing)
+    androidTestImplementation(libs.mockk.android)
 
     // Hilt testing (annotation processor + testing artifact)
-    androidTestImplementation(libs.hilt.android.testing)
     kaptAndroidTest(libs.hilt.android.compiler) // si usas kapt (o ksp), para generación de Hilt en tests
-
-    // If you use instrumentation unit tests requiring Robolectric-like features:
-    // (robolectric is usually used in testImplementation (JVM tests), not androidTest)
-    testImplementation(kotlin("test"))
 }
 
 kapt {

@@ -15,6 +15,7 @@ output.json                     # Salida JSON de builds
 # === Android Studio / intellij ===
 # =================================
 .idea/                          # Configuración del proyecto Android Studio
+.idea/modules/
 *.iws                           # Archivos de espacio de trabajo (IntelliJ)
 *.ipr                           # Archivos del proyecto IntelliJ
 *.bak                           # Backups temporales
