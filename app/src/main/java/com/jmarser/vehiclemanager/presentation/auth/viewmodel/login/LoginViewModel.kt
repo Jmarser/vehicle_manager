@@ -113,7 +113,8 @@ constructor(
                 _formState.update { it.copy(isLoading = false) }
                 result
                     .onSuccess { data ->
-                        emitEffect(LoginEffect.ShowToast("${resource.getString(R.string.login_successfull)} para ${data.name}"))
+                        emitEffect(LoginEffect.ShowToast(resource.getString(R.string.login_successfull)))
+                        emitEffect(LoginEffect.NavigateToHome)
                     }.onFailure { error ->
                         val resourceId = stringMapper.mapExceptionToResourceId(error)
                         val errorMessage = resource.getString(resourceId)

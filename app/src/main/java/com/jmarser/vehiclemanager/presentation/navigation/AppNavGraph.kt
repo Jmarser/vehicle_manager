@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.jmarser.vehiclemanager.presentation.auth.ui.navigation.AuthNavGraph
+import com.jmarser.vehiclemanager.presentation.vehicles.ui.navigation.VehiclesNavGraph
 
 @Composable
 fun AppNavGraph(
@@ -78,6 +79,7 @@ fun AppNavGraph(
     ) {
         listOf<BaseNavGraph>(
             AuthNavGraph,
+            VehiclesNavGraph
         ).forEach {
             it.build(
                 modifier = modifier,

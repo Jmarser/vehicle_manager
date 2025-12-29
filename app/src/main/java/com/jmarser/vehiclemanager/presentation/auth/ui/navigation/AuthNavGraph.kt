@@ -10,6 +10,8 @@ import com.jmarser.vehiclemanager.presentation.auth.ui.screens.LoginScreen
 import com.jmarser.vehiclemanager.presentation.auth.ui.screens.RegisterScreen
 import com.jmarser.vehiclemanager.presentation.auth.ui.screens.SplashScreen
 import com.jmarser.vehiclemanager.presentation.navigation.BaseNavGraph
+import com.jmarser.vehiclemanager.presentation.navigation.navigateToHome
+import com.jmarser.vehiclemanager.presentation.vehicles.ui.navigation.VehiclesNavGraph
 import kotlinx.serialization.Serializable
 
 object AuthNavGraph : BaseNavGraph {
@@ -41,7 +43,9 @@ object AuthNavGraph : BaseNavGraph {
             composable<Dest.Splash> {
                 SplashScreen(
                     modifier = modifier,
-                    navigateToHome = {},
+                    navigateToHome = {
+                        navController.navigateToHome()
+                    },
                     navigateToLogin = {
                         navController.navigate(Dest.Login) {
                             popUpTo(Dest.Splash) {
@@ -61,7 +65,9 @@ object AuthNavGraph : BaseNavGraph {
                     navigateToForgotPassword = {
                         navController.navigate(Dest.ForgotPassword)
                     },
-                    navigateToHome = {},
+                    navigateToHome = {
+                        navController.navigateToHome()
+                    },
                 )
             }
 
@@ -71,7 +77,9 @@ object AuthNavGraph : BaseNavGraph {
                     navigateToLogin = {
                         navController.popBackStack()
                     },
-                    navigateToHome = {},
+                    navigateToHome = {
+                        navController.navigateToHome()
+                    },
                 )
             }
 

@@ -137,6 +137,7 @@ class RegisterViewModel
                     result
                         .onSuccess { data ->
                             _uiEffect.emit(RegisterEffect.ShowToast(resource.getString(R.string.register_user_successfully)))
+                            _uiEffect.emit(RegisterEffect.NavigateToHome)
                         }.onFailure { error ->
                             _uiEffect.emit(RegisterEffect.ShowToast(resource.getString(stringMapper.mapExceptionToResourceId(error))))
                         }

@@ -94,7 +94,7 @@ fun SplashScreen(
 
         viewModel.uiEffect.collect { effect ->
             when (effect) {
-                SplashEffect.NavigateToHome -> navigateToLogin()
+                SplashEffect.NavigateToHome -> navigateToHome()
                 SplashEffect.NavigateToLogin -> navigateToLogin()
                 is SplashEffect.ShowToast -> {
                     Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()

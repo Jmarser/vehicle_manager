@@ -37,7 +37,7 @@ class SplashViewModel @Inject constructor(
             val user = getUser()
             user?.let {
                 _uiEffect.emit(SplashEffect.ShowToast(resource.getString(R.string.login_successfull)))
-                _uiEffect.emit(SplashEffect.NavigateToLogin)
+                _uiEffect.emit(SplashEffect.NavigateToHome)
             } ?: run {
                 _uiEffect.emit(SplashEffect.NavigateToLogin)
             }
